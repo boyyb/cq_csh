@@ -1,0 +1,60 @@
+﻿/*
+用户自定义样式
+*/
+
+/*QQ客服 改QQ号码在QQ.js*/                       
+.kf-xftb{position:fixed;top:300px;left:0px;z-index:10;background:url(images/customerservice.png) no-repeat;width:53px;height:88px;_display:none;cursor:pointer;}
+.kf-lf-lj{background:url(images/customerservice1.png) no-repeat right;width:191px;height:220px;position:fixed;top:270px;left:-191px;z-index:10;padding-top:80px;_display:none;cursor:pointer;}
+.kf-lf-lj a{display:block;width:120px;height:30px;text-decoration:none;}
+.kf-lf-lj a span{display:block;line-height:30px;background:url(images/customer_service_qqout.png) no-repeat left center;padding-left:20px;color:#7D7D7D;font-size:12px;margin-left:10px;text-align:left;}
+.kf-lf-lj a:hover{background:#e21001;border-radius:5px;text-decoration:none;}
+.kf-lf-lj a:hover span{background:url(images/customer_service_qqout1.png) no-repeat left center;color:white;}
+
+/*英文QQ客服*/
+.kf1-xftb{position:fixed;top:300px;left:0px;z-index:10;background:url(images/customerservice2.png) no-repeat;width:53px;height:88px;_display:none;cursor:pointer;}
+.kf1-lf-lj{background:url(images/customerservice3.png) no-repeat right;width:191px;height:220px;position:fixed;top:270px;left:-191px;z-index:10;padding-top:80px;_display:none;cursor:pointer;}
+.kf1-lf-lj a{display:block;width:120px;height:30px;text-decoration:none;}
+.kf1-lf-lj a span{display:block;line-height:30px;background:url(images/customer_service_qqout.png) no-repeat left center;padding-left:20px;color:#7D7D7D;font-size:12px;margin-left:10px;text-align:left;}
+.kf1-lf-lj a:hover{background:#e21001;border-radius:5px;text-decoration:none;}
+.kf1-lf-lj a:hover span{background:url(images/customer_service_qqout1.png) no-repeat left center;color:white;}
+
+
+/*左侧浮动返回顶部图标样式*/
+a.gotoptop_icon{display:block;position:fixed;right:5px;bottom:130px;width:56px;height:57px;background:url(images/backtotop.png) no-repeat;cursor:pointer;display:none}
+a.gotoptop_icon:hover{background-position:0px 0px;}
+
+
+/*首页>>新闻资讯*/
+.h-xwzx{clear:both;overflow:hidden;_height:100%;padding-top:30px;}
+.h-xwzx li{float:left;width:250px;padding:0px 0px 20px 60px;_padding:0px 0px 20px 55px;margin:0px 10px 0px 13px;background:url(images/textlist1-1.jpg) no-repeat left top;}
+.h-xwzx .i_1{background:url(images/textlist1-1.jpg) no-repeat left top;}
+.h-xwzx .i_2{background:url(images/textlist1-2.jpg) no-repeat left top;}
+.h-xwzx .i_3{background:url(images/textlist1-3.jpg) no-repeat left top;}
+.h-xwzx .title{display:block;height:45px;line-height:45px;overflow:hidden;}
+.h-xwzx .title a{font-size:18px;font-weight:bold;color:#626262;text-decoration:none;}
+.h-xwzx .title a:hover{color:#ef3b2d;}
+.h-xwzx p{line-height:30px;}
+
+/*首页>>关于我们*/
+.gywm-gd{display:block;background:url(images/gd.jpg) no-repeat left center;width:140px;height:37px;line-height:37px;margin-top:10px;color:white;font-size:14px;text-align:center;}
+.gywm-gd:hover{background:url(images/gd1.jpg) no-repeat left center;text-decoration:none;}
+
+/*首页>>产品中心*/
+.h-cpzx-t{display:block;height:90px;line-height:90px;font-size:32px;color:white;font-weight:bold;text-align:center;}
+.h-cpzx-fl{clear:both;overflow:hidden;margin-bottom:50px;}
+.h-cpzx-fl li{float:left;width:270px;text-align:center;background:#161616;padding:0px 25px 0px 25px;margin-right:13px;}
+.h-cpzx-fl li a{display:block;margin-top:45px;width:258px;height:170px;border:6px #5A5A5A solid;}
+.h-cpzx-fl li a:hover{border:6px #ff6600 solid;}
+.h-cpzx-fl li a img{width:258px;height:170px;}
+.h-cpzx-fl li span{display:block;font-weight:bold;font-size:26px;color:white;margin:10px 0px 10px 0px;height:40px;line-height:40px;overflow:hidden;}
+.h-cpzx-fl li div{color:white;text-align:left;height:110px;overflow:hidden;}
+.h-cpzx-fl li .cpzx-cksq{display:block;width:100px;margin:10px auto 25px auto;height:32px;line-height:31px;text-align:center;background:#991513;border-radius:5px;color:white;text-decoration:none;border:0px;}
+.h-cpzx-fl li .cpzx-cksq:hover{background:#ff6600;border:0px;}
+
+
+
+/*联系我们栏目*/
+.lxwm-box{background:url(images/contact_wrap.png) no-repeat left top;width:180px;height:233px;margin-top:11px;}
+.lxwm-box .lx-title{height:65px;padding:15px 5px 0px 70px;color:white;}
+.lxwm-box span{display:block;width:150px;height:35px;line-height:35px;padding-left:28px;border:#CCC 1px solid;border-width:1px 1px 0px 1px;overflow:hidden;color:#666666;}
+.lxwm-box  .lxwm-cs{line-height:18px;height:45px;border-bottom:1px #CCC solid;}
