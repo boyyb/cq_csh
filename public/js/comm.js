@@ -26,7 +26,7 @@
       $navmenu_a_current.addClass("current");
     }); 
   }
-
+    //轮播图控制
     $('.bxslider').bxSlider({
             mode:'vertical', //默认的是水平
             //displaySlideQty:1,//显示li的个数

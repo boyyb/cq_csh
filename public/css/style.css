@@ -35,7 +35,9 @@ a:hover{text-decoration:underline;}
 .menu_style_homepage{float:left;width:106px;text-align:center;}
 .menu_style{float:left;width:106px;text-align:center;}
 
+
 a.menu{display:block;color:white;text-decoration:none;font-weight:normal;font-size:16px;line-height:45px;}
+
 a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 .menu_current a.menu{font-weight:bold;background:#333;}
@@ -155,6 +157,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 }
 .more:hover{background:url(../images/more1.jpg) no-repeat left center;text-decoration:none;cursor:pointer;}
 
+
 #jq_box{
     height: 300px;width:1000px;margin:0 auto;
 }
@@ -261,12 +264,9 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     background: #a2a2a2;
     margin: 10px auto;
 }
+
 /*吃住玩够样式*/
 
 
-.btn_more{
-    height:30px;
-    width:70px;
-    border-radius: 3px;
-    background: bl;
-}
+
+

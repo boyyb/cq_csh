@@ -16,6 +16,7 @@
     <script src="public/js/jquery.bxslider/jquery.bxslider.min.js"></script>
     <script src="public/js/jquery.bxslider/jquery.bxslider.js"></script>
     <link href="public/js/jquery.bxslider/jquery.bxslider.css" type="text/css" rel="stylesheet"/>
+
 </head>
 <body>
 <!-------------------------顶部开始--------------------------->
@@ -84,10 +85,12 @@
     <div id="jqzx_box">
         <div id="jqzx_box_title" class="box_title">景区资讯</div>
     </div>
+
 </div>
 
 <!------------------------热门推荐开始----------------------------->
 <div id="rmtj_box">
+
     <div id="rmtj_title" class="box_title">热门推荐</div>
     <div id="rmtj_box1">空中滑翔
 
