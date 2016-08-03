@@ -12,6 +12,10 @@
     <script type="text/javascript">var submenu_style = 1;</script>
     <script src="public/js/script.js" type="text/javascript"></script>
     <script src="public/js/function.js" type="text/javascript"></script>
+    <!--轮播图-->
+    <script src="public/js/jquery.bxslider/jquery.bxslider.min.js"></script>
+    <script src="public/js/jquery.bxslider/jquery.bxslider.js"></script>
+    <link href="public/js/jquery.bxslider/jquery.bxslider.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
 <!-------------------------顶部开始--------------------------->
@@ -52,39 +56,39 @@
     <script type="text/javascript">var IsPageHome = "1";var Lanmu_Id = "61";var Sublanmu_Id = "0";ShowSubMenu(Lanmu_Id);</script>
 <!------------------------导航栏结束----------------------------->
 <!------------------------轮播图开始----------------------------->
-    <div class="banner" style="height:350px;width:1000px;background: grey;margin:10px auto;">
-        轮播图
+    <div class="banner" style="height:350px;width:1000px;margin:10px auto;">
+        <ul class="bxslider">
+            <li><img src="public/images/pic1.jpg" /></li>
+            <li><img src="public/images/pic2.jpg" /></li>
+            <li><img src="public/images/pic3.jpg" /></li>
+            <li><img src="public/images/pic4.jpg" /></li>
+        </ul>
     </div>
 </div>
 <!------------------------轮播图结束----------------------------->
 
 <!------------------------=====中间内容版块开始=====----------------------------->
 <div id="jq_box">
-    <div id="jqjs_box" style="width:50px;height:40px;background: red;">
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
-        <div id="jqjs_pic"></div>
+    <div id="jqjs_box" >
+        <div id="jqjs_box_title" class="box_title">景区简介</div>
+        <img id="jqjs_pic" style="width:250px;height:200px;float:right;margin:4px;" src="public/images/csh1.jpg"/>
+        <p style="margin:5px;font-size:15px;line-height:21px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;
+            长寿湖国家级生态旅游休闲度假区位于重庆市长寿区境内，因湖中岛屿排列呈现出“寿”而得名。
+            距重庆主城区100公里，是著名的“寿星之乡”，是我国西南地区最大的人工湖。<br/>&nbsp;&nbsp;&nbsp;&nbsp;
+            长寿湖湖面辽阔，碧波万顷，水中倒影粲然若画，气势极为壮观；若临暮春三秋，浅云遮日，烟波浩渺，水天一色，另是一番情趣。
+            湖中岛屿林木青翠，建有多处园林景点，坝东仿古亭上有周恩来、李富春等同志题词的牌匾。
+            是国际旅游热线三峡黄金水道的重要节点和重庆市长寿区旅游业发展的龙头景区，被誉为重庆的中心花园。
+        </p>
+        <a class="more" href="javascript:void(0)">更多...</a>
     </div>
-    <div id="jqzx_box">景区资讯</div>
+    <div id="jqzx_box">
+        <div id="jqzx_box_title" class="box_title">景区资讯</div>
+    </div>
 </div>
 
 <!------------------------热门推荐开始----------------------------->
 <div id="rmtj_box">
-    <div id="rmtj_title">热门推荐</div>
+    <div id="rmtj_title" class="box_title">热门推荐</div>
     <div id="rmtj_box1">空中滑翔
 
     </div>

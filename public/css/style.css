@@ -35,7 +35,7 @@ a:hover{text-decoration:underline;}
 .menu_style_homepage{float:left;width:106px;text-align:center;}
 .menu_style{float:left;width:106px;text-align:center;}
 
-a.menu{display:block;color:white;text-decoration:none;font-weight:normal;font-size:14px;line-height:45px;}
+a.menu{display:block;color:white;text-decoration:none;font-weight:normal;font-size:16px;line-height:45px;}
 a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 .menu_current a.menu{font-weight:bold;background:#333;}
@@ -143,6 +143,18 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 /***********************************************************自定义*********************************************************/
 /*网站首页样式*/
+
+.more{
+    display:block;
+    background:url(../images/more.jpg) no-repeat left center;
+    width:140px;height:37px;line-height:37px;margin-top:10px;
+    color:white;
+    font-size:14px;
+    text-align:center;
+    margin-left:10px;
+}
+.more:hover{background:url(../images/more1.jpg) no-repeat left center;text-decoration:none;cursor:pointer;}
+
 #jq_box{
     height: 300px;width:1000px;margin:0 auto;
 }
@@ -150,23 +162,44 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 #jqjs_box{
     float:left;
     height:300px;
-    width:650px;
-    background: lightgrey;
+    width:648px;
     margin-right:10px;
+    border:1px solid #f86d0d;
+    //
+    overflow: hidden;
+
+}
+.box_title{
+    height:30px;
+    line-height:30px;
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+}
+#jqjs_box_title{
+    background: #f86d0d;
+}
+#jqzx_box_title{
+    background: #4c8da5;
 }
 #jqzx_box{
     float:left;
     height:300px;
-    width:340px;
+    width:338px;
     background: lightgrey;
+    border:1px solid #4c8da5;
+    overflow: hidden;
 }
 #rmtj_box{
-    height: 610px;width:1000px;background: #888;
+    height: 600px;width:1000px;background: #888;
     margin: 10px auto;
+    border:1px solid #35af7c;
+    overflow: hidden;
 }
 #rmtj_title{
     float:left;
-    height: 40px;width:1000px;background: lightgrey;
+    width:1000px;
+    background: #35af7c;
     margin-bottom:3px;
 }
 #rmtj_box div[id^=rmtj_box]{
@@ -229,3 +262,11 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     margin: 10px auto;
 }
 /*吃住玩够样式*/
+
+
+.btn_more{
+    height:30px;
+    width:70px;
+    border-radius: 3px;
+    background: bl;
+}
