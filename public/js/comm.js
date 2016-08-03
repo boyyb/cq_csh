@@ -1,6 +1,6 @@
 ﻿$(function(){
  var $menuli=$("#Menu").children("ul").children("li");
- if($menuli.size()>0 && submenu_style!=2){
+ /*if($menuli.size()>0 && submenu_style!=2){
   $menuli.bind('mouseenter',function(){
    if($(this).children("ul").size()==0)
     {
@@ -11,7 +11,7 @@
   $("#Menu").bind('mouseleave',function(){
     $("#MenuItem"+Lanmu_Id).addClass("menu_current");
   });
- }
+ }*/
  var $navmenu=$(".nav_menu");
  var $navmenu_a=$navmenu.children("ul").children("li").find("a");
  var $navmenu_a_current;

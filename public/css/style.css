@@ -168,20 +168,35 @@ a.logined_href:link{font-size:9pt;color:#FF0000;text-decoration:underline}
 a.logined_href:visited{font-size:9pt;color:#FF0000;;text-decoration:underline}
 a.logined_href:hover{font-size:9pt;color:#FF0000;text-decoration:underline}
 
-/*****************************************自定义*********************************************/
+/***********************************************************自定义*********************************************************/
 #jq_box{
-    height: 300px;width:1100px;background: #888;
+    height: 300px;width:1000px;margin:0 auto;
 }
 
 #jqjs_box{
-    //float:left;
-    width:600px;
-    heigth:500px;
-    background: grey;
+    float:left;
+    height:300px;
+    width:650px;
+    background: lightgrey;
+    margin-right:10px;
 }
 #jqzx_box{
-    //float:left;
-    width:390px;
-    heigth:500px;
-    background: grey;
+    float:left;
+    height:300px;
+    width:340px;
+    background: lightgrey;
+}
+#rmtj_box{
+    height: 610px;width:1000px;background: #888;
+    margin: 10px auto;
+}
+#rmtj_title{
+    float:left;
+    height: 40px;width:1000px;background: lightgrey;
+    margin-bottom:3px;
+}
+#rmtj_box div[id^=rmtj_box]{
+    float:left;
+    height: 280px;width:330px;background: lightgrey;
+    margin:0 3.3px 3.3px 0;
 }

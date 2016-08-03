@@ -32,7 +32,7 @@
 <!------------------------导航栏开始----------------------------->
             <div class="menu_box" id="Menu">
                 <ul>
-                    <li class="menu_style_homepage menu_current" id="MenuItem61" name="MenuItem"><a href="" class="menu">网站首页</a></li>
+                    <li class="menu_style menu_current" id="MenuItem61" name="MenuItem"><a href="" class="menu">网站首页</a></li>
                     <li class="menu_style" id="MenuItem62" name="MenuItem"><a href="jqjs/" class="menu">景区介绍</a></li>
                     <li class="menu_style" id="MenuItem63" name="MenuItem"><a href="jqzx/" class="menu">景区资讯</a></li>
                     <li class="menu_style" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
@@ -60,36 +60,30 @@
 <!------------------------轮播图结束----------------------------->
 
 <!------------------------=====中间内容版块开始=====----------------------------->
-<!------------------------景区介绍开始----------------------------->
 <div id="jq_box">
-    <div id="jqjs_box">
-
-    </div>
-<!------------------------景区介绍结束----------------------------->
-<!------------------------景区资讯开始----------------------------->
-    <div id="jqzx_box">
-
-    </div>
+    <div id="jqjs_box">景区介绍</div>
+    <div id="jqzx_box">景区资讯</div>
 </div>
-<!------------------------景区资讯结束----------------------------->
+
 <!------------------------热门推荐开始----------------------------->
 <div id="rmtj_box">
-    <div id="jqjs_box1">
+    <div id="rmtj_title">热门推荐</div>
+    <div id="rmtj_box1">空中滑翔
 
     </div>
-    <div id="jqjs_box2">
+    <div id="rmtj_box2">快乐垂钓
 
     </div>
-    <div id="jqjs_box3">
+    <div id="rmtj_box3">极品翘壳
 
     </div>
-    <div id="jqjs_box4">
+    <div id="rmtj_box4">岛上人家
 
     </div>
-    <div id="jqjs_box5">
+    <div id="rmtj_box5">沿路骑行
 
     </div>
-    <div id="jqjs_box6">
+    <div id="rmtj_box6">血脐
 
     </div>
 </div>

@@ -1,6 +1,6 @@
 ﻿/*下拉样式*/
-#Menu ul li{position:relative;z-index:6;}
-#Menu ul li ul{position:absolute;left:0;z-index:8px;background-color:#b52218;line-height:30px;display:none;padding-top:1px;}/*一级样式*/
+#Menu ul li{position:relative;z-index:6;margin-right: 2px;}
+#Menu ul li ul{position:absolute;left:0;background-color:#b52218;line-height:30px;display:none;padding-top:1px;}/*一级样式*/
 #Menu ul li ul li{position:relative;width:106px;height:30px;border-width:0 0 1px 0;text-align:center;}/*li行样式*/
 #Menu ul li ul li ul{position:absolute;left:120px;top:0px;display:none;}/*二级样式*/
 #Menu ul li ul li ul li ul{position:absolute;top:0px;display:none;}/*三级样式*/
