@@ -60,7 +60,25 @@
 
 <!------------------------=====中间内容版块开始=====----------------------------->
 <div id="jq_box">
-    <div id="jqjs_box">景区介绍</div>
+    <div id="jqjs_box" style="width:50px;height:40px;background: red;">
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        fdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsfffffffffdsfdsfdsfsffffffff
+        <div id="jqjs_pic"></div>
+    </div>
     <div id="jqzx_box">景区资讯</div>
 </div>
 
