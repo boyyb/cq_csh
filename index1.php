@@ -15,7 +15,6 @@
 </head>
 <body>
 <!-------------------------顶部开始--------------------------->
-<div class="page_style lanmupage page_l61">
     <div class="top_box">
         <div class="top_box_inner">
             <div class="logo"></div>
@@ -30,23 +29,23 @@
             <div class="clear"></div>
 <!------------------------顶部结束----------------------------->
 <!------------------------导航栏开始----------------------------->
-            <div class="menu_box" id="Menu">
-                <ul>
-                    <li class="menu_style menu_current" id="MenuItem61" name="MenuItem"><a href="" class="menu">网站首页</a></li>
-                    <li class="menu_style" id="MenuItem62" name="MenuItem"><a href="jqjs/" class="menu">景区介绍</a></li>
-                    <li class="menu_style" id="MenuItem63" name="MenuItem"><a href="jqzx/" class="menu">景区资讯</a></li>
-                    <li class="menu_style" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
-                        <ul>
-                            <li><a href="czwg/eat">"吃"在长寿湖</a></li>
-                            <li><a href="czwg/live">"住"在长寿湖</a></li>
-                            <li><a href="czwg/play">"玩"在长寿湖</a></li>
-                            <li><a href="czwg/buy">"购"在长寿湖</a></li>
-                        </ul>
-                    </li>
-                    <li class="menu_style" id="MenuItem65" name="MenuItem"><a href="zxly/" class="menu">在线留言</a></li>
-                    <li class="menu_style" id="MenuItem66" name="MenuItem"><a href="lxwm/" class="menu">联系我们</a></li>
-                </ul>
-            </div>
+        <div class="menu_box" id="Menu">
+            <ul>
+              <li class="menu_style menu_current" id="MenuItem61" name="MenuItem"><a href="http://localhost/1_csh/index1.php" class="menu">网站首页</a></li>
+              <li class="menu_style" id="MenuItem62" name="MenuItem"><a href="http://localhost/1_csh/jqjs/" class="menu">景区介绍</a></li>
+              <li class="menu_style" id="MenuItem63" name="MenuItem"><a href="http://localhost/1_csh/jqzx/" class="menu">景区资讯</a></li>
+              <li class="menu_style" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
+                  <ul>
+                    <li><a href="http://localhost/1_csh/czwg/eat">"吃"在长寿湖</a></li>
+                    <li><a href="http://localhost/1_csh/czwg/live">"住"在长寿湖</a></li>
+                    <li><a href="http://localhost/1_csh/czwg/play">"玩"在长寿湖</a></li>
+                    <li><a href="http://localhost/1_csh/czwg/buy">"购"在长寿湖</a></li>
+                  </ul>
+                </li>
+             <li class="menu_style" id="MenuItem65" name="MenuItem"><a href="http://localhost/1_csh/zxly/" class="menu">在线留言</a></li>
+             <li class="menu_style" id="MenuItem66" name="MenuItem"><a href="http://localhost/1_csh/lxwm/" class="menu">联系我们</a></li>
+            </ul>
+        </div>
         </div>
     </div>
     <!--显示二级菜单-->
@@ -93,14 +92,8 @@
 <!------------------------底部开始----------------------------->
     <div class="bottom_box">
         <div class="bottom_info">
-            <a href="index.aspx">网站首页</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="#">景区介绍</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="#">景区资讯</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="#">吃住玩购</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="#">在线留言</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="#">联系我们</a>
-            <b><br/>联系人：</b>BinGo&nbsp;
-            <b>手机：</b>135123456789&nbsp;
+            <b>联系人：</b>BinGo&nbsp;
+            <b>手机：</b>13629795255&nbsp;
             <b>邮箱：</b>619280492@qq.com<br/>
             Copyright ©1996-2016 CSH Corporation, All Rights Reserved
         </div>

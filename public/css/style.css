@@ -6,7 +6,7 @@ html{-webkit-text-size-adjust:none;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,th,td,p,blockquote,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin:0px;padding:0px;}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
 audio,canvas,video{display:inline-block;*display: inline;*zoom:1;}
-body{word-wrap:break-word;text-align:center;font:12px/1.8 Tahoma,Verdana,Arial,\5b8b\4f53;color:#333333;}
+body{word-wrap:break-word;text-align:center;font:12px/1.8 Tahoma;color:#333333;}
 
 input,select,textarea,button{font-size:100%;}
 table{border-collapse:collapse;border-spacing:0;}
@@ -133,42 +133,16 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 .sublanmu_pn{font-size:13px;margin:15px 0 5px 0}
 .sublanmu_pn li{color:#D33506}
 
-/*评论*/
-.comments_box{text-align:left;border:1px solid #cccccc;margin:10px 5px 10px 10px;}
-.comments_box .title{padding:2px 0 0 10px;height:20px;font-weight:bold;background-color:#ececec}
-.comments_box ul li{padding:5px 0 5px 25px;}
-.comments_box .textarea{width:520px;height:100px;border:1px solid #cccccc;border-color:#000000 #cccccc #cccccc #000000;}
 
-.comments_list{padding:5px 5px 0 10px;border:0px solid #cccccc;overflow:hidden}
-.comments_list .title{display:block;padding:2px 0 3px 5px;height:18px;width:100%;font-weight:bold;}
-.comments_list .item{clear:both;margin:0 0 10px 0;overflow:hidden}
-.comments_list .header{padding:3px 0 0 10px;height:22px;background-color:#eeeeee}
-.comments_list .header .floornum{font-size:12px;font-style:Italic;font-weight:bold}
-.comments_list .header .left{float:left}
-.comments_list .header .right{float:right;padding-right:10px}
-.comments_list .quote{display:block;color:#999999;padding:5px 5px 5px 10px;border:1px solid #ececec}
-.comments_list .content{padding:5px 5px 5px 15px}
-.comments_list .reply{background:url(public/reply.gif) no-repeat 5px 5px;border:1px dashed #cccccc;padding:2px 5px 2px 25px;margin:2px 0 5px 0;color:#D33506}
-
-.comments_page{clear:both;vertical-align:middle;text-align:right;background-color:#ffffff;margin:10px 0 10px 0;font-family:宋体;}
-.comments_page a{height:15px;line-height:15px;vertical-align:middle;zoom:1;padding:2px 8px 2px 8px;border:1px solid #cccccc;font-size:12px}
-.comments_page span{vertical-align:middle;padding:2px 3px 2px 3px;font-weight:bold;font-size:12px}
 
 /*bottom样式*/
-.bottom_box{clear:both;text-align:center;height:90px;padding:10px 0 0 0;line-height:30px;color:#a2a2a2;background:#333;margin-top:10px;}
+.bottom_box{clear:both;text-align:center;height:70px;padding:10px 0 0 0;line-height:30px;color:#a2a2a2;background:#333;margin-top:10px;}
 .bottom_box a{color:#a2a2a2}
 .bottom_box a:hover{color:#d01700;text-decoration:none;}
 
-/*登陆界面*/
-.loginbox_item{height:20px;padding:0 0 0 0;padding:0 5px 5px 0;text-align:left;font-size:9pt;}
-.loginbox_textbox{width:100px;height:15px;border:0 solid #CCCCCC;border-width:1px 1px 1px 1px}
-.loginbox_textbox_yzm{width:40px;height:15px;border:0 solid #CCCCCC;border-width:1px 1px 1px 1px}
-.loginbox_submit{width:60px;height:20px;border:0 solid #333333;border-width:0 1px 1px 0;background-color:#dddddd;cursor:pointer;}
-a.logined_href:link{font-size:9pt;color:#FF0000;text-decoration:underline}
-a.logined_href:visited{font-size:9pt;color:#FF0000;;text-decoration:underline}
-a.logined_href:hover{font-size:9pt;color:#FF0000;text-decoration:underline}
 
 /***********************************************************自定义*********************************************************/
+/*网站首页样式*/
 #jq_box{
     height: 300px;width:1000px;margin:0 auto;
 }
@@ -200,3 +174,58 @@ a.logined_href:hover{font-size:9pt;color:#FF0000;text-decoration:underline}
     height: 280px;width:330px;background: lightgrey;
     margin:0 3.3px 3.3px 0;
 }
+
+/*景区介绍样式*/
+#jqjs_container{
+    width:1000px;
+    height:600px;
+    background: #a2a2a2;
+    margin: 10px auto;
+}
+#jqjs_left{
+    float:left;
+    width:200px;
+    height:600px;
+    background: #EEEE99;
+}
+#jqjs_right{
+    float:left;
+    width:800px;
+    height:600px;
+    background: #bbbbbb;
+}
+#jqzx_container{
+    width:1000px;
+    height:600px;
+    background: #a2a2a2;
+    margin: 10px auto;
+}
+
+/*景区资讯样式*/
+
+/*在线留言样式*/
+#zxly_container{
+    width:1000px;
+    height:600px;
+    background: #a2a2a2;
+    margin: 10px auto;
+}
+#zxly_message{
+    width:1000px;
+    height:200px;
+    background: #EEEE99;
+}
+#zxly_show{
+    width:1000px;
+    height:400px;
+    background: lightgrey;
+}
+
+/*联系我们样式*/
+#lxwm_container{
+    width:1000px;
+    height:600px;
+    background: #a2a2a2;
+    margin: 10px auto;
+}
+/*吃住玩够样式*/
