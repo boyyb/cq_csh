@@ -33,9 +33,9 @@ $(function(){
         captions: true,//自动控制
         auto: true,
         controls: true,//显示左右按钮
-        pager: false,
-        speed:1000,
-        pause:4000,
+        pager: false,//是否在下方显示页码
+        speed:1000,//图片滑动时间1s
+        pause:4000,//图片停留时间4s
         autoHover:true,//当鼠标滑向滑动内容上时，是否暂停滑动,true停，false不停
         //easing: 'swing',
     });
