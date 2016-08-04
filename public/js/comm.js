@@ -28,7 +28,7 @@ $(function(){
     }); 
   }
     //轮播图控制
-    $('.bxslider').bxSlider({
+  $('.bxslider').bxSlider({
         mode:'horizontal', //默认的是水平
         captions: true,//自动控制
         auto: true,
@@ -38,7 +38,10 @@ $(function(){
         pause:3500,//图片停留时间4s
         autoHover:true,//当鼠标滑向滑动内容上时，是否暂停滑动,true停，false不停
         //easing: 'swing',
-    });
+  });
+
+
+
 });
 
 function ShowSubMenu(id) //显示下拉
@@ -243,133 +246,6 @@ function expand_subnav(curentid,parentids) //根据当前sublamuid展开
      }
 
   }
-function AddFavourites(sid,tb,Id) //收藏
- {
-   var x=new PAAjax();
-   x.setarg("post",true);
-   var Url=location.href;
-   x.send("/e/aspx/add_favo.aspx","table="+tb+"&id="+Id+"&url="+UrlEncode(Url)+"&post=add",function(v){AddFavourites_Back(sid,v)});
- }
-
-function TongJi(s)//流量统计
- {
-   return;
-   var url=location.href;
-   var re=/http:\/\/([^\/]+)\//i;
-   var h = url.match(re);
-   url=h[1];
-   var referer=document.referrer;
-   if(referer==null){referer=""};
-   if(referer=="http://www.baidu.com/s?wd=a")
-    {
-      return;
-    }
-   var tjcookie=GetCookie("tongji");
-   if(tjcookie!="1")
-      {
-       var x=new PAAjax();
-       x.setarg("get",true);
-       x.send("/e/aspx/count.aspx","referer="+UrlEncode(referer)+"&s="+s,function(v){TJCookie(v,referer)});
-      }
- }
-
-function TJCookie(v,Referer)
- {
-   SetCookie("tongji","1",24*60*60);
-   SetCookie("referer",Referer,24*60*60);
- }
-
-function FontZoom(Size,Id)
- {
-   var Obj=document.getElementById(Id);
-   Obj.style.fontSize=Size; 
-   Obj.style.lineHeight="180%"; 
- }
-
-function ordercart(sid,Table,Id,thecolor,thesize,thetype) //产品订单界面，sid：分站点id，table:产品的数据表明，id：产品id
- {
-    if(Table==null){Table="";}
-    if(Id==null){Id=0;}
-    if(thecolor==null){thecolor="";}
-    if(thesize==null){thesize="";}
-    if(thetype==null){thetype="";}
-    IDialog('订购窗口',"/e/order/order.aspx?s="+sid+"&table="+Table+"&id="+Id+"&color="+thecolor+"&size="+thesize+"&type="+thetype,800,500);
- }
-
-function exchange(sid,Table,Id) //积分兑换界面
- {
-   IDialog('积分兑换窗口',"/e/order/exchange.aspx?s="+sid+"&table="+Table+"&id="+Id,550,450);
- }
-
-function open_calendar(Id,showtime)
- {
-  Id=document.getElementById(Id);
-  if(showtime==1)
-   {
-    SelectDate(Id,'yyyy-MM-dd hh:mm:ss',80,0);
-   }
- else
-   {
-    SelectDate(Id,'yyyy-MM-dd',80,0);
-   }
- }
 
 
-//改变验证码
-function Code_Change(Id)
- {
-  var obj=document.getElementById(Id);
-  var R=Math.random();
-  obj.src="/e/aspx/yzm.aspx?r="+R;
- }
 
-
-function Get_Info(Table,Id)
- {
-   var objclicks=document.getElementById("clicks");
-   var objcomments=document.getElementById("comments");
-   var objdownloads=document.getElementById("downloads");
-   var objreserves=document.getElementById("reserves");
-   if(objclicks==null && objcomments==null && objdownloads==null && objreserves==null)
-    {
-      return;
-    }
-  var R=Math.random();
-  var x=new PAAjax();
-  x.setarg("get",true);
-  x.send("/e/aspx/get_info.aspx","table="+Table+"&id="+Id+"&r="+R,function(v){Write_Info(v)});
- }
-
-function Write_Info(V)
- {
-  var Av=V.split('&');
-  if(Av.length==4)
-   {
-    var sublanmu_content=document.getElementById("sublanmu_content");
-    if(sublanmu_content!=null){sublanmu_content.style.display="";}
-    var clicks=Av[0].split('=')[1];
-    var comments=Av[1].split('=')[1];
-    var downloads=Av[2].split('=')[1];
-    var reserves=Av[3].split('=')[1];
-
-    var objclicks=document.getElementById("clicks");
-    var objcomments=document.getElementById("comments");
-    var objdownloads=document.getElementById("downloads");
-    var objreserves=document.getElementById("reserves");
-    if(objclicks!=null){objclicks.innerHTML=parseInt(clicks)+1;}
-    if(objcomments!=null){objcomments.innerHTML=comments;}
-    if(objdownloads!=null){objdownloads.innerHTML=downloads;}
-    if(objreserves!=null){objreserves.innerHTML=reserves;}
-  }
- }
-
-function Link_Open(link,Target) //友情链接
- {
-   if(link!="")
-    {
-      window.open(link,Target);
-    }
- }
-document.write("<script src=\"/e/js/function.js\" type=\"text/javascript\"></script>");
-document.write("<script src=\"/e/js/dialog.js\" type=\"text/javascript\"></script>");                                                                    
-document.write("<script src=\"/e/incs/pie/PIE.js\" type=\"text/javascript\"></script>");

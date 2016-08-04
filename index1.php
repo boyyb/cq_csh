@@ -8,10 +8,7 @@
     <link href="public/css/dropmenu.css" rel="stylesheet" type="text/css"/>
     <script src="public/js/jquery.min.js" type="text/javascript"></script>
     <script src="public/js/comm.js" type="text/javascript"></script>
-    <script src="public/js/zh-cn/lang.js" type="text/javascript"></script>
     <script type="text/javascript">var submenu_style = 1;</script>
-    <script src="public/js/script.js" type="text/javascript"></script>
-    <script src="public/js/function.js" type="text/javascript"></script>
     <!--轮播图-->
     <script src="public/js/jquery.bxslider/jquery.bxslider.min.js"></script>
     <script src="public/js/jquery.bxslider/jquery.bxslider.js"></script>
@@ -26,7 +23,6 @@
             <div class="topcontent">
                 <span class="top-l">欢迎光临长寿湖旅游网站!</span>
                 <span class="top-r">
-                    <script src="public/js/TtoS.js"></script>
                     <a href="javascript:void(0)">登陆</a>
                     <a href="javascript:void(0)">注册</a>
                 </span>

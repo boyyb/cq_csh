@@ -327,15 +327,14 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     border: 1px solid #ccc;
     resize: none;
 }
-#zxly_message input[type=submit],#zxly_message input[type=reset]{
+#zxly_message input[type=button],#zxly_message input[type=reset]{
     width: 80px;
     height: 25px;
     line-height: 18px;
     border: 0;
     border-radius: 5px;
-    background: darkred;
+    background: #ddd;
     cursor: pointer;
-    color:white;
     margin-right:30px;
 }
 /*****************************************联系我们样式**************************************/
