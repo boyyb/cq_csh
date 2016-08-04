@@ -146,6 +146,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 /***********************************************************自定义*********************************************************/
 /*网站首页样式*/
 
+/*更多按钮样式*/
 .more{
     display:block;
     background:url(../images/more.jpg) no-repeat left center;
@@ -157,6 +158,9 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 }
 .more:hover{background:url(../images/more1.jpg) no-repeat left center;text-decoration:none;cursor:pointer;}
 
+.banner *{
+    border:0;
+}
 
 #jq_box{
     height: 300px;width:1000px;margin:0 auto;

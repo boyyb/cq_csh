@@ -72,13 +72,15 @@
 <div id="jq_box">
     <div id="jqjs_box" >
         <div id="jqjs_box_title" class="box_title">景区简介</div>
-        <img id="jqjs_pic" style="width:250px;height:200px;float:right;margin:4px;" src="public/images/csh1.jpg"/>
-        <p style="margin:5px;font-size:15px;line-height:21px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;
+        <img id="jqjs_pic" style="width:250px;height:160px;float:right;margin:4px;" src="public/images/csh1.jpg"/>
+        <p style="margin:5px;font-size:14px;line-height:21px;text-align:left;">&nbsp;&nbsp;&nbsp;&nbsp;
             长寿湖国家级生态旅游休闲度假区位于重庆市长寿区境内，因湖中岛屿排列呈现出“寿”而得名。
             距重庆主城区100公里，是著名的“寿星之乡”，是我国西南地区最大的人工湖。<br/>&nbsp;&nbsp;&nbsp;&nbsp;
             长寿湖湖面辽阔，碧波万顷，水中倒影粲然若画，气势极为壮观；若临暮春三秋，浅云遮日，烟波浩渺，水天一色，另是一番情趣。
             湖中岛屿林木青翠，建有多处园林景点，坝东仿古亭上有周恩来、李富春等同志题词的牌匾。
             是国际旅游热线三峡黄金水道的重要节点和重庆市长寿区旅游业发展的龙头景区，被誉为重庆的中心花园。
+            长寿湖的优美景色和诸多的活动项目每年都吸引着全国各地游客前来观赏，
+            2012年12月，长寿区长寿湖风景区正式被国家旅游局批准为国家AAAA（4A）级风景名胜区。
         </p>
         <a class="more" href="javascript:void(0)">更多...</a>
     </div>

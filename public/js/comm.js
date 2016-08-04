@@ -1,4 +1,5 @@
-﻿$(function(){
+﻿//文档加载完成是执行
+$(function(){
  var $menuli=$("#Menu").children("ul").children("li");
  /*if($menuli.size()>0 && submenu_style!=2){
   $menuli.bind('mouseenter',function(){
@@ -28,12 +29,15 @@
   }
     //轮播图控制
     $('.bxslider').bxSlider({
-            mode:'vertical', //默认的是水平
-            //displaySlideQty:1,//显示li的个数
-            //moveSlideQty: 1,//移动li的个数
-            //captions: true,//自动控制
-            auto: true,
-            controls: false//隐藏左右按钮
+        mode:'horizontal', //默认的是水平
+        captions: true,//自动控制
+        auto: true,
+        controls: true,//显示左右按钮
+        pager: false,
+        speed:1000,
+        pause:4000,
+        autoHover:true,//当鼠标滑向滑动内容上时，是否暂停滑动,true停，false不停
+        //easing: 'swing',
     });
 });
 
