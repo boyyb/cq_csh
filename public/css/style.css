@@ -6,7 +6,7 @@ html{-webkit-text-size-adjust:none;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,th,td,p,blockquote,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin:0px;padding:0px;}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
 audio,canvas,video{display:inline-block;*display: inline;*zoom:1;}
-body{word-wrap:break-word;text-align:center;font:12px/1.8 Tahoma;color:#333333;}
+body{word-wrap:break-word;text-align:center;font:12px/1.5 Tahoma;color:#333333;}
 
 input,select,textarea,button{font-size:100%;}
 table{border-collapse:collapse;border-spacing:0;}
@@ -144,7 +144,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 
 /***********************************************************自定义*********************************************************/
-/*网站首页样式*/
+/***********************************网站首页样式*********************************/
 
 /*更多按钮样式*/
 .more{
@@ -154,9 +154,32 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     color:white;
     font-size:14px;
     text-align:center;
-    margin-left:10px;
+    margin:0 auto;
 }
-.more:hover{background:url(../images/more1.jpg) no-repeat left center;text-decoration:none;cursor:pointer;}
+.more:hover{
+    background:url(../images/more1.jpg) no-repeat left center;
+    text-decoration:none;
+    cursor:pointer;
+}
+.morezx{
+    display:block;
+    width:100px;
+    height:25px;
+    line-height:25px;
+    color:white;
+    font-size:14px;
+    text-align:center;
+    background: #991513;
+    -webkit-border-radius:4px;
+    -moz-border-radius:4px;
+    border-radius:4px;
+    margin:4px auto 0;
+}
+.morezx:hover{
+    text-decoration:none;
+    background: #ff6600;
+    cursor:pointer;
+}
 
 .banner *{
     border:0;
@@ -172,7 +195,6 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     width:648px;
     margin-right:10px;
     border:1px solid #35af7c;
-    //
     overflow: hidden;
 
 }
@@ -189,33 +211,65 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 #jqzx_box_title{
     background: #4c8da5;
 }
+#jqzx_box_content{
+    height:270px;
+    background: #f1f6fc;
+    text-align:left;
+    padding:5px;
+    font-size:14px;
+}
+
+#jqzx_box_content a[title]{
+    color:#122e67;
+}
+#jqzx_box_content a[title]:hover{
+    color:#ff8400;
+}
 #jqzx_box{
     float:left;
     height:300px;
     width:338px;
-    background: lightgrey;
     border:1px solid #4c8da5;
     overflow: hidden;
 }
 #rmtj_box{
-    height: 600px;width:1000px;background: #888;
+    height: 600px;width:1000px;
     margin: 10px auto;
     border:1px solid #f86d0d;
     overflow: hidden;
+    text-align:left;
 }
 #rmtj_title{
     float:left;
     width:1000px;
     background: #f86d0d;
-    margin-bottom:3px;
+    margin-bottom:2px;
+    text-align:center;
 }
 #rmtj_box div[id^=rmtj_box]{
     float:left;
-    height: 280px;width:330px;background: lightgrey;
-    margin:0 3.3px 3.3px 0;
-}
+    height:280px;
+    width:324px;
+    margin-bottom:5px;
+    background: #e0ecff;
 
-/*景区介绍样式*/
+}
+#rmtj_box1,#rmtj_box2,#rmtj_box4,#rmtj_box5{
+    margin-right:14px;
+}
+#rmtj_box div[id^=rmtj_box] img{
+    border:0;width:100%;height:220px;
+}
+#rmtj_box div[id^=rmtj_box] .item{
+    padding-left:5px;
+    font-weight:bold;
+    color:blue;
+    font-size:14px;
+}
+#rmtj_box div[id^=rmtj_box] .morezx{
+    margin:0 auto;
+}
+/**************************************景区介绍样式***********************************************/
 #jqjs_container{
     width:1000px;
     height:600px;
@@ -241,9 +295,10 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     margin: 10px auto;
 }
 
-/*景区资讯样式*/
+/**************************************景区资讯样式************************************/
 
-/*在线留言样式*/
+
+/**************************************在线留言样式**************************************/
 #zxly_container{
     width:1000px;
     height:600px;
@@ -261,7 +316,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     background: lightgrey;
 }
 
-/*联系我们样式*/
+/*****************************************联系我们样式**************************************/
 #lxwm_container{
     width:1000px;
     height:600px;
@@ -269,7 +324,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     margin: 10px auto;
 }
 
-/*吃住玩够样式*/
+/*****************************************吃住玩够样式***************************************/
 
 
 

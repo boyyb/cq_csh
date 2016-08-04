@@ -86,6 +86,20 @@
     </div>
     <div id="jqzx_box">
         <div id="jqzx_box_title" class="box_title">景区资讯</div>
+        <div id="jqzx_box_content">
+            <a href="" title="景区资讯123456789111111111111">景区资讯1</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯2</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯3</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯4</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯6</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯7</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯8</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯9</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯10</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯11</a><br/>
+            <a href="" title="景区资讯123456789111111111111">景区资讯12</a><br/>
+            <a class="morezx" href="javascript:void(0)">更多...</a>
+        </div>
     </div>
 
 </div>
@@ -94,23 +108,35 @@
 <div id="rmtj_box">
 
     <div id="rmtj_title" class="box_title">热门推荐</div>
-    <div id="rmtj_box1">空中滑翔
-
+    <div id="rmtj_box1">
+        <img src="public/images/rmtj_pic.jpg" title="'玩'在长寿湖"/>
+        <span class="item">"玩"在长寿湖>空中滑翔</span><br/>
+        <div class="moretj"><a class="morezx" href="javascript:void(0)">查看详情</a></div>
     </div>
-    <div id="rmtj_box2">快乐垂钓
-
+    <div id="rmtj_box2">
+        <img src="public/images/rmtj_pic.jpg" title="'玩'在长寿湖"/>
+        <span class="item">"玩"在长寿湖>快乐垂钓</span><br/>
+        <div class="moretj"><a class="morezx" href="javascript:void(0)">查看详情</a></div>
     </div>
-    <div id="rmtj_box3">极品翘壳
-
+    <div id="rmtj_box3">
+        <img src="public/images/rmtj_pic.jpg" title="'吃'在长寿湖"/>
+        <span class="item">"吃"在长寿湖>极品翘壳</span><br/>
+        <div class="moretj"><a class="morezx" href="javascript:void(0)">查看详情</a></div>
     </div>
-    <div id="rmtj_box4">岛上人家
-
+    <div id="rmtj_box4">
+        <img src="public/images/rmtj_pic.jpg" title="'住'在长寿湖"/>
+        <span class="item">"住"在长寿湖>岛上人家</span><br/>
+        <div class="moretj"><a class="morezx" href="javascript:void(0)">查看详情</a></div>
     </div>
-    <div id="rmtj_box5">沿路骑行
-
+    <div id="rmtj_box5">
+        <img src="public/images/rmtj_pic.jpg" title="'玩'在长寿湖"/>
+        <span class="item">"玩"在长寿湖>沿路骑行</span><br/>
+        <div class="moretj"><a class="morezx" href="javascript:void(0)">查看详情</a></div>
     </div>
-    <div id="rmtj_box6">血脐
-
+    <div id="rmtj_box6">
+        <img src="public/images/rmtj_pic.jpg" title="'购'在长寿湖"/>
+        <span class="item">"购"在长寿湖>血脐</span><br/>
+        <div class="moretj"><a class="morezx" href="javascript:void(0)">查看详情</a></div>
     </div>
 </div>
 <!------------------------热门推荐结束----------------------------->
