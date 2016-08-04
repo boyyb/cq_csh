@@ -167,7 +167,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     height:300px;
     width:648px;
     margin-right:10px;
-    border:1px solid #f86d0d;
+    border:1px solid #35af7c;
     //
     overflow: hidden;
 
@@ -180,7 +180,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     font-size:16px;
 }
 #jqjs_box_title{
-    background: #f86d0d;
+    background: #35af7c;
 }
 #jqzx_box_title{
     background: #4c8da5;
@@ -196,13 +196,13 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 #rmtj_box{
     height: 600px;width:1000px;background: #888;
     margin: 10px auto;
-    border:1px solid #35af7c;
+    border:1px solid #f86d0d;
     overflow: hidden;
 }
 #rmtj_title{
     float:left;
     width:1000px;
-    background: #35af7c;
+    background: #f86d0d;
     margin-bottom:3px;
 }
 #rmtj_box div[id^=rmtj_box]{
