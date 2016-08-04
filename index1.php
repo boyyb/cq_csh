@@ -59,10 +59,10 @@
 <!------------------------轮播图开始----------------------------->
     <div class="banner" style="height:350px;width:1000px;margin:10px auto;">
         <ul class="bxslider">
-            <li><img src="public/images/pic1.jpg" /></li>
-            <li><img src="public/images/pic2.jpg" /></li>
-            <li><img src="public/images/pic3.jpg" /></li>
-            <li><img src="public/images/pic4.jpg" /></li>
+            <li><img src="public/images/pic1.jpg" style="height:350px;width:1000px;"/></li>
+            <li><img src="public/images/pic2.jpg" style="height:350px;width:1000px;"/></li>
+            <li><img src="public/images/pic3.jpg" style="height:350px;width:1000px;"/></li>
+            <li><img src="public/images/pic4.jpg" style="height:350px;width:1000px;"/></li>
         </ul>
     </div>
 </div>
