@@ -1049,5 +1049,3 @@ function goto(num)
    });
   }
 }
-
-if(!IsPC()){document.write("<script src=\"/e/js/jquery.touchwipe.js\" type=\"text/javascript\"></script>");}

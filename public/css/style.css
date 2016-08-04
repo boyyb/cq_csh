@@ -267,7 +267,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     font-size:14px;
 }
 #rmtj_box div[id^=rmtj_box] .morezx{
-    margin:0 auto;
+    margin: 4px auto 0;
 }
 /**************************************景区介绍样式***********************************************/
 #jqjs_container{
@@ -299,29 +299,51 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 
 /**************************************在线留言样式**************************************/
-#zxly_container{
-    width:1000px;
-    height:600px;
-    background: #a2a2a2;
-    margin: 10px auto;
-}
+
 #zxly_message{
     width:1000px;
-    height:200px;
-    background: #EEEE99;
+    height:340px;
+    border:1px solid #8ba8af;
+    margin:5px auto;
+    padding-top: 20px;
+    font-size:15px;
 }
 #zxly_show{
     width:1000px;
     height:400px;
-    background: lightgrey;
+    border:1px solid #8ba8af;
+    margin:10px auto;
 }
-
+#zxly_message table input{
+    font-size: 13px;
+    padding: 2px 4px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+}
+#zxly_message table textarea{
+    width:400px;height:100px;
+    font-size: 13px;
+    padding: 2px 4px;
+    border: 1px solid #ccc;
+    resize: none;
+}
+#zxly_message input[type=submit],#zxly_message input[type=reset]{
+    width: 80px;
+    height: 25px;
+    line-height: 18px;
+    border: 0;
+    border-radius: 5px;
+    background: darkred;
+    cursor: pointer;
+    color:white;
+    margin-right:30px;
+}
 /*****************************************联系我们样式**************************************/
 #lxwm_container{
     width:1000px;
     height:600px;
     background: #a2a2a2;
-    margin: 10px auto;
+    margin: 5px auto;
 }
 
 /*****************************************吃住玩够样式***************************************/
