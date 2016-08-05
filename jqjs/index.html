@@ -9,6 +9,7 @@
     <script src="../public/js/jquery.min.js" type="text/javascript"></script>
     <script src="../public/js/comm.js" type="text/javascript"></script>
     <script type="text/javascript">var submenu_style = 1;</script>
+    <script src="../public/js/menuswitch.js" type="text/javascript"></script>
 
 </head>
 <body>
@@ -49,7 +50,46 @@
     <script type="text/javascript">var IsPageHome = "1";var Lanmu_Id = "61";var Sublanmu_Id = "0";ShowSubMenu(Lanmu_Id);</script>
     <!------------------------导航栏结束----------------------------->
     <div id="jqjs_container">
-        <div id="jqjs_left">导航菜单</div>
+        <div id="jqjs_left">
+            <div class="menuDiv">
+                <h3><a href='' >景区简介</a></h3>
+            </div>
+            <div class="menuDiv">
+                <h3><a href='' >主要景点</a></h3>
+                <ul>
+                    <li><a href="">气候生态</a></li>
+                    <li><a href="">行业类网站</a></li>
+                    <li><a href="">BLOG类网站</a></li>
+                    <li><a href="">门户类网站</a></li>
+                    <li><a href="">商城类网站</a></li>
+                </ul>
+            </div>
+            <div class="menuDiv">
+                <h3><a href=''  rel=''>气候生态</a></h3>
+                <ul>
+                    <li><a href="">HTML技巧</a></li>
+                    <li><a href="">CSS技巧</a></li>
+                    <li><a href="">CMS建站技巧</a></li>
+                    <li><a href="">其他技巧</a></li>
+                </ul>
+            </div>
+            <div class="menuDiv">
+                <h3><a href=''  rel=''>历史沿革</a></h3>
+            </div>
+            <div class="menuDiv">
+                <h3><a href=''>其他简介</a></h3>
+                <ul>
+                    <li><a href="">总理足迹</a></li>
+                    <li><a href="">天赐长寿</a></li>
+                </ul>
+            </div>
+            <script language="javascript">
+                var mSwitch = new MenuSwitch("menuDiv");
+                mSwitch.setDefault(0);
+                mSwitch.setPrevious(false);
+                mSwitch.init();
+            </script>
+        </div>
         <div id="jqjs_right">内容详情</div>
     </div>
 
