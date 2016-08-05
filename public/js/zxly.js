@@ -48,7 +48,7 @@ $(document).ready(function(){
             {"topic":topic,"email":email,"name":name,"phone":phone,"content":content,"type":type},
             function(data){
                 if(data=="ok"){
-                    $('#errorMsg').css('color','green').html("提交成功！");
+                    $('#errorMsg').css('color','green').html("提交成功！请等待审核通过。");
                     $('#zxly_message input[type=reset]').click();
                 }else{
                     $('#errorMsg').css('color','red').html("提交失败！");

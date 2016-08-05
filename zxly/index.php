@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<?php
+require_once '../public/class/db.class.php';
+$db = new DB();
+$data = $db -> getAll('message','*','',"time desc","0,10");
+
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>在线留言</title>
@@ -109,7 +116,25 @@
 
    </div>
    <div id="zxly_show">
-       留言展示区
+       <div id="zxly_show_title" class="box_title">最&nbsp;近&nbsp;留&nbsp;言</div>
+       <?php foreach($data as $k=>$v){?>
+       <div class="zxly_show_box">
+           <table width="100%" align="center" >
+               <tr height="30">
+                   <td align="left" width="260"><?php echo $v['type'],'：',$v['topic'];?></td>
+                   <td align="left" width="210">email：<?php echo $v['email'];?></td>
+                   <td align="left" width="170">留言人：<?php echo $v['name'];?></td>
+                   <td align="left" width="170">电话：<?php echo $v['phone'];?></td>
+                   <td align="right">留言时间：<?php echo date('Y-m-d H:i:s',$v['time']);?></td>
+               </tr>
+               <tr height="100">
+                   <td colspan="5" align="left" valign="top" class="td_content">
+                       <span>留言内容：<?php echo $v['content'];?></span>
+                   </td>
+               </tr>
+           </table>
+       </div>
+       <?php }?>
    </div>
 
 

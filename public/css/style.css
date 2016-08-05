@@ -308,12 +308,6 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     padding-top: 20px;
     font-size:15px;
 }
-#zxly_show{
-    width:1000px;
-    height:400px;
-    border:1px solid #8ba8af;
-    margin:10px auto;
-}
 #zxly_message table input{
     font-size: 13px;
     padding: 2px 4px;
@@ -337,6 +331,28 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     cursor: pointer;
     margin-right:30px;
 }
+#zxly_show{
+    width:1000px;
+    border:1px solid #8ba8af;
+    margin:10px auto;
+    padding-bottom:5px;
+}
+#zxly_show_title{
+    background: #35af7c;
+}
+.zxly_show_box{
+    width:98%;
+    min-height:140px;
+    border:1px darkgray solid;
+    margin:5px auto 0;
+    padding:5px;
+    background: #eeeeef;
+}
+.zxly_show_box .td_content{
+    padding:8px 0;
+    border-top: 1px dotted darkgreen;
+}
+
 /*****************************************联系我们样式**************************************/
 #lxwm_container{
     width:1000px;
