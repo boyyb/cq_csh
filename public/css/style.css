@@ -272,15 +272,11 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 /**************************************景区介绍样式***********************************************/
 #jqjs_container{
     width:1000px;
-    height:600px;
-    background: #a2a2a2;
     margin: 10px auto;
 }
 #jqjs_left{
     float:left;
     width:200px;
-    height:300px;
-    background: #EEEE99;
     margin-right:10px;
 }
 
@@ -296,48 +292,92 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     background: #a2a2a2;
     margin: 10px auto;
 }
-/********左侧菜单折叠样式************/
-.menuDiv{
-    border: 1px solid #CCCCCC;
+/********左侧折叠菜单样式************/
+#jqjs_left .accordion {
+    width: 100%;
+    max-width: 360px;
+    background: #FFF;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
-.menuDiv h3{
-    font-size: 14px;
-    padding-top: 5px;
-    padding-right: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-    background-color: #35af7c;
-    margin: 0px;
-}
-.menuDiv ul{
-    list-style-type: none;
-}
-.menuDiv ul li{
-    background-color: #EEEEEE;
+
+#jqjs_left .accordion .link {
+    cursor: pointer;
     display: block;
-    padding: 5px 5px 5px 15px;
+    padding: 15px;
+    color: #4D4D4D;
     font-size: 14px;
-    margin-top: 1px;
-    margin-right: 0px;
-    margin-bottom: 0px;
-    margin-left: 0px;
-    height: 16px;
+    font-weight: 700;
+    border-bottom: 1px solid #CCC;
+    position: relative;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
 }
-.menuDiv ul li a{
-    color:white;
-    background-color: lightslategray;
+
+#jqjs_left .accordion li:last-child .link {
+    border-bottom: 0;
+}
+
+#jqjs_left .accordion li i {
+    position: absolute;
+    top: 16px;
+    left: 12px;
+    font-size: 18px;
+    color: #595959;
+    -webkit-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+
+#jqjs_left .accordion li i.fa-chevron-down {
+    right: 12px;
+    left: auto;
+    font-size: 16px;
+}
+
+#jqjs_left .accordion li.open .link {
+    color: #b63b4d;
+}
+
+#jqjs_left .accordion li.open i {
+    color: #b63b4d;
+}
+#jqjs_left .accordion li.open i.fa-chevron-down {
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+/**
+ * Submenu
+ -----------------------------*/
+#jqjs_left .submenu {
+    display: none;
+    background: #444359;
+    font-size: 14px;
+}
+
+#jqjs_left .submenu li {
+    border-bottom: 1px solid #4b4a5e;
+}
+
+#jqjs_left .submenu a {
     display: block;
-    padding: 5px 5px 5px 15px;
-    font-size: 14px;
-    margin-top: -5px;
-    margin-right: -5px;
-    margin-bottom: -5px;
-    margin-left: -15px;
-    height: 16px;
+    text-decoration: none;
+    color: #d9d9d9;
+    padding: 12px;
+    padding-left: 42px;
+    -webkit-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
 }
-.menuDiv ul li a:hover{
-    color: #FFFFFF;
-    background-color: #DDDDDD;
+
+#jqjs_left .submenu a:hover {
+    background: #b63b4d;
+    color: #FFF;
 }
 
 /**************************************景区资讯样式************************************/
