@@ -399,8 +399,43 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     text-indent:0;
 }
 /**************************************景区资讯样式************************************/
-
-
+#jqzx_container{
+    width:1000px;
+    min-height:600px;
+    border:1px solid #FFEBEB;
+    margin: 10px auto;
+}
+#jqzx_container [class^=news]{
+    width:750px;
+}
+#jqzx_container div[class^=news] .title{
+    float:left;
+    width:705px;
+    height:40px;
+    background: cadetblue;
+}
+#jqzx_container div[class^=news] .pic{
+    float:left;
+    width:200px;
+    height:180px;
+    background: #999;
+    margin:5px 5px 5px 0;
+}
+#jqzx_container div[class^=news] .content{
+    float:left;
+    width:500px;
+    height:180px;
+    background: #EEEE99;
+    margin:5px 5px 5px 0;
+}
+#jqzx_container div[class^=news] .bottom{
+    float:left;
+    width: 705px;
+    height:35px;
+    background: greenyellow;
+    margin-bottom:18px;
+    border-bottom:1px dotted black;
+}
 /**************************************在线留言样式**************************************/
 
 #zxly_message{
