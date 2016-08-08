@@ -280,26 +280,14 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     margin-right:10px;
 }
 
-#jqjs_right{
-    float:left;
-    width:750px;
-    height:600px;
-    background: #bbbbbb;
-}
-#jqzx_container{
-    width:1000px;
-    height:600px;
-    background: #a2a2a2;
-    margin: 10px auto;
-}
 /********左侧折叠菜单样式************/
 #jqjs_left .accordion {
     width: 100%;
-    max-width: 360px;
+    max-width: 200px;
     background: #FFF;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 #jqjs_left .accordion .link {
@@ -307,8 +295,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     display: block;
     padding: 15px;
     color: #4D4D4D;
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 15px;
     border-bottom: 1px solid #CCC;
     position: relative;
     -webkit-transition: all 0.4s ease;
@@ -322,34 +309,36 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 #jqjs_left .accordion li i {
     position: absolute;
-    top: 16px;
-    left: 12px;
-    font-size: 18px;
+    top: 20px;
+    left: 180px;
+    font-size: 13px;
     color: #595959;
     -webkit-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
     transition: all 0.4s ease;
 }
 
-#jqjs_left .accordion li i.fa-chevron-down {
+#jqjs_left .accordion li i.fa-align-justify {
     right: 12px;
     left: auto;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 #jqjs_left .accordion li.open .link {
     color: #b63b4d;
+    font-weight:bold;
 }
 
 #jqjs_left .accordion li.open i {
     color: #b63b4d;
 }
-#jqjs_left .accordion li.open i.fa-chevron-down {
+/*控制折叠菜单右边图标旋转*/
+/*#jqjs_left .accordion li.open i.fa-align-justify {
     -webkit-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -o-transform: rotate(180deg);
     transform: rotate(180deg);
-}
+}*/
 
 /**
  * Submenu
@@ -369,17 +358,46 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     text-decoration: none;
     color: #d9d9d9;
     padding: 12px;
-    padding-left: 42px;
     -webkit-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
     transition: all 0.25s ease;
 }
-
+#jqjs_left div>a,#jqjs_left div>a:hover {
+    color:#4D4D4D;
+    text-decoration: none;
+}
 #jqjs_left .submenu a:hover {
     background: #b63b4d;
     color: #FFF;
 }
+/***右侧内容***/
+#jqjs_right{
+    float:left;
+    width:750px;
+    min-height:600px;
+    background: #eee;
+    border-radius: 2px;
+    margin-bottom:10px;
+}
 
+#jqjs_right h3{
+    text-align:left;
+    padding:5px;
+    font-size:15px;
+    border-bottom:1px dotted lightslategray;
+    color:#187fc4;
+    margin-bottom:5px;
+}
+#jqjs_right div[class^=jqjs] p{
+    font-size:14px;
+    text-align:left;
+    text-indent:2em;
+    margin-bottom:12px;
+    padding:5px;
+}
+#jqjs_right div[class=jqjs1] p,#jqjs_right div[class=jqjs4] p{
+    text-indent:0;
+}
 /**************************************景区资讯样式************************************/
 
 
