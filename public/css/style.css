@@ -6,7 +6,7 @@ html{-webkit-text-size-adjust:none;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,th,td,p,blockquote,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{margin:0px;padding:0px;}
 article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
 audio,canvas,video{display:inline-block;*display: inline;*zoom:1;}
-body{word-wrap:break-word;text-align:center;font:12px/1.5 Tahoma;color:#333333;}
+body{word-wrap:break-word;text-align:center;font:12px/1.5 Tahoma;color:#333333;background:#f2f9f2;}
 
 input,select,textarea,button{font-size:100%;}
 table{border-collapse:collapse;border-spacing:0;}
@@ -445,6 +445,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     margin:10px auto;
     padding-top: 20px;
     font-size:15px;
+    background:white;
 }
 #zxly_message table input{
     font-size: 13px;
@@ -517,6 +518,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     font-size:13px;
     font-weight:bold;
     color:darkgreen;
+    background:white;
 }
 #lxwm_info .lxwm_addr{
     line-height:20px;

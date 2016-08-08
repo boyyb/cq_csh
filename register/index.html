@@ -4,14 +4,29 @@
     <meta charset="UTF-8">
     <title>用户注册</title>
     <style>
+        body{
+            background: #f2f9f2;
+        }
+        #top{
+            font-size:14px;width:1200px;margin:30px auto 0;
+        }
+        #top a{
+            text-decoration: none;
+            color:black;
+        }
+        #top a:hover{
+            text-decoration: underline;
+            color:#ff2222;
+        }
         #reg_container{
             width:1200px;
-            height:900px;
+            min-height: 700px;
             border:1px darkgray solid;
             -webkit-border-radius:4px;
             -moz-border-radius:4px;
             border-radius:8px;
-            margin:50px auto;
+            margin:0px auto;
+            background: #fff;
         }
         #title{
             width:1150px;
@@ -21,49 +36,246 @@
             font-family: "微软雅黑 Light";
             font-size:32px;
             font-weight:bold;
-            border-bottom:1px dotted black;
+            border-bottom:1px dotted orangered;
             line-height:80px;
         }
         #reg_body ul{
             list-style: none;
+
+        }
+        #reg_container #reg_body{
+            text-align:center;
+            margin-top:30px;
+        }
+        #reg_body ul li{
+            list-style: none;
+            width:300px;
+            margin:15px auto;
+        }
+        #reg_body ul li input[placeholder]{
+            height:40px;
+            width:100%;
+            border:1px solid darkgrey;
+            border-radius:4px;
+            font-size:17px;
+            padding-left:5px;
+        }
+        #submit{
+            height:100%;
+            width:100%;
+            border-radius:4px;
+            background: orangered;
+            display:block;
+            color:white;
+            text-decoration: none;
+        }
+        #submit:hover{
+            background:darkred;
+        }
+
+        .hint{
+            border:1px solid red;
+            box-shadow:0 0 4px 1px red;
         }
     </style>
+    <script src="../public/js/jquery-2.2.4.min.js"></script>
+    <script>
+        $(function(){
+
+            $('#username').bind('blur focus keyup','',function(){
+                var username = $('input[name=username]').val();
+                var re = /^[a-zA-z]\w{3,15}$/;
+                if(!re.test(username)){
+                    $('#error_info').css('color','red').html("字母、数字、下划线组成，字母开头，4-16位！");
+                    $(this).addClass('hint');
+                }else{
+                    $(this).removeClass('hint');
+                }
+            });
+
+            $('#password').bind('blur focus keyup','',function(){
+                var password = $('input[name=password]').val();
+                if(password.length<6){
+                    $('#error_info').css('color','red').html("密码长度至少6位！");
+                    $(this).addClass('hint');
+                }else{
+                    $(this).removeClass('hint');
+                }
+            });
+
+            $('#repassword').bind('blur focus keyup','',function(){
+                var password = $('input[name=password]').val();
+                var repassword = $('input[name=repassword]').val();
+                if(password != repassword){
+                    $('#error_info').css('color','red').html("两次输入的密码不一致！");
+                    $(this).addClass('hint');
+                }else{
+                    $(this).removeClass('hint');
+                }
+            });
+
+            $('#email').bind('blur focus keyup','',function(){
+                var email = $('input[name=email]').val();
+                var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+                if(!re.test(email)){
+                    $('#error_info').css('color','red').html("邮箱格式错误！");
+                    $(this).addClass('hint');
+                }else{
+                    $(this).removeClass('hint');
+                    $('#error_info').html("");
+                }
+            });
+
+            $('#phone').bind('blur focus keyup','',function(){
+                var phone = $('input[name=phone]').val();
+                var re = /^1\d{10}$/;
+                if (!re.test(phone)) {
+                    $('#error_info').css('color','red').html("11位数字，以1开头！");
+                    $(this).addClass('hint');
+                }else{
+                    $(this).removeClass('hint');
+                    $('#error_info').html("");
+                }
+            });
+
+            $('input[name=sex]').click(function(){
+                var sex = $('input[name=sex]:checked').val();
+                if(sex){
+                    $('#li_sex').removeClass('hint');
+                    $('#error_info').html("");
+                }
+            });
+
+            //提交时验证数据
+            $('#submit').click(function(){
+                var username = $('input[name=username]').val();
+                var password = $('input[name=password]').val();
+                var repassword = $('input[name=repassword]').val();
+                var phone = $('input[name=phone]').val();
+                var email = $('input[name=email]').val();
+                var sex = $('input[name=sex]:checked').val();
+                var vcode = $('input[name=vcode]').val();
+                if(!username || !password || !repassword || !phone || !email || !vcode){
+                    $('#error_info').css('color','red').html("数据填写不完整！");
+                    return false;
+                }
+
+                //用户名：字母、数字、下划线组成，字母开头，4-16位
+                var re = /^[a-zA-z]\w{3,15}$/;
+                if(!re.test(username)){
+                    $('#error_info').css('color','red').html("字母、数字、下划线组成，字母开头，4-16位！");
+                    $('#username').addClass('hint');
+                    return false;
+                }
+                //判断密码长度
+                if(password.length<6){
+                    $('#error_info').css('color','red').html("密码长度至少6位！");
+                    $('#password').addClass('hint');
+                    return false;
+                }
+                //判断两次密码相等
+                if(password != repassword){
+                    $('#error_info').css('color','red').html("两次输入的密码不一致！");
+                    $('#repassword').addClass('hint');
+                    return false;
+                }
+
+                //手机号码：11位数字，以1开头
+                var re = /^1\d{10}$/;
+                if (!re.test(phone)) {
+                    $('#error_info').css('color','red').html("11位数字，以1开头！");
+                    $('#phone').addClass('hint');
+                    return false;
+                }
+
+                //邮箱验证
+                var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+                if(!re.test(email)){
+                    $('#error_info').css('color','red').html("邮箱格式错误！");
+                    $('#email').addClass('hint');
+                    return false;
+                }
+
+                //检查性别
+                if(!sex){
+                    $('#error_info').css('color','red').html("请选择性别！");
+                    $('#li_sex').addClass('hint');
+                    return false;
+                }
+
+                //检查用户协议是否被勾选
+                if(!$('#item').is(':checked')) {
+                    alert("请同意用户协议！");
+                    return false;
+                }
+
+                var data = {
+                    "username":username,
+                    "password":password,
+                    "phone":phone,
+                    "email":email,
+                    "sex":sex,
+                    "vcode":vcode,
+                };
+                alert(data);
+                $.post(
+                        'user_register.php',
+                        data,
+                        function(info){
+                            alert('ok');
+                        }
+
+                );
+            });
+
+        });
+    </script>
 </head>
 <body>
+<div id="top">
+    <a href="../index1.php">返回主页</a>
+</div>
 <div id="reg_container">
     <div id="title">用户注册</div>
     <div id="reg_body">
        <ul>
            <li>
-               <input id="username" name="username" placeholder="请输入用户名">
+               <input id="username" name="username" placeholder="请输入用户名" title="用户名">
            </li>
            <li>
-               <input id="password" name="password" placeholder="请输入密码">
+               <input id="password" name="password" placeholder="请输入密码" title="密码">
            </li>
            <li>
-               <input id="repassword" name="repassword" placeholder="请再次输入密码">
+               <input id="repassword" name="repassword" placeholder="请再次输入密码" title="确认密码">
            </li>
            <li>
-               <input id="vcode" name="vcode" placeholder="请输入验证码">
-               <img width="90" height="40" title="点击更换验证码"/>
+               <input id="phone" name="phone" placeholder="请输入电话号码" title="电话号码">
            </li>
            <li>
-               <input type="radio"  name="sex" value="男" id="boy"><label for="boy">男</label>
-               <input type="radio"  name="sex" value="女" id="girl"><label for="girl">女</label>
+               <input id="email" name="email" placeholder="请输入邮箱地址" title="邮箱地址">
+           </li>
+           <li style="height:40px;width:306px;border:1px solid darkgray;border-radius:4px;line-height:40px;
+                        margin:15px 0 15px 430px;" id="li_sex">
+                   <input type="radio"  name="sex" value="男" id="boy"><label for="boy">男</label>
+                   <input style="margin-left:100px;" type="radio"  name="sex" value="女" id="girl"><label for="girl">女</label>
            </li>
            <li>
-               <input id="phone" name="phone" placeholder="请输入电话号码">
+               <input id="vcode" name="vcode" placeholder="请输入右侧验证码" style="width:180px;float:left;">
+               <img width="100" height="40" title="点击刷新验证码" src="./captcha.php" align="absbottom" onclick="this.src='captcha.php?'+Math.random();"
+                    style="float:left;margin-left:10px;cursor:pointer;" />
+               <div style="clear:both;"></div>
            </li>
            <li>
-               <input id="email" name="email" placeholder="请输入邮箱地址">
+               <input type="checkbox" id="item">
+               <label for="item">我同意用户协议</label>
+               <a href="javascript:alert('你已经阅读完用户协议！请勾选复选框。');"> (阅读用户协议)</a>
            </li>
-           <li>
-               <input type="checkbox" id="item" name="item" ><a href="javascript:alert('你已经阅读完用户协议！请勾选复选框。');"> 同意并遵守用户协议</a>
-           </li>
-           <li>
-               <a href="">注册</a>
+           <li style="height:40px;width:306px;line-height:40px;
+                        margin:15px 0 15px 430px;">
+               <a href="javascript:void(0)" id="submit">注&nbsp;&nbsp;册</a>
            </li>
        </ul>
+        <p id="error_info"></p>
     </div>
 </div>
 </body>

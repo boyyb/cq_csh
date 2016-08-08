@@ -28,7 +28,7 @@ $data = $db -> getAll('message','*','',"time desc","0,10");
             <span class="top-l">欢迎光临长寿湖旅游网站!</span>
                 <span class="top-r">
                     <a href="javascript:void(0)">登陆</a>
-                    <a href="javascript:void(0)">注册</a>
+                    <a href="http://localhost/1_csh/register/">注册</a>
                 </span>
         </div>
         <div class="clear"></div>
