@@ -5,8 +5,20 @@
     <title>login</title>
     <script src="../public/js/jquery-2.2.4.min.js"></script>
     <style>
+        #top{
+            margin: 100px auto 0;height:25px;width:500px;
+            line-height:25px;
+        }
+        #top a{
+            text-decoration: none;
+            color:black;
+        }
+        #top a:hover{
+            text-decoration: underline;
+            color:#ff2222;
+        }
         #login_container{
-            margin: 100px auto 0;height:400px;width:500px;
+            margin: 0 auto;height:400px;width:500px;
             border:1px solid slategrey;border-radius:4px;background:white;
         }
         #title{
@@ -112,6 +124,7 @@
     </script>
 </head>
 <body style="background: #ccc">
+    <div id="top"><a href="../index1.php">返回主页</a></div>
     <div id="login_container">
         <div id="title">用户登录</div>
         <div id="login_body">

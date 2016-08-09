@@ -1,5 +1,6 @@
 <?php
 header("content-type:text/html;charset=utf-8");
+session_start();
 if(isset($_REQUEST)){
     require_once "../public/class/db.class.php";
     $db = new DB();
