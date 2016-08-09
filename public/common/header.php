@@ -13,8 +13,13 @@ if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/pla
         <div class="topcontent">
             <span class="top-l">欢迎光临长寿湖旅游网站!</span>
                 <span class="top-r">
-                    <a href="./login/">登陆</a>
-                    <a href="./register/">注册</a>
+                    <?php if(isset($_SESSION['username'])){?>
+                    <a href="" title="点击查看用户资料">【root】</a>
+                    <a href="javascript:void(0)" id="login_out" onclick="logout();">注销</a>
+                    <?php }else{?>
+                    <a href="/1_csh/login/">登陆</a>
+                    <a href="/1_csh/register/">注册</a>
+                    <?php }?>
                 </span>
         </div>
         <div class="clear"></div>
@@ -41,4 +46,12 @@ if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/pla
 </div>
 <!--显示二级菜单-->
 <script type="text/javascript">var IsPageHome = "1";var Lanmu_Id = "61";var Sublanmu_Id = "0";ShowSubMenu(Lanmu_Id);</script>
+<script>
+    function logout(){
+        var bool = confirm("确认要注销吗？");
+        if(bool){
+            document.getElementById("login_out").href = "/1_csh/login/logout.php?action=logout";
+        }
+    }
+</script>
 <!------------------------导航栏结束----------------------------->

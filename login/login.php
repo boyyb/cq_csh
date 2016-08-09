@@ -19,7 +19,7 @@ if(isset($_REQUEST)){
     }else{
         echo "ok";//返回ajax
         //处理session
-
+        $_SESSION['username']=$username;
     }
 }else{
     die("非法访问！");

@@ -7,7 +7,7 @@ if(isset($_REQUEST)){
     $db = new DB();
 
     //核对用户名重复问题
-    if($_REQUEST['action'] == "checkuser"){
+    if(@$_REQUEST['action'] == "checkuser"){
         $username = $_REQUEST['username'];
         $data = $db -> getOne('user',"*","username='$username'");
         if($data){
