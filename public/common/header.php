@@ -1,7 +1,10 @@
 
 <?php
 $url = $_SERVER['PHP_SELF'];
-echo $url;
+if($url == "/1_csh/index1.php"){
+    $flag = "mainPage";
+}
+echo $flag;
 ?>
 
 <!-------------------------顶部开始--------------------------->
@@ -20,7 +23,7 @@ echo $url;
         <!------------------------导航栏开始----------------------------->
         <div class="menu_box" id="Menu">
             <ul>
-                <li class="menu_style menu_current" id="MenuItem61" name="MenuItem"><a href="http://localhost/1_csh/index1.php" class="menu">网站首页</a></li>
+                <li class="menu_style <?php if($flag=="mainPage")echo "menu_current";?>" id="MenuItem61" name="MenuItem"><a href="http://localhost/1_csh/index1.php" class="menu">网站首页</a></li>
                 <li class="menu_style" id="MenuItem62" name="MenuItem"><a href="http://localhost/1_csh/jqjs/" class="menu">景区介绍</a></li>
                 <li class="menu_style" id="MenuItem63" name="MenuItem"><a href="http://localhost/1_csh/jqzx/" class="menu">景区资讯</a></li>
                 <li class="menu_style" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
