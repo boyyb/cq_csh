@@ -23,7 +23,7 @@
             <div class="topcontent">
                 <span class="top-l">欢迎光临长寿湖旅游网站!</span>
                 <span class="top-r">
-                    <a href="javascript:void(0)">登陆</a>
+                    <a href="./login/">登陆</a>
                     <a href="./register/">注册</a>
                 </span>
             </div>
