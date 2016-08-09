@@ -1,10 +1,9 @@
-
 <?php
-$url = $_SERVER['PHP_SELF'];
-if($url == "/1_csh/index1.php"){
-    $flag = "mainPage";
+session_start();
+$url = dirname($_SERVER['PHP_SELF']);
+if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/play" || $url=="/1_csh/czwg/buy"){
+    $url = "/1_csh/czwg/";
 }
-echo $flag;
 ?>
 
 <!-------------------------顶部开始--------------------------->
@@ -23,10 +22,10 @@ echo $flag;
         <!------------------------导航栏开始----------------------------->
         <div class="menu_box" id="Menu">
             <ul>
-                <li class="menu_style <?php if($flag=="mainPage")echo "menu_current";?>" id="MenuItem61" name="MenuItem"><a href="http://localhost/1_csh/index1.php" class="menu">网站首页</a></li>
-                <li class="menu_style" id="MenuItem62" name="MenuItem"><a href="http://localhost/1_csh/jqjs/" class="menu">景区介绍</a></li>
-                <li class="menu_style" id="MenuItem63" name="MenuItem"><a href="http://localhost/1_csh/jqzx/" class="menu">景区资讯</a></li>
-                <li class="menu_style" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
+                <li class="menu_style <?php if($url=="/1_csh")echo "menu_current";?>" id="MenuItem61" name="MenuItem"><a href="http://localhost/1_csh/index1.php" class="menu">网站首页</a></li>
+                <li class="menu_style <?php if($url=="/1_csh/jqjs")echo "menu_current";?>" id="MenuItem62" name="MenuItem"><a href="http://localhost/1_csh/jqjs/" class="menu">景区介绍</a></li>
+                <li class="menu_style <?php if($url=="/1_csh/jqzx")echo "menu_current";?>" id="MenuItem63" name="MenuItem"><a href="http://localhost/1_csh/jqzx/" class="menu">景区资讯</a></li>
+                <li class="menu_style <?php if($url=="/1_csh/czwg")echo "menu_current";?>"" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
                     <ul>
                         <li><a href="http://localhost/1_csh/czwg/eat">"吃"在长寿湖</a></li>
                         <li><a href="http://localhost/1_csh/czwg/live">"住"在长寿湖</a></li>
@@ -34,8 +33,8 @@ echo $flag;
                         <li><a href="http://localhost/1_csh/czwg/buy">"购"在长寿湖</a></li>
                     </ul>
                 </li>
-                <li class="menu_style" id="MenuItem65" name="MenuItem"><a href="http://localhost/1_csh/zxly/" class="menu">在线留言</a></li>
-                <li class="menu_style" id="MenuItem66" name="MenuItem"><a href="http://localhost/1_csh/lxwm/" class="menu">联系我们</a></li>
+                <li class="menu_style <?php if($url=="/1_csh/zxly")echo "menu_current";?>" id="MenuItem65" name="MenuItem"><a href="http://localhost/1_csh/zxly/" class="menu">在线留言</a></li>
+                <li class="menu_style <?php if($url=="/1_csh/lxwm")echo "menu_current";?>" id="MenuItem66" name="MenuItem"><a href="http://localhost/1_csh/lxwm/" class="menu">联系我们</a></li>
             </ul>
         </div>
     </div>
