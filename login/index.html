@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <script src="../public/js/jquery-2.2.4.min.js"></script>
+    <style>
+        #login_container{
+            margin: 100px auto 0;height:400px;width:500px;
+            border:1px solid slategrey;border-radius:4px;background:white;
+        }
+        #title{
+            height:35px;
+            width:100%;
+            font-weight:bold;
+            font-size:20px;
+            text-align:center;
+            background:cornflowerblue;
+            color:white;
+            line-height:35px;
+        }
+        #login_body p{
+            height:40px;
+            width:300px;
+            margin:40px auto;
+        }
+
+        #login_body p input{
+            height:40px;
+            width:300px;
+            font-size:19px;
+            line-height:40px;
+            padding-left: 10px;
+            border:1px solid grey;
+            border-radius:4px;
+        }
+        #login_body p #submit{
+            height:44px;
+            width:313px;
+            display:block;
+            text-decoration: none;
+            color:white;
+            text-align:center;
+            font-size:20px;
+            background:green;
+            font-family:"微软雅黑 Light";
+            border-radius:4px;
+            line-height:40px;
+        }
+        .hint{
+            border:1px solid red;
+            box-shadow:0 0 4px 1px red;
+        }
+        #error{
+            text-align:center;
+        }
+    </style>
+    <script>
+        //倒计时跳转功能
+        function jump(num){
+            if(num=='0'){
+                location.href="http://localhost/1_csh/index1.php";
+            }else{
+                setTimeout(function(){
+                    num--;
+                    $('#error').css('color','gray').html("("+num+")秒后跳转到主页,"+'<a href="../index1.php">手动跳转</a>');
+                    jump(num);
+                },1000)
+            }
+        }
+
+        $(document).ready(function(){
+            $('#submit').click(function(){
+                var username = $('input[name=username]').val();
+                var password = $('input[name=password]').val();
+                if(!username || !password){
+                    if(!username){
+                        $('input[name=username]').addClass('hint');
+                    }
+                    if(!password){
+                        $('input[name=password]').addClass('hint');
+                    }
+                    $('#error').css('color','red').html("用户名或密码不能为空！");
+                    return false;
+                }
+
+                $.post(
+                        'login.php',
+                        {"username":username,"password":password},
+                        function(data){
+                            if(data == "user_ne"){
+                                $('#error').css('color','red').html("用户名不存在！");
+                                $('input[name=username]').addClass('hint');
+                            }else if(data == "pwd_error"){
+                                $('#error').css('color','red').html("用户密码错误！");
+                                $('input[name=password]').addClass('hint');
+                            }else if(data == 'ok'){
+                                $('#submit').html("登陆成功！");
+                                //$('input[name]').prop('disabled',true);
+                               
+                                jump(5);
+
+                            }
+                        }
+                );
+            });
+
+            $('input[name]').click(function(){
+                $(this).removeClass('hint');
+            });
+        });
+    </script>
+</head>
+<body style="background: #ccc">
+    <div id="login_container">
+        <div id="title">用户登录</div>
+        <div id="login_body">
+            <p><input name="username" placeholder="用户名"/></p>
+            <p><input type="password" name="password" placeholder="密码"/></p>
+            <p><a id="submit" href="javascript:void(0)">登&nbsp;陆</a></p>
+            <p id="error"></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -388,7 +388,7 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     color:#187fc4;
     margin-bottom:5px;
 }
-#jqjs_right div[class^=jqjs] p{
+#jqjs_right div[class^=jqjs] p,#jqjs_right div[class^=other] p{
     font-size:14px;
     text-align:left;
     text-indent:2em;
