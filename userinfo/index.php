@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户个人资料</title>
+    <style>
+        #base,#cpwd{
+            width:100%;
+            background:green;
+            color:white;
+            text-align:center;
+            font-size:16px;
+            font-weight:bold;
+            height:30px;
+            line-height:30px;
+            border-radius:4px;
+        }
+
+        #isubmit,#back{
+            float:left;
+            height:25px;
+            width:60px;
+            text-decoration: none;
+            font-size:16px;
+            color:whitesmoke;
+            display: block;
+            background: green;
+            border-radius:4px;
+        }
+        #isubmit{
+            margin-left:250px;
+            margin-right:60px;
+
+        }
+        #psubmit{
+            height:25px;
+            width:90px;
+            text-decoration: none;
+            font-size:16px;
+            color:whitesmoke;
+            display: block;
+            background: green;
+            border-radius:4px;
+        }
+        #psubmit:hover,#isubmit:hover,#back:hover{
+            background: darkred;
+        }
+    </style>
+</head>
+<body style="background:#f2f9f2;">
+    <table  width="700px" align="center" style="background: white;margin-top:50px;">
+        <tr height="30">
+            <td colspan="3"><div id="base">用户信息</div></td>
+        </tr>
+        <tr height="35">
+            <td width="50" align="right">用户名：</td>
+            <td width="140">
+                <input type="text" disabled/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">性别：</td>
+            <td>
+                <input type="text" disabled/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">电话号码：</td>
+            <td>
+                <input type="text"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">邮箱：</td>
+            <td>
+                <input type="text"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td colspan="3" align="center">
+                <a id="isubmit" href="javascript:void(0)">更新</a>
+                <a id="back" href="<?php echo $_SERVER['HTTP_REFERER'];?>">返回</a>
+            </td>
+        </tr>
+        <tr height="50"><td></td></tr>
+        <tr height="30">
+            <td colspan="3"><div id="cpwd">密码修改</div></td>
+        </tr>
+        <tr height="35">
+            <td align="right">原始密码：</td>
+            <td>
+                <input type="password" name="opassword"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">新密码：</td>
+            <td>
+                <input type="password" name="npassword"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">确认密码：</td>
+            <td>
+                <input type="password" name="cpassword"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td colspan="3" align="center">
+                <a id="psubmit" href="javascript:void(0)">修改密码</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

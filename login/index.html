@@ -95,7 +95,7 @@
                     $('#error').css('color','red').html("用户名或密码不能为空！");
                     return false;
                 }
-
+                $('#submit').html("登陆中...");
                 $.post(
                         'login.php',
                         {"username":username,"password":password},
@@ -103,9 +103,11 @@
                             if(data == "user_ne"){
                                 $('#error').css('color','red').html("用户名不存在！");
                                 $('input[name=username]').addClass('hint');
+                                $('#submit').html("登&nbsp;陆");
                             }else if(data == "pwd_error"){
                                 $('#error').css('color','red').html("用户密码错误！");
                                 $('input[name=password]').addClass('hint');
+                                $('#submit').html("登&nbsp;陆");
                             }else if(data == 'ok'){
                                 $('#submit').html("登陆成功！");
                                 //$('input[name]').prop('disabled',true);
