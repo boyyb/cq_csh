@@ -26,6 +26,7 @@
             display: block;
             background: green;
             border-radius:4px;
+            line-height:25px;
         }
         #isubmit{
             margin-left:250px;
@@ -41,11 +42,20 @@
             display: block;
             background: green;
             border-radius:4px;
+            line-height:25px;
         }
         #psubmit:hover,#isubmit:hover,#back:hover{
             background: darkred;
         }
     </style>
+    <script src="../public/js/jquery-2.2.4.min.js"></script>
+    <script>
+        $(function(){
+            
+            //验证数据
+
+        });
+    </script>
 </head>
 <body style="background:#f2f9f2;">
     <table  width="700px" align="center" style="background: white;margin-top:50px;">
@@ -67,13 +77,13 @@
         <tr height="35">
             <td align="right">电话号码：</td>
             <td>
-                <input type="text"/>
+                <input name="phone" type="text"/>
             </td>
         </tr>
         <tr height="35">
             <td align="right">邮箱：</td>
             <td>
-                <input type="text"/>
+                <input name="email" type="text"/>
             </td>
         </tr>
         <tr height="35">
@@ -82,7 +92,9 @@
                 <a id="back" href="<?php echo $_SERVER['HTTP_REFERER'];?>">返回</a>
             </td>
         </tr>
-        <tr height="50"><td></td></tr>
+        <tr height="50"><td colspan="3">
+                <span id="error_info"></span>
+            </td></tr>
         <tr height="30">
             <td colspan="3"><div id="cpwd">密码修改</div></td>
         </tr>
