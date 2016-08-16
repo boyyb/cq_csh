@@ -1,6 +1,6 @@
 /*
-SQLyog Enterprise v12.08 (32 bit)
-MySQL - 5.6.17 : Database - csh
+SQLyog Professional v12.09 (64 bit)
+MySQL - 5.5.40 : Database - csh
 *********************************************************************
 */
 
@@ -15,6 +15,27 @@ MySQL - 5.6.17 : Database - csh
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`csh` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `csh`;
+
+/*Table structure for table `admin` */
+
+DROP TABLE IF EXISTS `admin`;
+
+CREATE TABLE `admin` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `state` tinyint(4) NOT NULL DEFAULT '0',
+  `level` tinyint(4) NOT NULL DEFAULT '1',
+  `note` varchar(50) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `recent_login` int(11) NOT NULL COMMENT '最近登录时间',
+  `add_time` int(11) DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+/*Data for the table `admin` */
+
+insert  into `admin`(`id`,`username`,`password`,`state`,`level`,`note`,`timestamp`,`recent_login`,`add_time`) values (1,'root','root',1,0,'超级管理员（最高权限，可管理其他普通管理员）','2016-08-16 21:23:15',1471352746,1471352746),(2,'admin','admin',0,1,'普通管理员','2016-08-16 21:23:16',1471352746,1471352746),(3,'yangbin','000000',0,1,'普通管理员','2016-08-16 21:23:17',1471352746,1471352746),(4,'admin123','',0,1,'垃圾管理员','2016-08-16 21:23:18',1471352746,1471352746),(5,'yangbin1','111111',0,1,'彬哥哥','2016-08-16 21:23:22',1471352890,1471352746);
 
 /*Table structure for table `message` */
 
@@ -50,15 +71,15 @@ CREATE TABLE `user` (
   `phone` varchar(20) NOT NULL COMMENT '电话',
   `email` varchar(50) NOT NULL COMMENT '邮箱',
   `reg_time` int(11) NOT NULL COMMENT '注册时间',
-  `recent_log` int(11) NOT NULL COMMENT '最近登陆时间',
+  `recent_login` int(11) NOT NULL COMMENT '最近登陆时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '数据更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`username`,`password`,`sex`,`phone`,`email`,`reg_time`,`recent_log`,`update_time`) values (1,'abc123','111111','男','13655445455','1111@qq.com',1470707511,0,'2016-08-09 09:51:51'),(2,'aaaa1','111111','男','12121212122','33@qq.com',1470707845,0,'2016-08-09 09:57:25');
+insert  into `user`(`id`,`username`,`password`,`sex`,`phone`,`email`,`reg_time`,`recent_login`,`update_time`) values (1,'abc123','111111','男','13655445455','1111@qq.com',1470707511,0,'2016-08-09 09:51:51'),(2,'aaaa1','111111','男','12121212122','33@qq.com',1470707845,0,'2016-08-09 09:57:25'),(6,'admin','111111','男','13629795255','boyyb87@qq.com',1470764536,0,'2016-08-10 01:42:18');
 
 /*Table structure for table `user_pic` */
 
@@ -69,7 +90,7 @@ CREATE TABLE `user_pic` (
   `pid` int(11) NOT NULL,
   `pic_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `user_pic` */
 

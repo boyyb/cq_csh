@@ -60,8 +60,8 @@
            });
             $('input[name=pwd]').bind('blur focus keyup','',function(){
                 var password = $('input[name=pwd]').val();
-                if(password.length<6){
-                    $('.pwd_hint').css('color','red').html("密码长度至少6位！");
+                if(password.length<4){
+                    $('.pwd_hint').css('color','red').html("密码长度至少4位！");
                     $(this).addClass('hint');
                 }else{
                     $('.pwd_hint').html("");
@@ -87,7 +87,7 @@
                     return;
                 }
                 if($(this).val()=='0'){
-                    $('.level_hint').css('color','red').html("超级管理员权限太大，你确定要设置为超级管理员！");
+                    alert("超级管理员权限太大，你确定要设置为超级管理员！");
                     return;
                 }
                 $('.level_hint').html("");
@@ -130,7 +130,7 @@
                 <input type="password" name="pwd" style="width:180px;">
             </td>
             <td>
-                <span class="pwd_hint">密码长度至少6位！</span>
+                <span class="pwd_hint">密码长度至少4位！</span>
             </td>
         </tr>
         <tr height="40">
