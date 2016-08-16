@@ -67,25 +67,22 @@
             });
             //删除选中
             $('.delch').click(function(){
-                var s='';
-                $('input[class="ch"]:checked').each(function(){
-                    if($(this).val()){
-                        s += $(this).val()+',';
-                    }
-                });
-                if(!s){
+                //判断是否有选中项
+                if($(".ch:checked").length == 0){
                     alert("请选择至少一个选项！");
                     return;
-                }else{
-                    var r = window.confirm("确认要删除所选管理员吗？删除后不可恢复！");
-                    if(r){
-                        alert(s.substring(0,s.length-1));
-                    }
                 }
 
-
-
-
+                var r = window.confirm("确认要删除所选管理员吗？删除后不可恢复！");
+                if(r){
+                    var s='';
+                    $('input[class="ch"]:checked').each(function(){
+                        if($(this).val()){
+                            s += $(this).val()+',';
+                        }
+                    });
+                    alert(s.substring(0,s.length-1));
+                }
 
 
 
