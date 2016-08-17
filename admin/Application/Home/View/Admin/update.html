@@ -13,7 +13,8 @@
             border-radius:4px;
             padding-left:5px;
         }
-        .saveAdmin{
+        .saveAdmin,.back{
+            float:left;
             display: block;
             width:60px;
             height:25px;
@@ -22,6 +23,10 @@
             color:white;
             line-height:25px;
             cursor:pointer;
+            text-align: center;
+        }
+        .back{
+            margin-left:75px;
         }
         select option{
             padding-left:5px;
@@ -33,6 +38,15 @@
     </style>
     <script>
         $(function(){
+
+            //获取原始数据
+            var ousername = $('input[name=username]').val();
+            var opwd = $('input[name=pwd]').val();
+            var olevel = $('select[name=level]').val();
+            var ostate = $('input[name=state]').val();
+            var onote = $('textarea[name=note]').val();
+            var url = document.referrer; //来源url
+            $('input[name=url_alist]').val(url);
 
             $('input[name=pwd]').bind('blur focus keyup','',function(){
                 var password = $('input[name=pwd]').val();
@@ -61,6 +75,17 @@
             });
 
             $('.saveAdmin').click(function(){
+                //检查数据有无变化
+                var nusername = $('input[name=username]').val();
+                var npwd = $('input[name=pwd]').val();
+                var nlevel = $('select[name=level]').val();
+                var nstate = $('input[name=state]').val();
+                var nnote = $('textarea[name=note]').val();
+                if(ousername == nusername && npwd == opwd && nlevel == olevel && nstate == ostate && nnote == onote){
+                    alert('数据没有发生变化！');
+                   // return false;
+                }
+                //数据合法性
                 var password = $('input[name=pwd]').val();
                 if(password.length<4){
                     $('.pwd_hint').css('color','red').html("密码长度至少4位！");
@@ -77,6 +102,10 @@
 
                 $('form').submit();
             });
+
+            $('.back').click(function(){
+                $(this).attr('href',url);
+            });
         });
     </script>
 </head>
@@ -92,6 +121,8 @@
             <td width="200">
                 <input type="text" name="username" value="{$data.username}" style="width:180px;" disabled>
                 <input type="hidden" name="id" value="{$data.id}" />
+                <input type="hidden" name="url_alist" />
+
             </td>
             <td>
                 <span class="username_hint"></span>
@@ -136,8 +167,10 @@
             <td></td>
         </tr>
         <tr height="40">
-            <td align="center" colspan="2">
+            <td></td>
+            <td>
                 <a class="saveAdmin">保存</a>
+                <a class="back">返回</a>
             </td>
             <td></td>
         </tr>

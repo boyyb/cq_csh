@@ -46,6 +46,19 @@
             $('.delAdmin').click(function(){
                 var r = window.confirm("确认要删除吗？删除后不可恢复！");
                 if(!r){return false;}
+                var id = $(this).find('b[style]').html();
+                $.post(
+                        "<?php echo U('admin/delete');?>",
+                        {"id":id},
+                        function(data){
+                            if(data == "1"){
+                                alert('删除成功！');
+                                window.location.reload();
+                            }else{
+                                alert('删除失败')
+                            }
+                        }
+                );
             });
 
             //复选框 全选 全不选
@@ -102,8 +115,6 @@
                     );
                 }
 
-
-
             });
         });
     </script>
@@ -136,7 +147,7 @@
             <td><?php if(strlen($v['note']) > 45): echo (mb_substr($v["note"],0,15,'utf-8')); ?>...<?php else: echo ($v["note"]); endif; ?></td>
             <td>
                 <?php if($v['username'] == 'root'): ?><a onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</a>
-                <?php else: ?><a class="delAdmin" href="<?php echo U('admin/delete',array('id'=>$v['id']));?>">删除</a><?php endif; ?>&nbsp;|&nbsp;
+                <?php else: ?><a class="delAdmin" href="javascript:void(<?php echo ($v['id']); ?>)">删除<b style="display:none;"><?php echo ($v["id"]); ?></b></a><?php endif; ?>&nbsp;|&nbsp;
                 <a href="<?php echo U('admin/update',array('id'=>$v['id']));?>" class="updateAdmin">修改</a>
             </td>
         </tr><?php endforeach; endif; ?>

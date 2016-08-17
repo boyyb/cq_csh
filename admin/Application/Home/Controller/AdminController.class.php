@@ -48,9 +48,15 @@ class AdminController extends Controller {
 
     }
 
-    public function delete($id){
-        D('admin')->delete($id);
-        $this->redirect('admin/alist');
+    public function delete(){
+        $id = $_REQUEST['id'];
+        $num = D('admin')->delete($id);
+        if($num){
+            echo "1";
+        }else{
+            echo "0";
+        }
+
     }
 
     public function delCh(){
@@ -67,13 +73,16 @@ class AdminController extends Controller {
     }
 
     public function usave(){
+        $url = $_SERVER['HTTP_REFERER'];//来源页面-更新
+        $url_alist = $_REQUEST['url_alist'];//来源页面-管理员列表
         $id = $_REQUEST['id'];
         $_REQUEST['password']=$_REQUEST['pwd'];
         $lastid = D('admin')->where("id=$id")->save($_REQUEST);
         if($lastid){
-            $this->success("更新成功","alist",3);
+            $this->success("更新成功",$url_alist,3);
         }else{
-            $this->error("更新失败","update",3);
+            $this->error("更新失败",$url,3);
+
         }
     }
 }

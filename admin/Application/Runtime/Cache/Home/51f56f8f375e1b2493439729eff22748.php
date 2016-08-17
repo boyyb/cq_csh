@@ -7,7 +7,7 @@
     <style>
         body{margin: 6px 0 0 10px;}
         h2{text-align:center;font-family: 微软雅黑;margin:20px;color:gray}
-        span.username{color:blue;font-weight: bold;}
+        span.username{color:orangered;font-weight: bold;}
     </style>
 </head>
 <body>
