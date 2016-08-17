@@ -20,7 +20,7 @@
             background: #b7d2ff;
         }
         .delAdmin ,.updateAdmin{
-            color:gray;
+            color:dodgerblue;
             text-decoration: none;
         }
         .delAdmin:hover ,.updateAdmin:hover{
@@ -58,6 +58,7 @@
             });
             //复选框 自动判断是否勾选全选
             $('.ch').click(function() {
+                //找出没有被选中的，并计算个数
                 if($('.ch').filter(':not(:checked)').size()>0){
                     $('.chall').prop('checked', false);
                 }
@@ -73,6 +74,8 @@
                     return;
                 }
 
+                var num = $(".ch:checked").length;//获取选中的个数
+
                 var r = window.confirm("确认要删除所选管理员吗？删除后不可恢复！");
                 if(r){
                     var s='';
@@ -81,7 +84,22 @@
                             s += $(this).val()+',';
                         }
                     });
-                    alert(s.substring(0,s.length-1));
+                    var allChId = s.substring(0,s.length-1);
+                    //alert(allChId);
+                    $.post(
+                            "{:U('admin/delCh')}",
+                            {"ids":allChId,"num":num},
+                            function(data){
+                                if(data=="1"){
+                                    alert("删除成功！");
+                                    window.location.reload();
+                                }else{
+                                    alert("删除失败！");
+                                }
+
+
+                            }
+                    );
                 }
 
 
@@ -109,7 +127,7 @@
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
-            <td><input type="checkbox" value="{$v.id}" class="ch"/></td>
+            <td><if condition="$v['username'] != 'root'"><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
             <td>{$k+1}</td>
             <td nowrap>{$v.username}</td>
             <td><if condition="$v['level'] eq 0">超级管理员<else />普通管理员</if></td>
@@ -118,12 +136,9 @@
             <td><if condition="$v['recent_login'] gt 0">{$v.recent_login|date="Y-m-d H:i",###}<else />未登录过</if> </td>
             <td><if condition="strlen($v['note']) gt 45" >{$v.note|mb_substr=0,15,'utf-8'}...<else />{$v.note}</if></td>
             <td>
-                <if condition="$v['username'] eq 'root'">
-                    <span onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</span>
-                <else />
-                    <a class="delAdmin" href="{:U('admin/delete',array('id'=>$v['id']))}">删除</a>
-                </if>&nbsp;|&nbsp;
-                <a href="" class="updateAdmin">修改</a>
+                <if condition="$v['username'] eq 'root'"><a onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</a>
+                <else /><a class="delAdmin" href="{:U('admin/delete',array('id'=>$v['id']))}">删除</a></if>&nbsp;|&nbsp;
+                <a href="{:U('admin/update',array('id'=>$v['id']))}" class="updateAdmin">修改</a>
             </td>
         </tr>
     </foreach>

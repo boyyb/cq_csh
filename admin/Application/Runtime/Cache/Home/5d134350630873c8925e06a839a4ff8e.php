@@ -20,7 +20,7 @@
             background: #b7d2ff;
         }
         .delAdmin ,.updateAdmin{
-            color:gray;
+            color:dodgerblue;
             text-decoration: none;
         }
         .delAdmin:hover ,.updateAdmin:hover{
@@ -58,6 +58,7 @@
             });
             //复选框 自动判断是否勾选全选
             $('.ch').click(function() {
+                //找出没有被选中的，并计算个数
                 if($('.ch').filter(':not(:checked)').size()>0){
                     $('.chall').prop('checked', false);
                 }
@@ -73,6 +74,8 @@
                     return;
                 }
 
+                var num = $(".ch:checked").length;//获取选中的个数
+
                 var r = window.confirm("确认要删除所选管理员吗？删除后不可恢复！");
                 if(r){
                     var s='';
@@ -81,7 +84,22 @@
                             s += $(this).val()+',';
                         }
                     });
-                    alert(s.substring(0,s.length-1));
+                    var allChId = s.substring(0,s.length-1);
+                    //alert(allChId);
+                    $.post(
+                            "<?php echo U('admin/delCh');?>",
+                            {"ids":allChId,"num":num},
+                            function(data){
+                                if(data=="1"){
+                                    alert("删除成功！");
+                                    window.location.reload();
+                                }else{
+                                    alert("删除失败！");
+                                }
+
+
+                            }
+                    );
                 }
 
 
@@ -108,7 +126,7 @@
         <th width="80" nowrap="">操作</th>
     </tr>
     <?php if(is_array($data)): foreach($data as $k=>$v): ?><tr height="25">
-            <td><input type="checkbox" value="<?php echo ($v["id"]); ?>" class="ch"/></td>
+            <td><?php if($v['username'] != 'root'): ?><input type="checkbox" value="<?php echo ($v["id"]); ?>" class="ch" /><?php endif; ?></td>
             <td><?php echo ($k+1); ?></td>
             <td nowrap><?php echo ($v["username"]); ?></td>
             <td><?php if($v['level'] == 0): ?>超级管理员<?php else: ?>普通管理员<?php endif; ?></td>
@@ -117,10 +135,9 @@
             <td><?php if($v['recent_login'] > 0): echo (date("Y-m-d H:i",$v["recent_login"])); else: ?>未登录过<?php endif; ?> </td>
             <td><?php if(strlen($v['note']) > 45): echo (mb_substr($v["note"],0,15,'utf-8')); ?>...<?php else: echo ($v["note"]); endif; ?></td>
             <td>
-                <?php if($v['username'] == 'root'): ?><span onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</span>
-                <?php else: ?>
-                    <a class="delAdmin" href="<?php echo U('admin/delete',array('id'=>$v['id']));?>">删除</a><?php endif; ?>&nbsp;|&nbsp;
-                <a href="" class="updateAdmin">修改</a>
+                <?php if($v['username'] == 'root'): ?><a onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</a>
+                <?php else: ?><a class="delAdmin" href="<?php echo U('admin/delete',array('id'=>$v['id']));?>">删除</a><?php endif; ?>&nbsp;|&nbsp;
+                <a href="<?php echo U('admin/update',array('id'=>$v['id']));?>" class="updateAdmin">修改</a>
             </td>
         </tr><?php endforeach; endif; ?>
     <tr height="30">
