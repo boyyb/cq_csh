@@ -71,7 +71,7 @@
                         scrolling="yes" frameborder="no" width="100%" height="100%"></iframe>
     </div>
     <div class="layout_footer">
-        <p>Copyright © 2014 - XXXX科技</p>
+        <p>Copyright © 2016 - BinGo</p>
     </div>
 </body>
 </html>

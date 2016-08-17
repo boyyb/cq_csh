@@ -83,7 +83,7 @@
                 var nnote = $('textarea[name=note]').val();
                 if(ousername == nusername && npwd == opwd && nlevel == olevel && nstate == ostate && nnote == onote){
                     alert('数据没有发生变化！');
-                   // return false;
+                    return false;
                 }
                 //数据合法性
                 var password = $('input[name=pwd]').val();

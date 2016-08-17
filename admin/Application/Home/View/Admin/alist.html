@@ -87,7 +87,7 @@
                     return;
                 }
 
-                var num = $(".ch:checked").length;//获取选中的个数
+                var num = $(".ch:checked").length;//获取选中的个数，同size()
 
                 var r = window.confirm("确认要删除所选管理员吗？删除后不可恢复！");
                 if(r){

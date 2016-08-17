@@ -64,11 +64,11 @@
         //倒计时跳转功能
         function jump(num){
             if(num=='0'){
-                location.href="http://localhost/1_csh/index1.php";
+                location.href="<?php echo U('index/index');?>";
             }else{
                 setTimeout(function(){
                     num--;
-                    $('#error').css('color','gray').html("("+num+")秒后跳转到主页,"+'<a href="../index1.php">手动跳转</a>');
+                    $('#error').css('color','gray').html("("+num+")秒后跳转到后台主页,"+'<a href="'+"<?php echo U('index/index');?>"+'">手动跳转</a>');
                     jump(num);
                 },1000)
             }
@@ -79,6 +79,7 @@
                 var username = $('input[name=username]').val();
                 var password = $('input[name=password]').val();
                 var vcode = $('input[name=vcode]').val();
+                var autologin = $('input[name=autologin]:checked').val() || 0;
                 if(!username || !password || !vcode){
                     if(!username){
                         $('input[name=username]').addClass('hint');
@@ -95,12 +96,13 @@
                 $('#submit').html("登陆中...");
                 $.post(
                         '<?php echo U("login/login");?>',
-                        {"username":username,"password":password,"vcode":vcode},
+                        {"username":username,"password":password,"vcode":vcode,"autologin":autologin},
                         function(data){
                             if(data == "vcode_error"){
                                 $('#error').css('color','red').html("验证码错误！");
                                 $('input[name=vcode]').addClass('hint');
                                 $('#submit').html("登&nbsp;陆");
+                                return;
                             }
                             if(data == "user_ne"){
                                 $('#error').css('color','red').html("用户名不存在！");
@@ -122,6 +124,11 @@
 
             $('input[name]').click(function(){
                 $(this).removeClass('hint');
+                $('#error').html("");
+            });
+
+            $('#vcode').click(function(){
+                $(this).attr('src',"<?php echo U('login/captcha');?>?r="+Math.random());
             });
         });
     </script>
@@ -135,8 +142,8 @@
         <p><input type="password" name="password" placeholder="密码"/></p>
         <p>
             <input name="vcode" placeholder="验证码"/>
-            <img style="width:120px;height:35px;vertical-align: middle;margin-left:20px;border-radius:3px;cursor:pointer;"
-                 title="点击刷新验证码" src=""/>
+            <img style="width:120px;height:40px;vertical-align: middle;margin:-7px 0  0 20px;border-radius:3px;cursor:pointer;"
+                 title="点击刷新验证码" src="<?php echo U('login/captcha');?>" id="vcode" />
         </p>
         <p><input type="checkbox" name="autologin" value="1" id="autologin"/><label for="autologin">一周内自动登陆</label></p>
         <p><a id="submit" href="javascript:void(0)">登&nbsp;陆</a></p>
