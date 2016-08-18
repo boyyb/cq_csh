@@ -4,7 +4,15 @@ use Think\Controller;
 class MessageController extends MyController {
 
     public function mlist(){
-        $data = D('message')->order("time desc")->select();
+        $mm = D('message');
+        $data = $mm->order("time desc")->select();
+        if(isset($_REQUEST['search'])){
+            $type=$_REQUEST['type'];
+            $checked=$_REQUEST['state'];
+            $name=$_REQUEST['name'];
+            $data = $mm->where();
+        }
+
         $this -> assign('data',$data);
         $this -> display();
     }
