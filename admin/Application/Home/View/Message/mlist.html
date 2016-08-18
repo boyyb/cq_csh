@@ -112,7 +112,7 @@
                     var allChId = s.substring(0,s.length-1);
                     //alert(allChId);
                     $.post(
-                            "{:U('admin/delCh')}",
+                            "{:U('message/delCh')}",
                             {"ids":allChId,"num":num},
                             function(data){
                                 if(data=="1"){

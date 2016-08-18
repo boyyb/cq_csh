@@ -18,10 +18,6 @@ class MessageController extends MyController {
         $this -> display();
     }
 
-    public function update(){
-
-    }
-
     public function delete(){
         $id = $_REQUEST['id'];
         $num = D('message')->delete($id);
@@ -33,7 +29,15 @@ class MessageController extends MyController {
     }
 
     public function delCh(){
-
+        $ids = $_REQUEST['ids'];
+        $num = $_REQUEST['num'];
+        $affectedRows = D('message')->delete($ids);
+        if($affectedRows == $num){
+            echo "1";
+        }
+        if($affectedRows == "0"){
+            echo "0";
+        }
     }
     public function save(){
         $id = $_REQUEST['id'];
