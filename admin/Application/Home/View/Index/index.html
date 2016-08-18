@@ -24,7 +24,7 @@
                 <ul class="dropdown-menu-uu" style="display: none" id="ad_setting_ul">
                     <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-user glyph-icon"></i> 个人中心 </a> </li>
                     <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-cog glyph-icon"></i> 设置 </a> </li>
-                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
+                    <li class="ad_setting_ul_li"> <a href="{:U('login/logout')}"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
                 </ul>
             </div>
     </div>
@@ -32,7 +32,7 @@
     <!--菜单-->
     <div class="layout_left_menu">
         <ul id="menu">
-            <li class="childUlLi">
+            <li class="childUlLi" id="root" <if condition="$level != '0'">style="display:none;"</if>>
                <a href=""  target="menuFrame"><i class="glyph-icon icon-user" style="font-size:14px;"></i>管理员信息</a>
                 <ul>
                     <li><a href="{:U('admin/add')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>添加管理员</a></li>

@@ -46,14 +46,19 @@ class LoginController extends Controller {
     public function Captcha(){
         import('Think.Captcha.Captcha');//自定义类
         $_vc = new \Think\Captcha();
-        $_vc->doimg();//输出验证码
+        $_vc->doimg();//输出验证码，先运行doimg,才能获取验证码
         session('vcode',$_vc->getCode());//验证码保存到SESSION中
+        //echo $_vc->getCode();
     }
 
     public function c(){
         echo get_client_ip(0,true);
     }
 
+    public function logout(){
+        session('username',null);
+        $this -> success("注销成功！",'index',2);
+    }
 
 
 }

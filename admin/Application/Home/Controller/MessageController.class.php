@@ -1,9 +1,10 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class LoginCheckController extends Controller {
+class MessageController extends MyController {
+
     public function index(){
-        //$this -> display();
+       echo 22222;
     }
 
 }

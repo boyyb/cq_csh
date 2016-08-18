@@ -1,7 +1,17 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class AdminController extends Controller {
+class AdminController extends MyController {
+    public function __construct(){
+        parent::__construct();
+        $username = session('username');
+        $data = D('admin')->where("username='$username'")->field('level')->select();
+        $level = $data[0]['level'];
+        if($level != '0'){
+            die("<script>alert('对不起！你无权访问该模块');</script>");
+        }
+    }
+
     public function add(){
         $this -> display();
     }

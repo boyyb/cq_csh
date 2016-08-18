@@ -116,7 +116,7 @@
                                 $('#submit').html("登陆成功！");
                                 //$('input[name]').prop('disabled',true);
 
-                                jump(5);
+                                jump(3);
                             }
                         }
                 );
