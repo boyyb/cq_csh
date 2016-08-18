@@ -7,10 +7,12 @@ class MessageController extends MyController {
         $mm = D('message');
         $data = $mm->order("time desc")->select();
         if(isset($_REQUEST['search'])){
-            $type=$_REQUEST['type'];
-            $checked=$_REQUEST['state'];
-            $name=$_REQUEST['name'];
-            $data = $mm->where();
+            foreach($_REQUEST as $k=>$v){
+               if(!$v || $k=='search'){
+                   unset($_REQUEST[$k]);
+               }
+            }
+            $data = $mm->where($_REQUEST)->select();
         }
 
         $this -> assign('data',$data);
