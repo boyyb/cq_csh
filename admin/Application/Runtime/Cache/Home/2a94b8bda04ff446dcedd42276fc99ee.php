@@ -33,26 +33,25 @@
     <div class="layout_left_menu">
         <ul id="menu">
             <li class="childUlLi" id="root" <?php if($level != '0'): ?>style="display:none;"<?php endif; ?>>
-               <a href=""  target="menuFrame"><i class="glyph-icon icon-user" style="font-size:14px;"></i>管理员信息</a>
+               <a href="javascript:void(0)"  target="menuFrame"><i class="glyph-icon icon-user" style="font-size:14px;"></i>管理员信息</a>
                 <ul>
                     <li><a href="<?php echo U('admin/add');?>" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>添加管理员</a></li>
                     <li><a href="<?php echo U('admin/alist');?>" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>管理员列表</a></li>
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="user.html"  target="menuFrame"> <i class="glyph-icon icon-reorder"></i>成员管理</a>
+                <a href="javascript:void(0)"  target="menuFrame"> <i class="glyph-icon icon-reorder"></i>会员管理</a>
                 <ul>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>后台菜单管理</a></li>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>展示商品管理</a></li>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>数据管理</a></li>
+                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>其他功能(暂定)</a></li>
+                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>会员列表</a></li>
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="role.html" target="menuFrame"> <i class="glyph-icon icon-reorder"></i>角色管理</a>
-                <ul>
+                <a href="role.html" target="menuFrame"> <i class="glyph-icon icon-reorder"></i>留言管理</a>
+               <!-- <ul>
                     <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>修改密码</a></li>
                     <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>帮助</a></li>
-                </ul>
+                </ul>-->
             </li>
             <li class="childUlLi">
                 <a href="#"> <i class="glyph-icon  icon-location-arrow"></i>菜单管理</a>
