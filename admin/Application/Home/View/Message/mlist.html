@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>administrators</title>
+    <title>message</title>
     <link rel="stylesheet" href="__PUBLIC__/Index_style/css/index.css" type="text/css" media="screen" />
     <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
     <style>
@@ -19,11 +19,11 @@
         table th{
             background: #b7d2ff;
         }
-        .delAdmin ,.updateAdmin{
+        .delMsg ,.detailMsg{
             color:dodgerblue;
             text-decoration: none;
         }
-        .delAdmin:hover ,.updateAdmin:hover{
+        .delMsg:hover ,.detailMsg:hover{
             color:red;
             text-decoration: underline;
         }
@@ -40,15 +40,27 @@
             line-height:25px;
             text-decoration: none;
         }
+        .check{
+            text-decoration: none;
+            color:brown;
+        }
+        .uncheck{
+            text-decoration: none;
+            color:gray;
+        }
+        .check:hover,.uncheck:hover{
+            text-decoration:underline;
+            color:red;
+        }
     </style>
     <script>
         $(function(){
-            $('.delAdmin').click(function(){
+            $('.delMsg').click(function(){
                 var r = window.confirm("确认要删除吗？删除后不可恢复！");
                 if(!r){return false;}
                 var id = $(this).find('b[style]').html();
                 $.post(
-                        "{:U('admin/delete')}",
+                        "{:U('message/delete')}",
                         {"id":id},
                         function(data){
                             if(data == "1"){
@@ -127,34 +139,39 @@
 <table border="1" style="border-collapse: collapse" width="95%">
     <tr height="25">
         <th width="25"><input type="checkbox" class="chall"/></th>
-        <th width="40" nowrap="">序号</th>
-        <th width="80" nowrap="">用户名</th>
-        <th width="80" nowrap="">管理等级</th>
-        <th width="50" nowrap="">状态</th>
-        <th width="60" nowrap="">添加时间</th>
-        <th width="100" nowrap="">上次登录时间</th>
-        <th width="180">备注</th>
-        <th width="80" nowrap="">操作</th>
+        <th width="30" nowrap="">序号</th>
+        <th width="80" nowrap="">留言人</th>
+        <th width="50" nowrap="">留言类型</th>
+        <th width="120" nowrap="">留言主题</th>
+        <th width="100" nowrap="">留言时间</th>
+        <th width="80" nowrap="">电话号码</th>
+        <th width="120" nowrap="">电子邮箱</th>
+        <th width="50" nowrap="">审核状态</th>
+        <th width="110" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
-            <td><if condition="$v['username'] != 'root'"><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
+            <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
             <td>{$k+1}</td>
-            <td nowrap>{$v.username}</td>
-            <td><if condition="$v['level'] eq 0">超级管理员<else />普通管理员</if></td>
-            <td><if condition="$v['state'] eq 0">未激活<else />已激活</if></td>
-            <td>{$v.add_time|date="Y-m-d",###}</td>
-            <td><if condition="$v['recent_login'] gt 0">{$v.recent_login|date="Y-m-d H:i",###}<else />未登录过</if> </td>
-            <td><if condition="strlen($v['note']) gt 45" >{$v.note|mb_substr=0,15,'utf-8'}...<else />{$v.note}</if></td>
+            <td nowrap>{$v.name}</td>
+            <td>{$v.type}</td>
+            <td><if condition="strlen($v['topic']) gt 45" >{$v.topic|mb_substr=0,15,'utf-8'}...<else />{$v.topic}</if></td>
+            <td>{$v.time|date="Y-m-d H：i",###}</td>
+            <td>{$v.phone}</td>
+            <td>{$v.email}</td>
+            <td><if condition="$v.checked eq '0'"><a class="check" href="{:U('message/check',array('id'=>$v['id'],'check'=>1))}" title="点击即可审核">审核</a>
+                <else /><a class="uncheck" href="{:U('message/check',array('id'=>$v['id'],'check'=>0))}" title="点击取消审核">取消审核</a>
+                </if>
+            </td>
             <td>
-                <if condition="$v['username'] eq 'root'"><a onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</a>
-                <else /><a class="delAdmin" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a></if>&nbsp;|&nbsp;
-                <a href="{:U('admin/update',array('id'=>$v['id']))}" class="updateAdmin">修改</a>
+                <a href="{:U('message/add',array('id'=>$v['id']))}" class="detailMsg">内容详情</a>&nbsp;|&nbsp;
+                <a class="delMsg" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
+
             </td>
         </tr>
     </foreach>
     <tr height="30">
-        <td colspan="9" style="text-align: left;padding-left:10px;"><a class="delch" href="javascript:void(0)">删除选中</a></td>
+        <td colspan="12" style="text-align: left;padding-left:10px;"><a class="delch" href="javascript:void(0)">删除选中</a></td>
     </tr>
 
 </table>

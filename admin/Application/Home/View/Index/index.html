@@ -5,7 +5,7 @@
 <title>网站后台管理系统</title>
 
 <link rel="stylesheet" href="__PUBLIC__/Index_style/css/index.css" type="text/css" media="screen" />
-
+<link rel="stylesheet" href="__PUBLIC__/Index_style/css/font-awesome.min.css" type="text/css" media="screen" />
 <script type="text/javascript" src="__PUBLIC__/Index_style/js/jquery.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Index_style/js/tendina.min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/Index_style/js/common.js"></script>
@@ -42,12 +42,17 @@
             <li class="childUlLi">
                 <a href="javascript:void(0)"  target="menuFrame"> <i class="glyph-icon icon-reorder"></i>会员管理</a>
                 <ul>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>其他功能(暂定)</a></li>
-                    <li><a href="#"><i class="glyph-icon icon-chevron-right"></i>会员列表</a></li>
+                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>其他功能(暂定)</a></li>
+                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>会员列表</a></li>
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="{:U('message/index')}" target="menuFrame"> <i class="glyph-icon icon-arrow-left"></i>留言管理</a>
+                <a href="javascript:void(0)" target="menuFrame"> <i class="fa fa-comment"></i>留言管理</a>
+                <ul>
+                    <li><a href="{:U('message/add')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>添加留言</a></li>
+                    <li><a href="{:U('message/mlist')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>留言列表</a></li>
+                    <li><a href="/1_csh/zxly/" target="_blank"><i class="glyph-icon icon-chevron-right"></i>前台查看</a></li>
+                </ul>
             </li>
             <li class="childUlLi">
                 <a href="#"> <i class="glyph-icon  icon-location-arrow"></i>菜单管理</a>

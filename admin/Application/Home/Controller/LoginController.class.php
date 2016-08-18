@@ -27,6 +27,10 @@ class LoginController extends Controller {
         if(!$data){
             die('pwd_error');
         }
+        //判断用户是否激活
+        if($data[0]['state'] == '0'){
+            die("user_lock");
+        }
         //自动登录处理
         if($autologin == "1"){
             //...
