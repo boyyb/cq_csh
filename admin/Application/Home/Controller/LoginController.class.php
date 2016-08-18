@@ -41,7 +41,7 @@ class LoginController extends Controller {
         $am->where("username='$username' and password='$password'")->save($_REQUEST);
 
         //设置session
-        session('username',$username);
+        session('admin_uname',$username);
         echo "ok";
 
     }
@@ -55,12 +55,8 @@ class LoginController extends Controller {
         //echo $_vc->getCode();
     }
 
-    public function c(){
-        echo get_client_ip(0,true);
-    }
-
     public function logout(){
-        session('username',null);
+        session('admin_uname',null);
         $this -> success("注销成功！",'index',2);
     }
 

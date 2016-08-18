@@ -43,7 +43,7 @@ body{padding: 0px;
 .ad_setting{
     cursor:pointer;
     border-left:1px solid #424242;
-    width: 130px;
+    /*width: 130px;*/
     height: 100%;
     float: right;
     line-height:50px;

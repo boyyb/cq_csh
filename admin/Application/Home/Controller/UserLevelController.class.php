@@ -1,19 +1,12 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class AdminController extends MyController {
+class UserLevelController extends MyController {
+    private $ulm = '';//用户等级模型
+
     public function __construct(){
         parent::__construct();
-        $username = session('admin_uname');
-        $data = D('admin')->where("username='$username'")->field('level')->select();
-        $level = $data[0]['level'];
-        if($level){
-            die("<script>alert('对不起！你无权访问该模块');</script>");
-        }
-    }
-
-    public function add(){
-        $this -> display();
+        $this -> ulm = D('user_level');
     }
 
     public function update(){
@@ -28,15 +21,6 @@ class AdminController extends MyController {
         }
     }
 
-    public function checkUsername(){
-        $username =$_REQUEST['username'];
-        $data = D('admin')->where("username='$username'")->select();
-        if($data){
-            echo "1";
-        }else{
-            echo "0";
-        }
-    }
 
     public function save(){
         $_REQUEST['add_time']=time();
@@ -49,9 +33,9 @@ class AdminController extends MyController {
         }
     }
 
-    public function alist(){
+    public function ullist(){
         $data = array();
-        $alldata = D('admin')->select();
+        $alldata = $this->ulm->order("priority desc")->select();
         if($alldata){$data = $alldata;}
         $this->assign("data",$data);
         $this->display();
@@ -72,7 +56,7 @@ class AdminController extends MyController {
     public function delCh(){
         $ids = $_REQUEST['ids'];
         $num = $_REQUEST['num'];
-        $affectedRows = D('admin')->delete($ids);
+        $affectedRows = D('user')->delete($ids);
         if($affectedRows == $num){
             echo "1";
         }

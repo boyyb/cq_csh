@@ -7,12 +7,18 @@ class MessageController extends MyController {
         $mm = D('message');
         $data = $mm->order("time desc")->select();
         if(isset($_REQUEST['search'])){
+            //筛选出不为空的查询条件
             foreach($_REQUEST as $k=>$v){
-               if(!$v || $k=='search'){
+               if($v=='' || $k=='search'){
                    unset($_REQUEST[$k]);
                }
             }
-            $data = $mm->where($_REQUEST)->select();
+            if($_REQUEST){
+                $data = $mm->where($_REQUEST)->order("time desc")->select();
+                //返回查询的参数
+                $this->assign('search',$_REQUEST);
+            }
+
         }
 
         $this -> assign('data',$data);

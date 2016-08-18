@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>message</title>
+    <title>用户等级</title>
     <link rel="stylesheet" href="__PUBLIC__/Index_style/css/index.css" type="text/css" media="screen" />
     <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
     <style>
@@ -10,6 +10,7 @@
         .list{
             border: 1px solid #cccccc;
             background: snow;
+            margin-top:10px;
         }
         .list th,.list td{
             border: 1px solid #cccccc;
@@ -18,15 +19,16 @@
         .list th{
             background: #b7d2ff;
         }
-        .delMsg ,.detailMsg{
+        .delUlevel ,.detailUlevel{
             color:dodgerblue;
             text-decoration: none;
         }
-        .delMsg:hover ,.detailMsg:hover{
+        .delUlevel:hover ,.detailUlevel:hover{
             color:red;
             text-decoration: underline;
         }
-        .delch{
+        .delch,.addUlevel{
+            float:left;
             display: block;
             height:25px;
             width:70px;
@@ -38,6 +40,9 @@
             text-align: center;
             line-height:25px;
             text-decoration: none;
+        }
+        .addUlevel{
+            margin-left:40%;
         }
         .check{
             text-decoration: none;
@@ -52,20 +57,10 @@
             color:red;
         }
 
-        .search{
-            margin-top:10px;
-            margin-bottom:4px;
-        }
-        .search table{
-            background: gainsboro;
-        }
-        .search select option{
-            padding-left:5px;
-        }
     </style>
     <script>
         $(function(){
-            $('.delMsg').click(function(){
+            $('.delUlevel').click(function(){
                 var r = window.confirm("确认要删除吗？删除后不可恢复！");
                 if(!r){return false;}
                 var id = $(this).find('b[style]').html();
@@ -149,86 +144,39 @@
 </head>
 <body>
 <div class="route_bg">
-    <a href="javascript:void(0)">留言管理</a><i class="glyph-icon icon-chevron-right"></i>
-    <a href="javascript:void(0)">留言列表</a>
+    <a href="javascript:void(0)">会员管理</a><i class="glyph-icon icon-chevron-right"></i>
+    <a href="javascript:void(0)">会员等级</a>
 </div>
-<div class="search">
-    <form action="{:U('message/mlist')}" method="post">
-        <table width="99%" border="0">
-            <tr height="30">
-                <td width="70">留言类型：</td>
-                <td width="200">
-                    <select name="type" style="width:130px;height:25px;">
-                        <option value="">请选择</option>
-                        <option <if condition="$search.type eq '咨询'">selected="selected"</if> value="咨询">咨询</option>
-                        <option <if condition="$search.type eq '建议'">selected="selected"</if> value="建议">建议</option>
-                        <option <if condition="$search.type eq '投诉'">selected="selected"</if> value="投诉">投诉</option>
-                        <option <if condition="$search.type eq '其他'">selected="selected"</if> value="其他">其他</option>
-                    </select>
-                </td>
-                <td width="70">审核状态：</td>
-                <td width="200">
-                    <select name="checked" style="width:130px;height:25px;">
-                        <option value="">请选择</option>
-                        <option <if condition="$search.checked eq '1'">selected="selected"</if> value="1">已审核</option>
-                        <option <if condition="$search.checked eq '0'">selected="selected"</if> value="0">未审核</option>
-                    </select>
-                </td>
-                <td width="60">留言人：</td>
-                <td width="200"><input name="name" id="name" style="width:130px;height:25px;" value="{$search.name}"/>
-                    <input name="search" type="hidden" value="1"/></td>
-                <td align="right">
-                    <input type="submit" value="查询"
-                           style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer">
-                    <input type="button" id="reset" value="重置"
-                           style="width:60px;height:25px;margin-right:10px;background: green;color:white;cursor:pointer">
-                </td>
-            </tr>
-        </table>
-    </form>
 
-</div>
 <table border="1" style="border-collapse: collapse" width="99%" class="list">
     <tr height="25">
         <th width="25"><input type="checkbox" class="chall"/></th>
-        <th width="30" nowrap="">序号</th>
-        <th width="80" nowrap="">留言人</th>
-        <th width="50" nowrap="">留言类型</th>
-        <th width="140" nowrap="">留言主题</th>
-        <th width="100" nowrap="">留言时间</th>
-        <th width="80" nowrap="">电话号码</th>
-        <th width="120" nowrap="">电子邮箱</th>
-        <th width="50" nowrap="">审核状态</th>
+        <th width="40" nowrap="">序号</th>
+        <th width="80" nowrap="">等级名称</th>
+        <th width="150" nowrap="">积分范围</th>
+        <th width="70" nowrap="">优先级</th>
         <th width="110" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
             <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
             <td>{$k+1}</td>
-            <td nowrap>{$v.name}</td>
-            <td>{$v.type}</td>
-            <td><if condition="strlen($v['topic']) gt 45" >{$v.topic|mb_substr=0,15,'utf-8'}...<else />{$v.topic}</if></td>
-            <td>{$v.time|date="Y-m-d H：i",###}</td>
-            <td>{$v.phone}</td>
-            <td>{$v.email}</td>
-            <td><if condition="$v.checked eq '0'"><a class="check" href="{:U('message/check',array('id'=>$v['id'],'check'=>1))}" title="点击即可审核">审核</a>
-                <else /><a class="uncheck" href="{:U('message/check',array('id'=>$v['id'],'check'=>0))}" title="点击取消审核">取消审核</a>
-                </if>
-            </td>
+            <td nowrap>{$v.level_name}</td>
+            <td>{$v.score_from} - {$v.score_to}</td>
+            <td>{$v.priority}</td>
             <td>
-                <a href="{:U('message/add',array('id'=>$v['id']))}" class="detailMsg">内容详情</a>&nbsp;|&nbsp;
-                <a class="delMsg" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
+                <a href="{:U('userlevel/add',array('id'=>$v['id']))}" class="detailUlevel">修改</a>&nbsp;|&nbsp;
+                <a class="delUlevel" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
 
             </td>
         </tr>
     </foreach>
     <tr height="30">
         <td colspan="12" style="text-align: left;padding-left:10px;">
-            <if condition="$data eq null">没有查询到相关数据！！！<else />
-            <a class="delch" href="javascript:void(0)">删除选中</a></if>
+            <a class="delch" href="javascript:void(0)">删除选中</a>
+            <a class="addUlevel" href="{:U('userLevel/add')}">添加等级</a>
         </td>
     </tr>
-
 </table>
 
 </body>

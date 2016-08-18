@@ -18,7 +18,7 @@
             <div id="ad_setting" class="ad_setting">
                 <a class="ad_setting_a" href="javascript:; ">
                     <i class="icon-user glyph-icon" style="font-size: 20px"></i>
-                    <span>管理员</span>
+                    <span style="color:orangered;font-size:15px;font-weight:bold;"><?php echo session('admin_uname');?></span>
                     <i class="icon-chevron-down glyph-icon"></i>
                 </a>
                 <ul class="dropdown-menu-uu" style="display: none" id="ad_setting_ul">
@@ -42,7 +42,7 @@
             <li class="childUlLi">
                 <a href="javascript:void(0)"  target="menuFrame"> <i class="glyph-icon icon-reorder"></i>会员管理</a>
                 <ul>
-                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>其他功能(暂定)</a></li>
+                    <li><a href="{:U('userLevel/ullist')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>会员等级</a></li>
                     <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>会员列表</a></li>
                 </ul>
             </li>
