@@ -22,9 +22,12 @@
                     <i class="icon-chevron-down glyph-icon"></i>
                 </a>
                 <ul class="dropdown-menu-uu" style="display: none" id="ad_setting_ul">
-                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-user glyph-icon"></i> 个人中心 </a> </li>
-                    <li class="ad_setting_ul_li"> <a href="javascript:;"><i class="icon-cog glyph-icon"></i> 设置 </a> </li>
-                    <li class="ad_setting_ul_li"> <a href="{:U('login/logout')}"><i class="icon-signout glyph-icon"></i> <span class="font-bold">退出</span> </a> </li>
+                    <li class="ad_setting_ul_li">
+                        <a onclick="showWin()" href="javascript:void(0);"><i class="icon-user glyph-icon"></i>修改密码</a>
+                    </li>
+                    <li class="ad_setting_ul_li">
+                        <a href="{:U('login/logout')}" class="logout"><i class="icon-signout glyph-icon"></i>退出</a>
+                    </li>
                 </ul>
             </div>
     </div>
@@ -33,17 +36,17 @@
     <div class="layout_left_menu">
         <ul id="menu">
             <li class="childUlLi" id="root" <if condition="$level != '0'">style="display:none;"</if>>
-               <a href="javascript:void(0)"  target="menuFrame"><i class="glyph-icon icon-user" style="font-size:14px;"></i>管理员信息</a>
+               <a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-user"></i>管理员</a>
                 <ul>
                     <li><a href="{:U('admin/add')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>添加管理员</a></li>
                     <li><a href="{:U('admin/alist')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>管理员列表</a></li>
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="javascript:void(0)"  target="menuFrame"> <i class="glyph-icon icon-reorder"></i>会员管理</a>
+                <a href="javascript:void(0)"  target="menuFrame"> <i class="fa fa-user" style="font-size:14px;"></i>会员管理</a>
                 <ul>
                     <li><a href="{:U('userLevel/ullist')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>会员等级</a></li>
-                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>会员列表</a></li>
+                    <li><a href="javascript:void(0)" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>会员列表</a></li>
                 </ul>
             </li>
             <li class="childUlLi">
@@ -55,12 +58,16 @@
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="#"> <i class="glyph-icon  icon-location-arrow"></i>菜单管理</a>
+                <a href="javascript:void(0)"> <i class="fa fa-phone"></i>联系我们</a>
                 <ul>
-                    <li><a href="meunbox.html" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>平台菜单</a></li>
-                    <li><a href="meunbox_add.html" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>运行商菜单</a></li>
-                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>服务站菜单</a></li>
-                    <li><a href="#" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>商家菜单</a></li>
+                    <li><a href="{:U('contact/show')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>信息管理</a></li>
+                </ul>
+            </li>
+            <li class="childUlLi">
+                <a href="javascript:void(0)"> <i class="fa fa-navicon"></i>新闻管理</a>
+                <ul>
+                    <li><a href="{:U('contact/show')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>添加新闻</a></li>
+                    <li><a href="{:U('contact/show')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>新闻列表</a></li>
                 </ul>
             </li>
         </ul>
@@ -73,5 +80,40 @@
     <div class="layout_footer">
         <p>Copyright © 2016 - BinGo</p>
     </div>
+
+    <div id="win">
+        <div id="title">修改密码<span id="close" onclick="hide()"><i title="点击关闭" style="font-size:18px;margin-top:2px;" class="fa fa-times-circle"></i></span></div>
+        <div id="content">
+            <table align="center;" width="100%">
+                <tr height="35">
+                    <td align="right">原密码：</td>
+                    <td><input type="password" name="pwd"/>
+                        <input type="hidden" name="username" value="<?php echo session('admin_uname');?>"/>
+                        <input type="hidden" name="url" value="{:U('index/changePwd')}">
+                        <input type="hidden" name="url_logout" value="{:U('login/logout')}">
+                    </td>
+
+                </tr>
+                <tr height="35">
+                    <td align="right">新密码：</td>
+                    <td><input type="password" name="npwd"/></td>
+                </tr>
+                <tr height="35">
+                    <td align="right">确认密码：</td>
+                    <td><input type="password" name="cnpwd"/></td>
+                </tr>
+                <tr height="30">
+                    <td align="center" colspan="2"><span class="hint_cp"></span></td>
+                </tr>
+                <tr height="35">
+                    <td align="center" colspan="2">
+                        <a class="save" href="javascript:void(0)">保存</a>
+                        <a class="closewin" onclick="hide()" href="javascript:void(0)">关闭</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mask" style="display:none;"></div>
 </body>
 </html>

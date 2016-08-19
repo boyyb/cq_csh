@@ -67,8 +67,8 @@
                 location.href="{:U('index/index')}";
             }else{
                 setTimeout(function(){
-                    num--;
                     $('#error').css('color','gray').html("("+num+")秒后跳转到后台主页,"+'<a href="'+"{:U('index/index')}"+'">手动跳转</a>');
+                    num--;
                     jump(num);
                 },1000)
             }

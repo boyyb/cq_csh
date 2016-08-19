@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>contact</title>
+    <link rel="stylesheet" href="__PUBLIC__/Index_style/css/index.css" type="text/css" media="screen" />
+    <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        table{
+            margin-top:10px;
+            background: snow;
+        }
+        .update,.save{
+            width: 80px;
+            height: 25px;
+            line-height: 18px;
+            border: none;
+            border-radius: 5px;
+            background: #ddd;
+            cursor: pointer;
+            margin-right:50px;
+            outline:none;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            var old = [];
+            old[0] = $('input[name=cname]').val();
+            old[1] = $('input[name=cphone]').val();
+            old[2] = $('input[name=cemail]').val();
+            old[3] = $('input[name=cqq]').val();
+            old[4] = $('input[name=caddress]').val();
+
+
+            $('.update,.save').mouseover(function(){
+                $(this).css('background','#f86d0d').css('color','white');
+            });
+            $('.update,.save').mouseout(function(){
+                $(this).css('background','#ddd').css('color','black');
+            });
+
+            $('.update').click(function(){
+                $('input[name]').removeAttr('disabled');
+            });
+            $('.save').click(function(){
+                //判断表单是否为disabled属性
+                if($('input[name]').prop("disabled")){
+                    alert("提示：修改后才能保存！");
+                    return false;
+                }
+                var newc = [];
+                newc[0] = $('input[name=cname]').val();
+                newc[1] = $('input[name=cphone]').val();
+                newc[2] = $('input[name=cemail]').val();
+                newc[3] = $('input[name=cqq]').val();
+                newc[4] = $('input[name=caddress]').val();
+
+                var count = 0;
+                $.each(newc,function(i,e){
+                    if(e != old[i]){
+                        count++;
+                    }
+                });
+                if(count == 0){
+                    alert("数据没发生变化！");
+                    return false;
+                }
+
+                //ajax保存修改内容
+                $('.hint_c').css("color","green").html("数据保存中...");
+                var id = $('input[name=id]').val();
+                $.post(
+                        "{:U('contact/save')}",
+                        {"cname":newc[0],"cphone":newc[1],"cemail":newc[2],"cqq":newc[3],"caddress":newc[4],"id":id},
+                        function(data){
+                            if(data=="1"){
+                                $('.hint_c').html("");
+                                alert("保存成功！");
+                                window.location.reload();
+                            }else{
+                                $('.hint_c').css("color","red").html("保存失败！");
+                            }
+                        }
+                );
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">联系我们</a><i class="glyph-icon icon-chevron-right"></i>
+    <a href="javascript:void(0)">信息管理</a>
+</div>
+<table >
+    <tr height="40">
+        <td nowrap align="right">联系人：</td>
+        <td>
+            <input name="cname" disabled value="{$data.cname}" style="width:250px;height:25px;border-radius:4px;"/>
+            <input name="id" value="{$data.id}" type="hidden"/>
+        </td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">联系电话：</td>
+        <td><input name="cphone" disabled value="{$data.cphone}" style="width:250px;height:25px;border-radius:4px;"/></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">电子邮箱：</td>
+        <td><input name="cemail" disabled value="{$data.cemail}" style="width:250px;height:25px;border-radius:4px;"/></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">QQ：</td>
+        <td><input name="cqq" disabled value="{$data.cqq}" style="width:250px;height:25px;border-radius:4px;"/></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">联系地址：</td>
+        <td><input name="caddress" disabled value="{$data.caddress}" style="width:550px;height:25px;border-radius:4px;"/></td>
+    </tr>
+    <tr height="50">
+        <td align="center" colspan="2">
+            <input type="button" class="update" value="修改">
+            <input type="button" class="save"  value="保存">
+        </td>
+    </tr>
+    <tr height="50">
+        <td  colspan="2">
+           <span class="hint_c" style="margin-left:200px;"></span>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

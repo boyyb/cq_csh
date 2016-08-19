@@ -24,4 +24,24 @@ class IndexController extends MyController {
         //}
 
     }
+
+
+    //管理员自行修改密码
+    public function changePwd(){
+        $username = $_REQUEST['username'];
+        $opwd = $_REQUEST['password'];
+        $npwd = $_REQUEST['npassword'];
+        $am = D('admin');
+        $data = $am->where("username='$username' and password='$opwd'")->select();
+        if(!$data){
+            echo "opwd_error";
+            die;
+        }
+        $num = $am->where("username='$username'")->save(array('password'=>$npwd));
+        if($num){
+            echo "ok";
+        }else{
+            echo "fail";
+        }
+    }
 }

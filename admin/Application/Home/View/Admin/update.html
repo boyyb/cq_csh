@@ -43,7 +43,7 @@
             var ousername = $('input[name=username]').val();
             var opwd = $('input[name=pwd]').val();
             var olevel = $('select[name=level]').val();
-            var ostate = $('input[name=state]').val();
+            var ostate = $('input[name=state]:checked').val();
             var onote = $('textarea[name=note]').val();
             var url = document.referrer; //来源url
             $('input[name=url_alist]').val(url);
@@ -79,7 +79,7 @@
                 var nusername = $('input[name=username]').val();
                 var npwd = $('input[name=pwd]').val();
                 var nlevel = $('select[name=level]').val();
-                var nstate = $('input[name=state]').val();
+                var nstate = $('input[name=state]:checked').val();
                 var nnote = $('textarea[name=note]').val();
                 if(ousername == nusername && npwd == opwd && nlevel == olevel && nstate == ostate && nnote == onote){
                     alert('数据没有发生变化！');
