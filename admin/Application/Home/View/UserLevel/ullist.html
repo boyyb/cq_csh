@@ -42,19 +42,76 @@
             text-decoration: none;
         }
         .addUlevel{
-            margin-left:40%;
+            margin-left:5%;
         }
-        .check{
+        /*****************************************弹窗样式**********************************/
+        #win_add{
+            display : none;
+            position : absolute;
+            width : 400px;
+            height: 270px;
+            top : 150px;
+            left: -200px;;
+            margin-left:50%;
+            z-index: 1051;
+            border-radius:4px;
+            border:1px gray solid;
+            background: white;
+        }
+        #title_add{
+            height:30px;
+            background-color : #0066bb;
+            color : ghostwhite;
+            padding-left:4px;
+            font-size:16px;
+            line-height:30px;
+        }
+        #close_add{
+            position:absolute;
+            top:0px;
+            right:10px;
+            cursor: pointer;
+        }
+        #close_add:hover{
+            color:orangered;
+        }
+        #content_add{
+            padding-left : 3px;
+            padding-top :  5px;
+        }
+        #button_add{
+            position:absolute;
+            left:-111px;
+            margin-left:50%;
+            bottom:10px;
+            height:30px;
+            width:222px;
+            color : ghostwhite;
+            font-size:16px;
+            line-height:30px;
+        }
+        .save_add,.closewin_add{
+            display: block;
+            height:25px;
+            width:70px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
             text-decoration: none;
-            color:brown;
+            float:left;
         }
-        .uncheck{
-            text-decoration: none;
-            color:gray;
+        .save_add{
+            margin-right:80px;
         }
-        .check:hover,.uncheck:hover{
-            text-decoration:underline;
-            color:red;
+        #win_add input[name]{
+            width:180px;
+            height:25px;
+            border-radius:4px;
+            padding-left:3px;
         }
 
     </style>
@@ -65,7 +122,7 @@
                 if(!r){return false;}
                 var id = $(this).find('b[style]').html();
                 $.post(
-                        "{:U('message/delete')}",
+                        "{:U('userLevel/delete')}",
                         {"id":id},
                         function(data){
                             if(data == "1"){
@@ -117,12 +174,13 @@
                     var allChId = s.substring(0,s.length-1);
                     //alert(allChId);
                     $.post(
-                            "{:U('message/delCh')}",
+                            "{:U('userLevel/delCh')}",
                             {"ids":allChId,"num":num},
                             function(data){
                                 if(data=="1"){
                                     alert("删除成功！");
                                     window.location.reload();
+                                    $(".ch:checked").prop('checked',false);
                                 }else{
                                     alert("删除失败！");
                                 }
@@ -131,13 +189,107 @@
                             }
                     );
                 }
-
             });
-
             //重置查询条件
             $('#reset').click(function(){
                 $('option').removeAttr('selected');
                 $("#name").val("")
+            });
+
+            //打开弹窗-会员等级
+            $('.addUlevel,.detailUlevel').click(function(){
+                $('.mask').css('display','block');
+                $('#win_add').slideDown('normal');
+                //打开弹窗时初始化表单数据
+                $('#win_add [name]').val('').removeClass('hint');
+                $('.prompt_info').html('');
+                var id = $(this).find('b[style]').html();
+                if(id){
+                    $('.prompt_info').css('color','green').html("数据获取中...请等待！！！");
+                    //ajax取数据
+                    $.post(
+                            "{:U('userLevel/getOneUl')}",
+                            {"id":id},
+                            function(jsonStr){
+                                if(jsonStr=="0"){
+                                    alert('没有找到相应数据！');
+                                    return;
+                                }
+                                obj = jQuery.parseJSON(jsonStr); //全局变量
+                                //赋值到表单中
+                                $('input[name=id][type=hidden]').val(obj[0].id);
+                                $('input[name=level_name]').val(obj[0].level_name);
+                                $('input[name=score_from]').val(obj[0].score_from);
+                                $('input[name=score_to]').val(obj[0].score_to);
+                                $('textarea[name=note]').val(obj[0].note);
+                                $('.prompt_info').html('');
+                            }
+                    );
+                }
+
+            });
+            //关闭弹窗
+            $('.closewin_add,#close_add').click(function(){
+                $('#win_add').slideUp("normal");
+                $('.mask').css('display','none');
+                if(flag==1){
+                    flag=0;//数据保存成功后才刷新页面
+                    window.location.reload();
+                }
+            });
+            //保存
+            $('.save_add').click(function(){
+                var id = $('input[name=id][type=hidden]').val();
+                var level_name = $('input[name=level_name]').val();
+                var score_from = $('input[name=score_from]').val();
+                var score_to = $('input[name=score_to]').val();
+                var note = $('textarea[name=note]').val();
+                //修改数据的规则
+                if(id){
+                    var num = 0;
+                    if(level_name!=obj[0].level_name){num++;}
+                    if(score_from!=obj[0].score_from){num++;}
+                    if(score_to!=obj[0].score_to){num++;}
+                    if(note!=obj[0].note){num++;}
+                    if(num == 0){
+                        $('.prompt_info').css('color','red').html("数据没有发生变化！");
+                        return;
+                    }
+                }
+                if(!level_name){
+                    $('input[name=level_name]').addClass('hint');
+                    $('.prompt_info').css('color','red').html("请填写必填项");
+                    return;
+                }
+                if(score_from && isNaN(score_from)){
+                    $('input[name=score_from]').addClass('hint');
+                    $('.prompt_info').css('color','red').html("请填写数字类型");
+                    return;
+                }
+                if(score_to && isNaN(score_to)){
+                    $('input[name=score_to]').addClass('hint');
+                    $('.prompt_info').css('color','red').html("请填写数字类型");
+                    return;
+                }
+                $('.prompt_info').css('color','green').html("保存中...");
+                $.post(
+                        "{:U('userLevel/save')}",
+                        {"level_name":level_name,"score_from":score_from,"score_to":score_to,"note":note,"id":id},
+                        function(data){
+                            if(data=="ok"){
+                                $('.prompt_info').css('color','green').html("保存成功！");
+                                flag = 1;
+                            }else{
+                                $('.prompt_info').css('color','red').html("保存失败！");
+                                return;
+                            }
+                        }
+                );
+            });
+
+            $('input[name]').click(function(){
+                $(this).removeClass('hint');
+                $('.prompt_info').html('');
             });
         });
     </script>
@@ -151,11 +303,11 @@
 <table border="1" style="border-collapse: collapse" width="99%" class="list">
     <tr height="25">
         <th width="25"><input type="checkbox" class="chall"/></th>
-        <th width="40" nowrap="">序号</th>
-        <th width="80" nowrap="">等级名称</th>
-        <th width="150" nowrap="">积分范围</th>
-        <th width="70" nowrap="">优先级</th>
-        <th width="110" nowrap="">操作</th>
+        <th width="30" nowrap="">序号</th>
+        <th width="70" nowrap="">等级名称</th>
+        <th width="120" nowrap="">积分范围</th>
+        <th width="150" nowrap="">备注</th>
+        <th width="60" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
@@ -163,9 +315,9 @@
             <td>{$k+1}</td>
             <td nowrap>{$v.level_name}</td>
             <td>{$v.score_from} - {$v.score_to}</td>
-            <td>{$v.priority}</td>
+            <td>{$v.note}</td>
             <td>
-                <a href="{:U('userlevel/add',array('id'=>$v['id']))}" class="detailUlevel">修改</a>&nbsp;|&nbsp;
+                <a href="javascript:void({$v['id']})" class="detailUlevel"><b style="display: none;">{$v.id}</b>修改</a>&nbsp;|&nbsp;
                 <a class="delUlevel" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
 
             </td>
@@ -174,10 +326,51 @@
     <tr height="30">
         <td colspan="12" style="text-align: left;padding-left:10px;">
             <a class="delch" href="javascript:void(0)">删除选中</a>
-            <a class="addUlevel" href="{:U('userLevel/add')}">添加等级</a>
+            <a class="addUlevel" href="javascript:void(0)">添加等级</a>
         </td>
     </tr>
 </table>
+<div id="win_add">
+    <div id="title_add">
+        <span>添加用户等级</span>
+        <a id="close_add" title="点击关闭">X</a>
+    </div>
+    <div id="content_add">
+        <table align="center;" width="100%">
+            <tr height="30">
+                <td align="right"><b style="color:red;">*</b>等级名称：</td>
+                <td>
+                    <input type="text" name="level_name"/>
+                    <input type="hidden" name="id" value=""/>
+                </td>
 
+            </tr>
+            <tr height="30">
+                <td align="right">积分下限：</td>
+                <td><input type="text" name="score_from"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right">积分上限：</td>
+                <td><input type="text" name="score_to"/></td>
+            </tr>
+            <tr height="40">
+                <td align="right">备注：</td>
+                <td>
+                    <textarea style="width:180px;height:50px;resize: none;border-radius:4px;padding-left:5px;" name="note"></textarea>
+                </td>
+            </tr>
+            <tr height="30">
+                <td align="center" colspan="2"><span class="prompt_info"></span></td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="button_add">
+        <a class="save_add" href="javascript:void(0)">保存</a>
+        <a class="closewin_add" href="javascript:void(0)">关闭</a>
+    </div>
+</div>
+
+<div class="mask" style="display:none;"></div>
 </body>
 </html>

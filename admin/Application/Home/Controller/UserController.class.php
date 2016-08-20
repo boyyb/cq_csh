@@ -2,7 +2,11 @@
 namespace Home\Controller;
 use Think\Controller;
 class UserController extends MyController {
-
+    public $um = '';
+    public function __construct(){
+        parent::__construct();
+        $this->um=D('user');
+    }
     public function update(){
         $id = $_REQUEST['id'];
         if($id){
@@ -36,7 +40,8 @@ class UserController extends MyController {
         }
     }
 
-    public function alist(){
+    public function ulist(){
+        die('开发中。。。');
         $data = array();
         $alldata = D('admin')->select();
         if($alldata){$data = $alldata;}

@@ -117,6 +117,7 @@ body{padding: 0px;
     text-decoration: none;
     font-size:15px;
     font-weight:bold;
+    display:block;
 }
 .ad_setting_ul_li_a{
     color: #fff !important;

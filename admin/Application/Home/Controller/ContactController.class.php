@@ -13,7 +13,11 @@ class ContactController extends MyController {
         $id=$_REQUEST['id'];
         $_REQUEST['edittime']=time();
         $_REQUEST['editer']=session('admin_uname');
-        $num = D('contact')->where("id=$id")->save($_REQUEST);
+        if($id){
+            $num = D('contact')->where("id=$id")->save($_REQUEST);
+        }else{
+            $num = D('contact')->add($_REQUEST);
+        }
         if($num){
             echo "1";
         }else{

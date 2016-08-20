@@ -17,6 +17,9 @@ $(function(){
     $("#ad_setting").mouseover(function(){
         $("#ad_setting_ul").show();
     });
+    $("#ad_setting").mouseout(function(){
+        $('#ad_setting_ul').hide();
+    });
     $("#ad_setting_ul").mouseleave(function(){
         $(this).hide();
     });
@@ -100,7 +103,10 @@ function showWin(){
     //方法二：利用jquery的show方法，实现显示效果
     // winNode.show("slow");
     //方法三：利用jquery的fadeIn方法实现淡入
-    winNode.fadeIn("slow");
+    winNode.fadeIn("normal");
+    //初始化窗口中的表单数据
+    $('#win input[type=password]').removeClass('hint').val('');
+    $('#win .hint_cp').html('');
     //增加遮罩
     $('.mask').css('display','block');
 }
@@ -109,7 +115,7 @@ function hide(){
     //方法一：修改css的值
     //winNode.css("display", "none");
     //方法二：jquery的fadeOut方式
-    winNode.fadeOut("slow");
+    winNode.fadeOut("fast");
     //方法三：jquery的hide方法
     winNode.hide("slow");
     $('.mask').css('display','none');

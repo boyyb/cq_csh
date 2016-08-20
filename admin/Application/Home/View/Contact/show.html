@@ -9,9 +9,9 @@
         body{margin: 6px 0 0 10px;}
         table{
             margin-top:10px;
-            background: snow;
+            background: white;
         }
-        .update,.save{
+        .update_c,.save_c{
             width: 80px;
             height: 25px;
             line-height: 18px;
@@ -21,6 +21,9 @@
             cursor: pointer;
             margin-right:50px;
             outline:none;
+        }
+        input[name]{
+            padding-left:4px;
         }
 
     </style>
@@ -34,17 +37,17 @@
             old[4] = $('input[name=caddress]').val();
 
 
-            $('.update,.save').mouseover(function(){
+            $('.update_c,.save_c').mouseover(function(){
                 $(this).css('background','#f86d0d').css('color','white');
             });
-            $('.update,.save').mouseout(function(){
+            $('.update_c,.save_c').mouseout(function(){
                 $(this).css('background','#ddd').css('color','black');
             });
 
-            $('.update').click(function(){
+            $('.update_c').click(function(){
                 $('input[name]').removeAttr('disabled');
             });
-            $('.save').click(function(){
+            $('.save_c').click(function(){
                 //判断表单是否为disabled属性
                 if($('input[name]').prop("disabled")){
                     alert("提示：修改后才能保存！");
@@ -120,8 +123,8 @@
     </tr>
     <tr height="50">
         <td align="center" colspan="2">
-            <input type="button" class="update" value="修改">
-            <input type="button" class="save"  value="保存">
+            <input type="button" class="update_c" value="修改">
+            <input type="button" class="save_c"  value="保存">
         </td>
     </tr>
     <tr height="50">
