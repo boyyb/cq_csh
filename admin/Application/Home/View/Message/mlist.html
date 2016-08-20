@@ -3,13 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>message</title>
-    <link rel="stylesheet" href="__PUBLIC__/Index_style/css/index.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
     <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
     <style>
         body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
         .list{
             border: 1px solid #cccccc;
             background: snow;
+            font-size:14px;
+
         }
         .list th,.list td{
             border: 1px solid #cccccc;
@@ -54,7 +80,8 @@
 
         .search{
             margin-top:10px;
-            margin-bottom:4px;
+            margin-bottom:2px;
+            font-size:14px;
         }
         .search table{
             background: gainsboro;
@@ -149,16 +176,16 @@
 </head>
 <body>
 <div class="route_bg">
-    <a href="javascript:void(0)">留言管理</a><i class="glyph-icon icon-chevron-right"></i>
+    <a href="javascript:void(0)">留言管理</a><i class="fa fa-chevron-right"></i>
     <a href="javascript:void(0)">留言列表</a>
 </div>
 <div class="search">
     <form action="{:U('message/mlist')}" method="post">
         <table width="99%" border="0">
             <tr height="30">
-                <td width="70">留言类型：</td>
-                <td width="200">
-                    <select name="type" style="width:130px;height:25px;">
+                <td width="85" nowrap>留言类型：</td>
+                <td width="180">
+                    <select name="type" style="width:130px;height:25px;border-radius:4px;">
                         <option value="">请选择</option>
                         <option <if condition="$search.type eq '咨询'">selected="selected"</if> value="咨询">咨询</option>
                         <option <if condition="$search.type eq '建议'">selected="selected"</if> value="建议">建议</option>
@@ -166,17 +193,16 @@
                         <option <if condition="$search.type eq '其他'">selected="selected"</if> value="其他">其他</option>
                     </select>
                 </td>
-                <td width="70">审核状态：</td>
-                <td width="200">
-                    <select name="checked" style="width:130px;height:25px;">
+                <td width="85" nowrap>审核状态：</td>
+                <td width="180">
+                    <select name="checked" style="width:130px;height:25px;border-radius:4px;">
                         <option value="">请选择</option>
                         <option <if condition="$search.checked eq '1'">selected="selected"</if> value="1">已审核</option>
                         <option <if condition="$search.checked eq '0'">selected="selected"</if> value="0">未审核</option>
                     </select>
                 </td>
-                <td width="60">留言人：</td>
-                <td width="200"><input name="name" id="name" style="width:130px;height:25px;" value="{$search.name}"/>
-                    <input name="search" type="hidden" value="1"/></td>
+                <td width="75" nowrap>留言人：</td>
+                <td width="180"><input name="name" id="name" style="width:130px;height:25px;border-radius:4px;" value="{$search.name}"/></td>
                 <td align="right">
                     <input type="submit" value="查询"
                            style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer">
@@ -218,7 +244,6 @@
             <td>
                 <a href="{:U('message/add',array('id'=>$v['id']))}" class="detailMsg">内容详情</a>&nbsp;|&nbsp;
                 <a class="delMsg" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
-
             </td>
         </tr>
     </foreach>
@@ -228,7 +253,11 @@
             <a class="delch" href="javascript:void(0)">删除选中</a></if>
         </td>
     </tr>
-
+    <tr height="30">
+        <td colspan="12">
+            {$page}
+        </td>
+    </tr>
 </table>
 
 </body>
