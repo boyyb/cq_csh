@@ -4,27 +4,39 @@ use Think\Controller;
 class MessageController extends MyController {
 
     public function mlist(){
+        //筛选出不为空的查询条件
         if(isset($_REQUEST)){
-            //筛选出不为空的查询条件
             foreach($_REQUEST as $k=>$v){
                 if($v==''){
                     unset($_REQUEST[$k]);
                 }else{
-                    $_REQUEST[$k]=urldecode($v);//解码还原为正常字符
+                    //模糊查询姓名
+                    if($k=="name"){
+                        $map[$k]  = array('like',"%".$v."%");
+                    }else{
+                        $map[$k]=array('eq',urldecode($v));//解码还原为正常字符
+                    }
                 }
             }
         }
-        $map = $_REQUEST;//处理后的查询条件
         $mm = D('message');
         $count = $mm->where($map)->count();// 查询满足要求的总记录数
         $pageSize = 5;//分页显示条数
         $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
-        foreach($map as $key=>$val) {
+        //设置分页样式
+        $Page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');
+        $Page->setConfig('prev', '上一页');
+        $Page->setConfig('next', '下一页');
+        $Page->setConfig('last', '末页');
+        $Page->setConfig('first', '首页');
+        $Page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');
+        $Page->lastSuffix = false;//最后一页不显示为总页数
+        foreach($_REQUEST as $key=>$val) {
             $Page->parameter[$key] = urlencode($val); //带上查询参数，并url编码
         }
         $show = $Page->show();// 分页显示输出
         $data = $mm->order("id desc")->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
-        $this->assign("search",$map);//赋值查询的参数，以便显示
+        $this->assign("search",$_REQUEST);//赋值查询的参数，以便显示
         $this->assign('page',$show);// 赋值分页输出
         $this -> assign('data',$data);// 赋值数据集
         $this -> display();// 输出模板
