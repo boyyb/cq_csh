@@ -16,6 +16,9 @@ if(isset($_REQUEST)){
     $res = $db -> getOne("user","*","username='$username' and password='$password'");
     if(!$res){
         die("pwd_error");
+    }
+    if($res['state']=="0"){
+        echo "lock";//返回ajax
     }else{
         echo "ok";//返回ajax
         //处理session

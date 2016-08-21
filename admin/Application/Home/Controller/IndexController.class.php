@@ -15,7 +15,7 @@ class IndexController extends MyController {
     public function welcome(){
         date_default_timezone_set('Asia/Shanghai');
         //if(session('username')){
-            $username = session('admin_uname');
+            $username = session('admin_uname')?session('admin_uname'):cookie('admin_uname');
             $data = D('admin')->where("username='$username'")->field("recent_login,login_ip")->select();
             $data = $data[0];
             $data['username'] = $username;

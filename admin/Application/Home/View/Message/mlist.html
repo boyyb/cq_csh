@@ -188,6 +188,7 @@
                             function(data){
                                 if(data=="1"){
                                     alert("删除成功！");
+                                    $('.ch').prop('checked',false);//重新初始化复选框
                                     window.location.reload();
                                 }else{
                                     alert("删除失败！");

@@ -33,7 +33,7 @@ class LoginController extends Controller {
         }
         //自动登录处理
         if($autologin == "1"){
-            //...
+            cookie("admin_uname",$username,86400*7);
         }
         //更新表数据,记录登录信息
         $_REQUEST['recent_login']=time();
@@ -57,6 +57,7 @@ class LoginController extends Controller {
 
     public function logout(){
         session('admin_uname',null);
+        cookie('admin_uname',null);
         $this -> success("注销成功！",'index',2);
     }
 

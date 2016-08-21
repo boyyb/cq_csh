@@ -176,7 +176,7 @@
 
                 var num = $(".ch:checked").length;//获取选中的个数，同size()
 
-                var r = window.confirm("确认要删除所选管理员吗？删除后不可恢复！");
+                var r = window.confirm("确认要删除所选会员吗？删除后不可恢复！");
                 if(r){
                     var s='';
                     $('input[class="ch"]:checked').each(function(){
@@ -187,11 +187,12 @@
                     var allChId = s.substring(0,s.length-1);
                     //alert(allChId);
                     $.post(
-                            "{:U('message/delCh')}",
+                            "{:U('user/delCh')}",
                             {"ids":allChId,"num":num},
                             function(data){
                                 if(data=="1"){
                                     alert("删除成功！");
+                                    $('.ch').prop('checked',false);//重新初始化复选框
                                     window.location.reload();
                                 }else{
                                     alert("删除失败！");

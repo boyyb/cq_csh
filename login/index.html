@@ -108,12 +108,14 @@
                                 $('#error').css('color','red').html("用户密码错误！");
                                 $('input[name=password]').addClass('hint');
                                 $('#submit').html("登&nbsp;陆");
+                            }else if(data=="lock"){
+                                $('#error').css('color','red').html("账户被锁定！");
+                                $('#submit').html("登&nbsp;陆");
                             }else if(data == 'ok'){
                                 $('#submit').html("登陆成功！");
                                 //$('input[name]').prop('disabled',true);
 
                                 jump(5);
-
                             }
                         }
                 );

@@ -10,23 +10,21 @@ class UserController extends MyController {
 
     public function ulist(){
         //筛选出不为空的查询条件
-        dump($_REQUEST);
         if(isset($_REQUEST)){
             foreach($_REQUEST as $k=>$v){
-                if($v=='' || $k=="p"){
+                if($v=='' || $k=="p"){ //查询条件排除p
                     unset($_REQUEST[$k]);
                 }else{
                     //模糊查询姓名
                     if($k=="username"){
                         $map[$k]  = array('like',"%".$v."%");
                     }else{
-                        $map[$k]=array('eq',urldecode($v));//解码还原为正常字符
+                        $map[$k]=array('eq',urldecode($v));//解码还原为正常字符(汉字)
                     }
                 }
             }
         }
-        dump($_REQUEST);
-        dump($map);
+
         $count = $this->um->where($map)->join("user_level ul ON ul.id=user.level_id ")->count();// 查询满足要求的总记录数
         $pageSize = 5;//分页显示条数
         $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
