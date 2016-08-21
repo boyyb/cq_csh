@@ -2,14 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>user_list</title>
-    <link rel="stylesheet" href="__PUBLIC__/Index_style/css/index.css" type="text/css" media="screen" />
+    <title>userlist</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
     <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
     <style>
         body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
         .list{
             border: 1px solid #cccccc;
             background: snow;
+            font-size:14px;
+            border-collapse: collapse;
+
         }
         .list th,.list td{
             border: 1px solid #cccccc;
@@ -39,22 +66,23 @@
             line-height:25px;
             text-decoration: none;
         }
-        .check{
-            text-decoration: none;
-            color:brown;
-        }
-        .uncheck{
+        .lock{
             text-decoration: none;
             color:gray;
         }
-        .check:hover,.uncheck:hover{
+        .unlock{
+            text-decoration: none;
+            color:brown;
+        }
+        .lock:hover,.unlock:hover{
             text-decoration:underline;
             color:red;
         }
 
         .search{
             margin-top:10px;
-            margin-bottom:4px;
+            margin-bottom:2px;
+            font-size:14px;
         }
         .search table{
             background: gainsboro;
@@ -62,22 +90,59 @@
         .search select option{
             padding-left:5px;
         }
+        /********************分页样式**********************/
+        .pages a,.pages span {
+            display:inline-block;
+            padding:2px 5px;
+            margin:0 2px;
+            border:1px solid #ccc;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+        }
+        .pages a,.pages li {
+            display:inline-block;
+            list-style: none;
+            text-decoration:none; color:#58A0D3;
+        }
+        .pages a.first,.pages a.prev,.pages a.next,.pages a.end{
+            margin:0px;
+        }
+        .pages a:hover{
+            color:white;
+            border-color:#50A8E6;
+            background:#50A8E6;
+        }
+        .pages span.current{
+            background:#50A8E6;
+            color:#FFF;
+            font-weight:700;
+            border-color:#50A8E6;
+        }
+        .pages .rows{
+            margin-left:10px;
+        }
+        /*********************分页样式结束**************************/
     </style>
     <script>
         $(function(){
+            //单条删除
             $('.delMsg').click(function(){
                 var r = window.confirm("确认要删除吗？删除后不可恢复！");
                 if(!r){return false;}
                 var id = $(this).find('b[style]').html();
+                $(this).html("删除中...").append('<i class="fa fa-refresh fa-spin"></i>');
                 $.post(
-                        "{:U('message/delete')}",
+                        "{:U('user/delete')}",
                         {"id":id},
                         function(data){
                             if(data == "1"){
-                                alert('删除成功！');
+                                //alert('删除成功！');
                                 window.location.reload();
                             }else{
-                                alert('删除失败')
+                                alert('删除失败');
+                                $('.delMsg').css('color','dodgerblue').html("删除").removeChild('i');//还原删除样式
+
                             }
                         }
                 );
@@ -142,41 +207,73 @@
             //重置查询条件
             $('#reset').click(function(){
                 $('option').removeAttr('selected');
-                $("#name").val("")
+                $("#username").val("")
+            });
+
+            //高亮查询结果
+            var key=$('input[name=username]').val();
+            if(key){
+                highlight_key($('.list'),2,key);
+            }
+            //审核点击事件-数据处理效果+防止重复点击
+            $('.lock,.unlock').click(function(){
+                //判断是否存在子元素i-字体图标元素
+                if($(this).find('i').length==0){
+                    $(this).html('状态切换中...').attr("title","状态切换中...请等待！")
+                            .css("color","gray")
+                            .append('<i class="fa fa-refresh fa-spin"></i>');
+                }else{
+                    alert("数据处理中...请不要重复点击！");
+                }
+
             });
         });
+        //高亮处理函数，e是table元素，n是第几列，val是高亮的值
+        function highlight_key(e,n,val){
+            e.find("tr").each(function(i) {
+                var rows = e.find('tr').size();
+                //排除非数据行
+                if(i==0 || i==rows-1 || i==rows-2){
+                    return true;
+                }
+                var tds = $(this).children();
+                var oldval = tds.eq(n).text();
+                var r = new RegExp(val,"g");//正则规则
+                t = oldval.replace(r,"<span style='background:greenyellow'>" + val + "</span>");//返回处理后的字符
+                tds.eq(n).html(t);//重新填上新值,text()无法设别html标签，切记不能用
+            });
+        }
     </script>
 </head>
 <body>
 <div class="route_bg">
-    <a href="javascript:void(0)">会员管理</a><i class="glyph-icon icon-chevron-right"></i>
+    <a href="javascript:void(0)">会员管理</a><i class="fa fa-chevron-right"></i>
     <a href="javascript:void(0)">会员列表</a>
 </div>
 <div class="search">
-    <form action="{:U('message/mlist')}" method="post">
+    <form action="{:U('user/ulist')}" method="post">
         <table width="99%" border="0">
             <tr height="30">
-                <td width="70">留言类型：</td>
-                <td width="200">
-                    <select name="type" style="width:130px;height:25px;">
+                <td width="85" nowrap>会员等级：</td>
+                <td width="180">
+                    <select name="level_id" style="width:130px;height:25px;border-radius:4px;">
                         <option value="">请选择</option>
-                        <option <if condition="$search.type eq '咨询'">selected="selected"</if> value="咨询">咨询</option>
-                        <option <if condition="$search.type eq '建议'">selected="selected"</if> value="建议">建议</option>
-                        <option <if condition="$search.type eq '投诉'">selected="selected"</if> value="投诉">投诉</option>
-                        <option <if condition="$search.type eq '其他'">selected="selected"</if> value="其他">其他</option>
+                        <foreach name="levelArr" key="k" item="v">
+                            <!--if条件句中 condition中的数组值用$a['b']方式表示不能用$a.b-->
+                            <option <if condition="$search['level_id'] eq $v['id']">selected="selected"</if> value="{$v.id}">{$v.level_name}</option>
+                        </foreach>
                     </select>
                 </td>
-                <td width="70">审核状态：</td>
-                <td width="200">
-                    <select name="checked" style="width:130px;height:25px;">
+                <td width="85" nowrap>用户状态：</td>
+                <td width="180">
+                    <select name="state" style="width:130px;height:25px;border-radius:4px;">
                         <option value="">请选择</option>
-                        <option <if condition="$search.checked eq '1'">selected="selected"</if> value="1">已审核</option>
-                        <option <if condition="$search.checked eq '0'">selected="selected"</if> value="0">未审核</option>
+                        <option <if condition="$search.state eq '1'">selected="selected"</if> value="1">正常</option>
+                        <option <if condition="$search.state eq '0'">selected="selected"</if> value="0">锁定</option>
                     </select>
                 </td>
-                <td width="60">留言人：</td>
-                <td width="200"><input name="name" id="name" style="width:130px;height:25px;" value="{$search.name}"/>
-                    <input name="search" type="hidden" value="1"/></td>
+                <td width="75" nowrap>用户名：</td>
+                <td width="180"><input name="username" id="username" style="width:130px;height:25px;border-radius:4px;" value="{$search.username}"/></td>
                 <td align="right">
                     <input type="submit" value="查询"
                            style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer">
@@ -188,37 +285,34 @@
     </form>
 
 </div>
-<table border="1" style="border-collapse: collapse" width="99%" class="list">
+<table width="99%" class="list">
     <tr height="25">
         <th width="25"><input type="checkbox" class="chall"/></th>
         <th width="30" nowrap="">序号</th>
-        <th width="80" nowrap="">留言人</th>
-        <th width="50" nowrap="">留言类型</th>
-        <th width="140" nowrap="">留言主题</th>
-        <th width="100" nowrap="">留言时间</th>
-        <th width="80" nowrap="">电话号码</th>
-        <th width="120" nowrap="">电子邮箱</th>
-        <th width="50" nowrap="">审核状态</th>
-        <th width="110" nowrap="">操作</th>
+        <th width="80" nowrap="">用户名</th>
+        <th width="30" nowrap="">性别</th>
+        <th width="60" nowrap="">会员等级</th>
+        <th width="70" nowrap="">会员积分</th>
+        <th width="80" nowrap="">注册时间</th>
+        <th width="120" nowrap="">最近登录时间</th>
+        <th width="130" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
             <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
-            <td>{$k+1}</td>
-            <td nowrap>{$v.name}</td>
-            <td>{$v.type}</td>
-            <td><if condition="strlen($v['topic']) gt 45" >{$v.topic|mb_substr=0,15,'utf-8'}...<else />{$v.topic}</if></td>
-            <td>{$v.time|date="Y-m-d H：i",###}</td>
-            <td>{$v.phone}</td>
-            <td>{$v.email}</td>
-            <td><if condition="$v.checked eq '0'"><a class="check" href="{:U('message/check',array('id'=>$v['id'],'check'=>1))}" title="点击即可审核">审核</a>
-                <else /><a class="uncheck" href="{:U('message/check',array('id'=>$v['id'],'check'=>0))}" title="点击取消审核">取消审核</a>
-            </if>
-            </td>
+            <td>{$sn+$k+1}</td>
+            <td nowrap>{$v.username}</td>
+            <td>{$v.sex}</td>
+            <td>{$v.level_name}</td>
+            <td>{$v.score}</td>
+            <td>{$v.reg_time|date="Y-m-d",###}</td>
+            <td>{$v.recent_login|date="Y-m-d H：i",###}</td>
             <td>
-                <a href="{:U('message/add',array('id'=>$v['id']))}" class="detailMsg">内容详情</a>&nbsp;|&nbsp;
-                <a class="delMsg" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
-
+                <a href="{:U('user/detail',array('id'=>$v['id']))}" class="detailMsg">详情</a>&nbsp;|&nbsp;
+                <a class="delMsg" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>&nbsp;|&nbsp;
+                <if condition="$v.state eq '0'"><a class="unlock" href="{:U('user/lock',array('id'=>$v['id'],'state'=>1))}" title="点击解锁用户">解锁</a>
+                    <else /><a class="lock" href="{:U('user/lock',array('id'=>$v['id'],'state'=>0))}" title="点击锁定用户">锁定</a>
+                </if>
             </td>
         </tr>
     </foreach>
@@ -228,7 +322,11 @@
                 <a class="delch" href="javascript:void(0)">删除选中</a></if>
         </td>
     </tr>
-
+    <tr height="30">
+        <td colspan="12">
+            <div class="pages">{$page}</div>
+        </td>
+    </tr>
 </table>
 
 </body>

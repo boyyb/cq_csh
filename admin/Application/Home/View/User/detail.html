@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>contact</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
+        .button{
+            width: 80px;
+            height: 25px;
+            line-height: 18px;
+            border: none;
+            border-radius: 5px;
+            background: green;
+            cursor: pointer;
+            outline:none;
+            color:white;
+            margin-right:20px;
+        }
+        input[name]{
+            padding-left:4px;
+            width:250px;
+            height:25px;
+            border-radius:4px;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            var old = [];
+            old[0] = $('input[name=password]').val();
+            old[1] = $('input[name=phone]').val();
+            old[2] = $('input[name=email]').val();
+
+            $('.update').click(function(){
+                $('input[name=password],input[name=phone],input[name=email]').removeAttr('disabled');
+            });
+            $('.save').click(function(){
+                //判断表单是否为disabled属性
+                if($('input[name=password]').prop("disabled")){
+                    alert("提示：修改后才能保存！");
+                    return false;
+                }
+                var newc = [];
+                newc[0] = $('input[name=password]').val();
+                newc[1] = $('input[name=phone]').val();
+                newc[2] = $('input[name=email]').val();
+                var count = 0;
+                $.each(newc,function(i,e){
+                    if(e != old[i]){
+                        count++;
+                    }
+                });
+                if(count == 0){
+                    alert("数据没发生变化！");
+                    return false;
+                }
+
+                //ajax保存修改内容
+                $('.hint').css("color","gray").html("数据保存中...")
+                        .append('<i class="fa fa-spinner fa-spin"></i>');
+                var id = $('input[name=id]').val();
+                $.post(
+                        "{:U('user/save')}",
+                        {"password":newc[0],"phone":newc[1],"email":newc[2],"id":id},
+                        function(data){
+                            if(data=="ok"){
+                                $('.hint').css("color","green").html("保存成功！")
+                                        .removeChild('i');
+
+                            }else{
+                                $('.hint').css("color","red").html("保存失败！");
+                            }
+                        }
+                );
+            });
+
+            $('.back').click(function(){
+                var url = $('input[name=url]').val();
+                window.location.href=url;
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">会员管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">会员详情</a>
+</div>
+<table >
+    <tr height="40">
+        <td nowrap align="right">用户名：</td>
+        <td>
+            <input name="username" disabled value="{$data.username}" />
+            <input name="id" value="{$data.id}" type="hidden"/>
+            <input name="url" value="{$data.url}" type="hidden"/>
+        </td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">密码：</td>
+        <td><input name="password" disabled value="{$data.password}"/></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">性别：</td>
+        <td><input name="sex" disabled value="{$data.sex}" /></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">电话：</td>
+        <td><input name="phone" disabled value="{$data.phone}" /></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">email：</td>
+        <td><input name="email" disabled value="{$data.email}" /></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">注册时间：</td>
+        <td><input name="reg_time" disabled value="{$data.reg_time}" /></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">最近登录时间：</td>
+        <td><input name="recent_login" disabled value="{$data.recent_login}" /></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">会员等级：</td>
+        <td><input name="level_name" disabled value="{$data.level_name}" /></td>
+    </tr>
+    <tr height="40">
+        <td nowrap align="right">会员积分：</td>
+        <td><input name="score" disabled value="{$data.score}" /></td>
+    </tr>
+
+    <tr height="50">
+        <td align="center" colspan="2">
+            <input type="button" class="button update" value="修改">
+            <input type="button" class="button save"  value="保存">
+            <input type="button" class="button back"  value="返回">
+        </td>
+    </tr>
+    <tr height="50">
+        <td  colspan="2">
+            <span class="hint" style="margin-left:200px;"></span>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 date_default_timezone_set("PRC");
 require_once '../public/class/db.class.php';
 $db = new DB();
-$data = $db -> getAll('message','*','checked=1',"time desc","0,10");
+$data = $db -> getAll('message','*','checked=1',"id desc","0,20");
 
 ?>
 

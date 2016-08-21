@@ -26,6 +26,10 @@ if(isset($_REQUEST)){
     }
    //写入数据到数据库中
     $_REQUEST['reg_time']=time();
+    //默认最低用户等级
+    $lidarr = $db->execSql("select id from user_level order by score_from asc limit 1");
+    $_REQUEST['level_id']=$lidarr[0]['id'];
+
     $data = $db -> create('user',$_REQUEST);
     $db -> add('user',$data);
     if($db -> getLastId()){

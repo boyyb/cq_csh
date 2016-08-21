@@ -211,19 +211,32 @@
             if(key){
                 highlight_key($('.list'),2,key);
             }
+            //审核点击事件-数据处理效果+防止重复点击
+            $('.check,.uncheck').click(function(){
+                //判断是否存在子元素i-字体图标元素
+                if($(this).find('i').length==0){
+                    $(this).html('').attr("title","数据处理中...请等待！")
+                            .css("color","gray")
+                            .append('<i class="fa fa-refresh fa-spin"></i>');
+                }else{
+                    alert("数据处理中...请不要重复点击！");
+                }
+
+            });
         });
         //高亮处理函数，e是table元素，n是第几列，val是高亮的值
         function highlight_key(e,n,val){
             e.find("tr").each(function(i) {
                 var rows = e.find('tr').size();
+                //排除非数据行
                if(i==0 || i==rows-1 || i==rows-2){
                     return true;
                }
-                var tdArr = $(this).children();
-                var oldval = tdArr.eq(n).text();
+                var tds = $(this).children();
+                var oldval = tds.eq(n).text();
                 var r = new RegExp(val,"g");//正则规则
                 t = oldval.replace(r,"<span style='background:greenyellow'>" + val + "</span>");//返回处理后的字符
-                tdArr.eq(n).html(t);//重新填上新值,text()无法设别html标签，切记不能用
+                tds.eq(n).html(t);//重新填上新值,text()无法设别html标签，切记不能用
             });
         }
     </script>
@@ -278,13 +291,13 @@
         <th width="100" nowrap="">留言时间</th>
         <th width="80" nowrap="">电话号码</th>
         <th width="120" nowrap="">电子邮箱</th>
-        <th width="50" nowrap="">审核状态</th>
+        <th width="50" nowrap="">审核留言</th>
         <th width="110" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
             <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
-            <td>{$k+1}</td>
+            <td>{$sn+$k+1}</td>
             <td nowrap>{$v.name}</td>
             <td>{$v.type}</td>
             <td><if condition="strlen($v['topic']) gt 45" >{$v.topic|mb_substr=0,15,'utf-8'}...<else />{$v.topic}</if></td>

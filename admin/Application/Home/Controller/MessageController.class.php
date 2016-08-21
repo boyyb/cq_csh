@@ -21,7 +21,7 @@ class MessageController extends MyController {
         }
         $mm = D('message');
         $count = $mm->where($map)->count();// 查询满足要求的总记录数
-        $pageSize = 5;//分页显示条数
+        $pageSize = 15;//分页显示条数
         $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
         //设置分页样式
         $Page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');
@@ -36,9 +36,10 @@ class MessageController extends MyController {
         }
         $show = $Page->show();// 分页显示输出
         $data = $mm->order("id desc")->where($map)->limit($Page->firstRow.','.$Page->listRows)->select();
-        $this->assign("search",$_REQUEST);//赋值查询的参数，以便显示
-        $this->assign('page',$show);// 赋值分页输出
+        $this -> assign("search",$_REQUEST);//赋值查询的参数，以便显示
+        $this -> assign('page',$show);// 赋值分页输出
         $this -> assign('data',$data);// 赋值数据集
+        $this -> assign("sn",$Page->firstRow);
         $this -> display();// 输出模板
     }
 
