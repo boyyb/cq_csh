@@ -186,7 +186,7 @@ CREATE TABLE `user_pic` (
   `pid` int(11) NOT NULL,
   `pic_name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,6 +195,7 @@ CREATE TABLE `user_pic` (
 
 LOCK TABLES `user_pic` WRITE;
 /*!40000 ALTER TABLE `user_pic` DISABLE KEYS */;
+INSERT INTO `user_pic` VALUES (5,6,'989f47300e01523e8f4d.jpg');
 /*!40000 ALTER TABLE `user_pic` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -207,4 +208,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-22 21:00:34
+-- Dump completed on 2016-08-23  1:51:32
