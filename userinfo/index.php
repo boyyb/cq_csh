@@ -59,8 +59,21 @@
 </head>
 <body style="background:#f2f9f2;">
     <table  width="700px" align="center" style="background: white;margin-top:50px;">
+        <!--<tr>
+            <td rowspan="15">
+                <img style="height:40px;height:40px;background: grey;" src=""/>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>-->
         <tr height="30">
             <td colspan="3"><div id="base">用户信息</div></td>
+        </tr>
+        <tr height="10">
+            <td colspan="2"></td>
+            <td rowspan="5" width="100" align="left" valign="top">
+                <img style="height:60px;width:60px;background: grey;margin-top:20px;" src=""/>
+            </td>
         </tr>
         <tr height="35">
             <td width="50" align="right">用户名：</td>
