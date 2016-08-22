@@ -1,3 +1,18 @@
+<?php
+session_start();
+date_default_timezone_set("PRC");
+require_once '../public/class/db.class.php';
+$db = new DB();
+$username = $_SESSION['username'];
+$arr = $db->getOne('user',"*","username='$username'");
+$id = $arr['id'];
+$data = $db -> getOne('user_pic',"pic_name","pid=$id");
+if($data){
+    $src="../public/upload/user_pic/".$data['pic_name'];
+}else{
+    $src="../public/upload/user_pic/default.png";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,7 +69,7 @@
             display : none;
             position : absolute;
             width : 400px;
-            height: 270px;
+            height: 220px;
             top : 150px;
             left: -200px;;
             margin-left:50%;
@@ -81,8 +96,7 @@
             color:orangered;
         }
         #content_add{
-            padding-left : 3px;
-            padding-top :  5px;
+            padding-top : 10px;
         }
         #button_add{
             position:absolute;
@@ -126,19 +140,19 @@
         }
 
     </style>
-    <script src="../public/js/jquery-2.2.4.min.js"></script>
     <script>
         $(function () {
             var files = $(".files");
-            $("#fileupload").wrap("<form id='myupload' action='action.php' method='post' enctype='multipart/form-data'></form>");
+            $("#fileupload").wrap("<form id='myupload' action='action_pic.php' method='post' enctype='multipart/form-data'></form>");
             $("#fileupload").change(function(){
                 $("#myupload").ajaxSubmit({
                     dataType:  'json',
                     success: function(data) {
-                        $("#pic").attr("src","files/"+data);
+                        $("#pic").attr("src","http://localhost/1_csh/public/upload/tmp/"+data);
+                        $('input[name=src]').val(data);
                     },
                     error:function(xhr){
-                        alert("上传失败");
+                        alert("上传失败："+xhr.responseText);
                     }
                 });
             });
@@ -152,55 +166,34 @@
             });
             //关闭弹窗
             $('.closewin_add,#close_add').click(function(){
-                $('#win_add').fadeOut("normal");
+                $('#win_add').hide();
                 $('.mask').css('display','none');
-                if(flag==1){
-                    flag=0;//数据保存成功后才刷新页面
-                    window.location.reload();
-                }
+
+                window.location.reload();
             });
             //保存
             $('.save_add').click(function(){
                 var id = $('input[name=id][type=hidden]').val();
-                var level_name = $('input[name=level_name]').val();
-                var score_from = $('input[name=score_from]').val();
-                var score_to = $('input[name=score_to]').val();
-                var note = $('textarea[name=note]').val();
-                //修改数据的规则
-                if(id){
-                    var num = 0;
-                    if(level_name!=obj[0].level_name){num++;}
-                    if(score_from!=obj[0].score_from){num++;}
-                    if(score_to!=obj[0].score_to){num++;}
-                    if(note!=obj[0].note){num++;}
+                var src = $('input[name=src]').val();
+                var file =  $('#fileupload').val();
+                if(!file){
+                    alert("没有选择文件！");
+                    return;
+                }
+                if(!src){
                     if(num == 0){
-                        $('.prompt_info').css('color','red').html("数据没有发生变化！");
+                        $('.prompt_info').css('color','red').html("文件名获取失败！");
                         return;
                     }
                 }
-                if(!level_name){
-                    $('input[name=level_name]').addClass('hint');
-                    $('.prompt_info').css('color','red').html("请填写必填项");
-                    return;
-                }
-                if(score_from && isNaN(score_from)){
-                    $('input[name=score_from]').addClass('hint');
-                    $('.prompt_info').css('color','red').html("请填写数字类型");
-                    return;
-                }
-                if(score_to && isNaN(score_to)){
-                    $('input[name=score_to]').addClass('hint');
-                    $('.prompt_info').css('color','red').html("请填写数字类型");
-                    return;
-                }
-                $('.prompt_info').css('color','green').html("保存中...");
+                $('.prompt_info').css('color','blue').html("头像保存中...");
                 $.post(
-                    "{:U('userLevel/save')}",
-                    {"level_name":level_name,"score_from":score_from,"score_to":score_to,"note":note,"id":id},
+                    "action_pic.php",
+                    {"pic_name":src,"id":id,"save":1},
                     function(data){
                         if(data=="ok"){
-                            $('.prompt_info').css('color','green').html("保存成功！");
-                            flag = 1;
+                            alert("保存成功！");
+                            window.location.reload();
                         }else{
                             $('.prompt_info').css('color','red').html("保存失败！");
                             return;
@@ -219,35 +212,39 @@
         </tr>
         <tr height="10">
             <td rowspan="5" width="70" align="right" valign="top">
-                <img id="changePic" title="点击更改头像" style="cursor:pointer;height:60px;width:60px;background: grey;margin-top:20px;" src=""/>
+                <img id="changePic" title="点击更改头像"
+                     style="cursor:pointer;height:60px;width:60px;margin-top:20px;border-radius:4px;border:1px solid gray"
+                     src="<?php echo $src;?>"/>
             </td>
             <td colspan="3"></td>
         </tr>
         <tr height="35">
             <td width="50" align="right">用户名：</td>
             <td width="140">
-                <input type="text" disabled/>
+                <input type="text" disabled value="<?php echo $arr['username'];?>"/>
+                <input type="hidden" name="id" value="<?php echo $id;?>">
+                <input type="hidden" name="src" value="">
             </td>
             <td></td>
         </tr>
         <tr height="35">
             <td align="right">性别：</td>
             <td>
-                <input type="text" disabled/>
+                <input type="text" disabled value="<?php echo $arr['sex'];?>"/>
             </td>
             <td></td>
         </tr>
         <tr height="35">
             <td align="right">电话号码：</td>
             <td>
-                <input name="phone" type="text"/>
+                <input name="phone" type="text" value="<?php echo $arr['phone'];?>"/>
             </td>
             <td></td>
         </tr>
         <tr height="35">
             <td align="right">邮箱：</td>
             <td>
-                <input name="email" type="text"/>
+                <input name="email" type="text" value="<?php echo $arr['email'];?>"/>
             </td>
             <td></td>
         </tr>
@@ -293,35 +290,20 @@
 
 <div id="win_add" style="display:none;">
         <div id="title_add">
-            <span>添加用户等级</span>
+            <span>更换用户头像</span>
             <a id="close_add" title="点击关闭">X</a>
         </div>
         <div id="content_add">
-            <table align="center;" width="100%">
-                <tr height="30">
-                    <td align="right"><b style="color:red;">*</b>等级名称：</td>
-                    <td>
-                        <input type="text" name="level_name"/>
-                        <input type="hidden" name="id" value=""/>
-                    </td>
-
+            <div style="width:60px;height:60px; margin: 10px auto;">
+                <img width="100%" height="100%" src="<?php echo $src;?>" id="pic">
+            </div>
+            <table width="100%">
+                <tr>
+                    <td align="right" width="180" style="font-size:14px;">更换头像：</td>
+                    <td><a href="javascript:;" class="a-upload"><input id="fileupload" type="file" name="mypic"></td>
                 </tr>
-                <tr height="30">
-                    <td align="right">积分下限：</td>
-                    <td><input type="text" name="score_from"/></td>
-                </tr>
-                <tr height="30">
-                    <td align="right">积分上限：</td>
-                    <td><input type="text" name="score_to"/></td>
-                </tr>
-                <tr height="40">
-                    <td align="right">备注：</td>
-                    <td>
-                        <textarea style="width:180px;height:50px;resize: none;border-radius:4px;padding-left:5px;" name="note"></textarea>
-                    </td>
-                </tr>
-                <tr height="30">
-                    <td align="center" colspan="2"><span class="prompt_info"></span></td>
+                <tr>
+                    <td colspan="2" align="center"><span class="prompt_info"></span></td>
                 </tr>
             </table>
 
