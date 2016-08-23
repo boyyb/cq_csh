@@ -64,6 +64,10 @@ if($data){
         #psubmit:hover,#isubmit:hover,#back:hover{
             background: darkred;
         }
+        .hint{
+            border:1px solid red;
+            box-shadow:0 0 4px 1px red;
+        }
         /*****************************************弹窗样式**********************************/
         #win_add{
             display : none;
@@ -201,8 +205,135 @@ if($data){
                     }
                 );
             });
+            //获取初始数据
+            o = [];
+            o[0] = $('input[name=phone]').val();
+            o[1] = $('input[name=email]').val();
+            flag = true; //变量锁，防止重复提交
+
+            //更新基础数据
+            $('#isubmit').click(function(){
+                if(!flag){alert("请不要重复提交！");return;}
+                var id = $('input[name=id][type=hidden]').val();
+                var n = [];
+                n[0] = $('input[name=phone]').val();
+                n[1] = $('input[name=email]').val();
+                var num = 0;
+                $.each(n,function(i,e){
+                    if(e!=o[i]){
+                        num++;
+                    }
+                });
+                if(num==0){
+                    alert("数据没发生变化");
+                    return false;
+                }
+                //正则匹配邮箱和电话号码
+                    var phone = $('input[name=phone]').val();
+                    var re = /^1\d{10}$/;
+                    if (!re.test(phone)) {
+                        $('#hint_update').css('color','red').html("号码格式：11位数字，以1开头！");
+                        $('input[name=phone]').addClass('hint');
+                        return false;
+                    }
+                    var email = $('input[name=email]').val();
+                    var re = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+                    if(!re.test(email)){
+                        $('#hint_update').css('color','red').html("邮箱格式错误！");
+                        $('input[name=email]').addClass('hint');
+                        return false;
+                    }
+                $('#hint_update').css('color','green').html("数据保存中...");
+                flag = false;
+                $.post(
+                    "update.php",
+                    {"id":id,"phone":phone,"email":email},
+                    function(ret){
+                        if(ret.state=="ok"){
+                            $('#hint_update').css('color','green').html("保存成功！");
+                            return;
+                        }
+                        if(ret.state=="fail"){
+                            $('#hint_update').css('color','red').html("保存失败！");
+                            return;
+                        }
+                        flag = true;
+                    },'json'
+                );
+
+            });
+
+            //更改密码
+            flag_cp = true;
+            $('#psubmit').click(function(){
+                if(!flag_cp){alert("请不要重复提交！");return;}
+                var opwd = $('input[name=opassword]').val();
+                var npwd = $('input[name=npassword]').val();
+                var cpwd = $('input[name=cpassword]').val();
+                var id = $('input[name=id][type=hidden]').val();
+                if(!opwd || !npwd || !cpwd){
+                    if(!opwd){
+                        $('input[name=opassword]').addClass('hint');
+                    }
+                    if(!npwd){
+                        $('input[name=npassword]').addClass('hint');
+                    }
+                    if(!cpwd){
+                        $('input[name=cpassword]').addClass('hint');
+                    }
+                    $('.hint_cp').css('color','red').html("数据不能为空！");
+                    return false;
+                }
+                if(opwd==npwd){
+                    $('input[name=opassword],input[name=npassword]').addClass('hint');
+                    $('.hint_cp').css('color','red').html("新旧密码一样！");
+                    return false;
+                }
+                if(npwd.length<4){
+                    $('input[name=npassword]').addClass('hint');
+                    $('.hint_cp').css('color','red').html("密码长度至少4位！");
+                    return false;
+                }
+                if(npwd != cpwd){
+                    $('input[name=cpassword],input[name=npassword]').addClass('hint');
+                    $('.hint_cp').css('color','red').html("新密码两次输入不一样！");
+                    return false;
+                }
+                $('.hint_cp').css('color','green').html("数据保存中...");
+                flag_cp = false;
+                $.post(
+                    'update.php',
+                    {"opwd":opwd,"npwd":npwd,"id":id},
+                    function(data){
+                        if(data == "opwd_error"){
+                            $('.hint_cp').css('color','red').html("原密码错误！");
+                            $('input[name=opassword]').addClass('hint');
+                            flag_cp = true;
+                        }else if(data == "ok"){
+                            $('.hint_cp').css('color','green').html("密码修改成功！");
+                            jump(3);
+                        }
+                    }
+                )
+            });
+
+            $('input[name]').click(function(){
+                $('input[name]').removeClass('hint');
+                $('#hint_update,.hint_cp').html('');
+            });
         });
 
+        function jump(num){
+            if(num=='0'){
+                location.href="http://localhost/1_csh/login/back_login.php";
+            }else{
+                setTimeout(function(){
+                    $('.hint_cp').css('color','gray').html("("+num+")秒后重新登录");
+                    num--;
+                    jump(num);
+                },1000)
+            }
+        }
     </script>
 </head>
 <body style="background:#f2f9f2;">
@@ -254,7 +385,7 @@ if($data){
                 <a id="back" href="<?php echo $_SERVER['HTTP_REFERER'];?>">返回</a>
             </td>
         </tr>
-        <tr height="50"><td colspan="3">
+        <tr height="50"><td colspan="3" align="center">
                 <span id="hint_update"></span>
             </td></tr>
         <tr height="30">
