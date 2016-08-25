@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>slider_picture</title>
+    <script src="jquery-2.2.4.min.js"></script>
+    <style>
+        .p{
+            width:500px;
+            height:295px;
+            border-bottom:1px dashed dodgerblue;
+            padding:5px;
+            font-size:14px;
+            position:relative;
+            margin-top:30px;
+        }
+        .p .pic{
+            width:380px;
+            height:140px;
+            border:1px solid dimgrey;
+            border-radius:0 4px 4px 4px;
+        }
+        .p .content{
+            margin-top:10px;
+        }
+        .p .content input:not([type=radio]){
+            height:21px;
+            width:270px;
+            border-radius:3px;
+            padding-left:3px;
+        }
+        .p .content a[class^=update]{
+            display: block;
+            width:80px;
+            height:23px;
+            background: darkgreen;
+            color:white;
+            line-height: 23px;
+            text-align:center;
+            text-decoration: none;
+            border-radius:3px;
+        }
+        .p .test{
+            text-decoration: none;
+            color:blue;
+        }
+        .p .test:hover{
+            color:brown;
+            text-decoration: underline;
+        }
+        .p .content a[class^=update]:hover{
+            background: forestgreen;
+        }
+        .p .top_info{
+            position:absolute;
+            top:-20px;
+            left:5px;
+            width:60px;
+            height:25px;
+            background: darkslategrey;
+            text-align:left;
+            line-height:25px;
+            padding-left:3px;
+            color:white;
+            border-radius: 3px 3px 0 0 ;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+
+            //默认选中本地上传
+            $('#localP1,#localP2,#localP3,#localP4').prop("checked",true);
+            //选择本地上传时，复位网络图片框
+            $('#localP1,#localP2,#localP3,#localP4').click(function(){
+                if($(this).is(':checked')){
+                    var id = $(this).attr('id');
+                    var index = id.substring(id.length-1);
+                    $('input[name=pic_network'+index+']').val('').prop('disabled',true);
+                }
+            });
+            //选择网络图片时，激活输入框，复位本地上传
+            $('#networkP1,#networkP2,#networkP3,#networkP4').click(function(){
+                if($(this).is(':checked')){
+                    $(this).parents('tr').find('input[disabled]').prop("disabled",false);
+                    var id = $(this).attr('id');
+                    var index = id.substring(id.length-1);
+                    var file = $('input[name=pic_local'+index+']')
+                    file.after(file.clone().val(""));
+                    file.remove();
+                }
+            });
+
+            $('.update1,.update2,.update3,.update4').click(function(){
+                var classname = $(this).attr('class');
+                var index = classname.substring(classname.length-1);
+                //判断是否有数据变化
+                if(!$('input[name=pic_local'+index+']').val() && !$('input[name=pic_network'+index+']').val()){
+                    alert("图片-"+index+"：数据没发生变化");
+                    return false;
+                }
+
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+<div class="p">
+    <div class="top_info">图片-1</div>
+    <div class="pic">
+        <img src=""/>
+    </div>
+    <div class="content">
+        <table class="p1">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source1" value="1" id="localP1">
+                    <label for="localP1">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local1"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source1" value="2" id="networkP1">
+                    <label for="networkP1">网络图片</label>：
+                </td>
+                <td>
+                    <input name="pic_network1" disabled placeholder="请填写图片url"/>
+                    <a class="test" href="">测试</a>
+                </td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="prompt" /></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="" class="update1">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt">ok</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="p">
+    <div class="top_info">图片-2</div>
+    <div class="pic">
+        <img src=""/>
+    </div>
+    <div class="content">
+        <table class="p2">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source2" value="1" id="localP2">
+                    <label for="localP2">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local2"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right"><input type="radio" name="pic_source2" value="2" id="networkP2">
+                    <label for="networkP2">网络图片</label>：
+                </td>
+                <td><input name="pic_network2" disabled placeholder="请填写图片url"/>
+                    <a class="test" href="">测试</a></td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="prompt" /></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="" class="update2">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt">ok</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="p">
+    <div class="top_info">图片-3</div>
+    <div class="pic">
+        <img src=""/>
+    </div>
+    <div class="content">
+        <table class="p3">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source3" value="1" id="localP3">
+                    <label for="localP3">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local3"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right"><input type="radio" name="pic_source3" value="2" id="networkP3">
+                    <label for="networkP3">网络图片</label>：
+                </td>
+                <td><input name="pic_network3" disabled placeholder="请填写图片url"/>
+                    <a class="test" href="">测试</a></td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="prompt" /></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="" class="update3">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt">ok</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="p">
+    <div class="top_info">图片-4</div>
+    <div class="pic">
+        <img src=""/>
+    </div>
+    <div class="content">
+        <table class="p4">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source4" value="1" id="localP4">
+                    <label for="localP4">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local4"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right"><input type="radio" name="pic_source4" value="2" id="networkP4">
+                    <label for="networkP4">网络图片</label>：
+                </td>
+                <td><input name="pic_network4" disabled placeholder="请填写图片url"/>
+                    <a class="test" href="">测试</a>
+                </td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="prompt" /></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="" class="update4">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt">ok</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
