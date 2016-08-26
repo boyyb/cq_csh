@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userlist</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
+        .list{
+            border: 1px solid #cccccc;
+            background: snow;
+            font-size:14px;
+            border-collapse: collapse;
+
+        }
+        .list th,.list td{
+            border: 1px solid #cccccc;
+            text-align:center;
+        }
+        .list th{
+            background: #b7d2ff;
+        }
+
+        .search{
+            margin-top:10px;
+            margin-bottom:2px;
+            font-size:14px;
+        }
+        .search table{
+            background: gainsboro;
+        }
+        .search select option{
+            padding-left:5px;
+        }
+        /********************分页样式**********************/
+        .pages a,.pages span {
+            display:inline-block;
+            padding:2px 5px;
+            margin:0 2px;
+            border:1px solid #ccc;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+        }
+        .pages a,.pages li {
+            display:inline-block;
+            list-style: none;
+            text-decoration:none; color:#58A0D3;
+        }
+        .pages a.first,.pages a.prev,.pages a.next,.pages a.end{
+            margin:0px;
+        }
+        .pages a:hover{
+            color:white;
+            border-color:#50A8E6;
+            background:#50A8E6;
+        }
+        .pages span.current{
+            background:#50A8E6;
+            color:#FFF;
+            font-weight:700;
+            border-color:#50A8E6;
+        }
+        .pages .rows{
+            margin-left:10px;
+        }
+        /*********************分页样式结束**************************/
+    </style>
+    <script>
+        $(function(){
+
+            //重置查询条件
+            $('#reset').click(function(){
+                $('option').removeAttr('selected');
+                $("#username").val("")
+            });
+
+            //高亮查询结果
+            var key=$('input[name=username]').val();
+            if(key){
+                highlight_key($('.list'),2,key);
+            }
+
+        });
+        //高亮处理函数，e是table元素，n是第几列，val是高亮的值
+        function highlight_key(e,n,val){
+            e.find("tr").each(function(i) {
+                var rows = e.find('tr').size();
+                //排除非数据行
+                if(i==0 || i==rows-1 || i==rows-2){
+                    return true;
+                }
+                var tds = $(this).children();
+                var oldval = tds.eq(n).text();
+                var r = new RegExp(val,"g");//正则规则
+                t = oldval.replace(r,"<span style='background:greenyellow'>" + val + "</span>");//返回处理后的字符
+                tds.eq(n).html(t);//重新填上新值,text()无法设别html标签，切记不能用
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">会员管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">登陆日志</a>
+</div>
+<div class="search">
+    <form action="{:U('user/loglist')}" method="post">
+        <table width="99%" border="0">
+            <tr height="30">
+                <td width="75" nowrap>用户名：</td>
+                <td width="180"><input name="username" id="username"
+                                       style="width:130px;height:20px;border-radius:4px;border:1px solid gray;" value="{$search.username}"/></td>
+                <td width="85" nowrap>登陆日期：</td>
+                <td width="180">
+
+                </td>
+                <td align="right">
+                    <input type="submit" value="查询"
+                           style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer">
+                    <input type="button" id="reset" value="重置"
+                           style="width:60px;height:25px;margin-right:10px;background: green;color:white;cursor:pointer">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+<table width="99%" class="list">
+    <tr height="25">
+        <th width="30" nowrap="">序号</th>
+        <th width="80" nowrap="">用户名</th>
+        <th width="120" nowrap="">登录时间</th>
+        <th width="130" nowrap="">登陆ip</th>
+    </tr>
+    <foreach name="data" item="v" key="k">
+        <tr height="25">
+            <td>{$sn+$k+1}</td>
+            <td nowrap>{$v.username}</td>
+            <td>{$v.login_time|date="Y-m-d H:i:s",###}</td>
+            <td>{$v.login_ip}</td>
+        </tr>
+    </foreach>
+    <tr height="30">
+        <td colspan="12">
+            <div class="pages">{$page}</div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

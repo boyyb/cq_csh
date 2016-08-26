@@ -95,4 +95,32 @@ class AdminController extends MyController {
 
         }
     }
+
+    public function loglist(){
+        $count = D("admin_login")->join("admin ON admin.id=admin_login.pid ")->count();// 总记录数
+        $pageSize = 10;//分页显示条数
+        $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
+        //设置分页样式
+        $Page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');
+        $Page->setConfig('prev', '上一页');
+        $Page->setConfig('next', '下一页');
+        $Page->setConfig('last', '末页');
+        $Page->setConfig('first', '首页');
+        $Page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');
+        $Page->lastSuffix = false;//最后一页不显示为总页数
+        foreach($_POST as $key=>$val) {
+            $Page->parameter[$key] = urlencode($val); //带上查询参数，并url编码
+        }
+        $show = $Page->show();// 分页显示输出
+        //获取表数据，联表查询
+        $data = D("admin_login")->join("admin ON admin.id=admin_login.pid ")
+            ->field("admin_login.*,admin.*")
+            ->order("admin_login.login_time desc")
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> assign('data',$data);// 赋值数据集
+        $this -> assign("sn",$Page->firstRow);//序号
+        $this -> display();// 输出模板
+    }
 }

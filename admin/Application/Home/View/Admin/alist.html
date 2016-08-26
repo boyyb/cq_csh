@@ -121,8 +121,8 @@
 </head>
 <body>
 <div class="route_bg">
-    <a href="javascript:void(0)">留言管理</a><i class="glyph-icon icon-chevron-right"></i>
-    <a href="javascript:void(0)">留言列表</a>
+    <a href="javascript:void(0)">管理员</a><i class="glyph-icon icon-chevron-right"></i>
+    <a href="javascript:void(0)">列表</a>
 </div>
 <table border="1" style="border-collapse: collapse" width="99%">
     <tr height="25">
@@ -132,7 +132,6 @@
         <th width="80" nowrap="">管理等级</th>
         <th width="50" nowrap="">状态</th>
         <th width="60" nowrap="">添加时间</th>
-        <th width="100" nowrap="">上次登录时间</th>
         <th width="180">备注</th>
         <th width="80" nowrap="">操作</th>
     </tr>
@@ -144,7 +143,6 @@
             <td><if condition="$v['level'] eq 0">超级管理员<else />普通管理员</if></td>
             <td><if condition="$v['state'] eq 0">未激活<else />已激活</if></td>
             <td>{$v.add_time|date="Y-m-d",###}</td>
-            <td><if condition="$v['recent_login'] gt 0">{$v.recent_login|date="Y-m-d H:i",###}<else />未登录过</if> </td>
             <td><if condition="strlen($v['note']) gt 45" >{$v.note|mb_substr=0,15,'utf-8'}...<else />{$v.note}</if></td>
             <td>
                 <if condition="$v['username'] eq 'root'"><a onclick="alert('root账户不允许删除！')" style="color:gray;cursor:not-allowed;">删除</a>

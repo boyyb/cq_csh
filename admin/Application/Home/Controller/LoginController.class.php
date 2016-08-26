@@ -35,10 +35,12 @@ class LoginController extends Controller {
         if($autologin == "1"){
             cookie("admin_uname",$username,86400*7);
         }
-        //更新表数据,记录登录信息
-        $_REQUEST['recent_login']=time();
+        //更新记录表数据,记录登录信息
+        $alm = D('admin_login');
+        $_REQUEST['pid'] = $data[0]['id'];
+        $_REQUEST['login_time']=time();
         $_REQUEST['login_ip']=get_client_ip();
-        $am->where("username='$username' and password='$password'")->save($_REQUEST);
+        $alm->add($_REQUEST);
 
         //设置session
         session('admin_uname',$username);

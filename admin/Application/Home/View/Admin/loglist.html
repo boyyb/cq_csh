@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userlist</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <style>
+        body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
+        .list{
+            border: 1px solid #cccccc;
+            background: snow;
+            font-size:14px;
+            border-collapse: collapse;
+            margin-top:10px;
+
+        }
+        .list th,.list td{
+            border: 1px solid #cccccc;
+            text-align:center;
+        }
+        .list th{
+            background: #b7d2ff;
+        }
+
+        /********************分页样式**********************/
+        .pages a,.pages span {
+            display:inline-block;
+            padding:2px 5px;
+            margin:0 2px;
+            border:1px solid #ccc;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+        }
+        .pages a,.pages li {
+            display:inline-block;
+            list-style: none;
+            text-decoration:none; color:#58A0D3;
+        }
+        .pages a.first,.pages a.prev,.pages a.next,.pages a.end{
+            margin:0px;
+        }
+        .pages a:hover{
+            color:white;
+            border-color:#50A8E6;
+            background:#50A8E6;
+        }
+        .pages span.current{
+            background:#50A8E6;
+            color:#FFF;
+            font-weight:700;
+            border-color:#50A8E6;
+        }
+        .pages .rows{
+            margin-left:10px;
+        }
+        /*********************分页样式结束**************************/
+    </style>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">管理员</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">登陆日志</a>
+</div>
+
+<table width="75%" class="list">
+    <tr height="25">
+        <th width="50" nowrap="">序号</th>
+        <th width="100" nowrap="">用户名</th>
+        <th width="100" nowrap="">用户级别</th>
+        <th width="100" nowrap="">登陆时间</th>
+        <th width="100" nowrap="">登陆ip</th>
+    </tr>
+    <foreach name="data" item="v" key="k">
+        <tr height="25">
+            <td>{$sn+$k+1}</td>
+            <td>{$v.username}</td>
+            <td><if condition="$v.level eq 0">超级管理员<else />普通管理员</if></td>
+            <td>{$v.login_time|date="Y-m-d H:i:s",###}</td>
+            <td>{$v.login_ip}</td>
+        </tr>
+    </foreach>
+    <tr height="30">
+        <td colspan="12">
+            <div class="pages">{$page}</div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

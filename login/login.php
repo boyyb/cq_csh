@@ -1,6 +1,21 @@
 <?php
 header("content-type:text/html;charset=utf-8");
 session_start();
+function get_client_ip(){
+    if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")){
+        $ip = getenv("HTTP_CLIENT_IP");
+    }else if (getenv("HTTP_X_FORWARDED_FOR") && strcasecmp(getenv("HTTP_X_FORWARDED_FOR"), "unknown")){
+        $ip = getenv("HTTP_X_FORWARDED_FOR");
+    }else if (getenv("REMOTE_ADDR") && strcasecmp(getenv("REMOTE_ADDR"), "unknown")){
+        $ip = getenv("REMOTE_ADDR");
+    }else if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] && strcasecmp($_SERVER['REMOTE_ADDR'], "unknown")){
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }else{
+        $ip = "unknown";
+
+    }
+    return($ip);
+}
 if(isset($_REQUEST)){
     require_once "../public/class/db.class.php";
     $db = new DB();
@@ -21,6 +36,11 @@ if(isset($_REQUEST)){
         echo "lock";//返回ajax
     }else{
         echo "ok";//返回ajax
+        //记录登陆数据
+        $pid = $res['id'];
+        $login_time=time();
+        $login_ip=get_client_ip();
+        $db->add('user_login',array("pid"=>$pid,"login_time"=>$login_time,"login_ip"=>$login_ip));
         //处理session
         $_SESSION['username']=$username;
     }
