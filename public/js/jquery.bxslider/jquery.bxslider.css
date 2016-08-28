@@ -193,12 +193,14 @@
 	background: #666\9;
 	background: rgba(80, 80, 80, 0.75);
 	width: 100%;
+	height:30px;
+	line-height:30px;
 }
 
 .bx-wrapper .bx-caption span {
 	color: #fff;
 	font-family: Arial;
 	display: block;
-	font-size: .85em;
-	padding: 10px;
+	font-size: 14px;
+
 }

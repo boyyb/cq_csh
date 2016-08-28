@@ -14,8 +14,8 @@ if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/pla
             <span class="top-l">欢迎光临长寿湖旅游网站!</span>
                 <span class="top-r">
                     <?php if(isset($_SESSION['username'])){?>
-                    <a href="/1_csh/userinfo/index.php?username=<?php echo $_SESSION['username'];?>" title="点击查看用户资料">【root】</a>
                     <a href="javascript:void(0)" id="login_out" onclick="logout();">注销</a>
+                    <a href="/1_csh/userinfo/" class="userdetail" title="点击查看用户资料">[root]</a>
                     <?php }else{?>
                     <a href="/1_csh/login/">登陆</a>
                     <a href="/1_csh/register/">注册</a>

@@ -131,7 +131,13 @@ class UserController extends MyController {
                     if($k=="username"){
                         $map[$k]  = array('like',"%".$v."%");
                     }else{
-                        $map[$k]=array('eq',urldecode($v));//解码还原为正常字符(汉字)
+                        //登录时间查询
+                        $v = urldecode($v);//解码还原为正常字符(针对汉字)
+                        $btime = strtotime($v);
+                        $etime = $btime+86400;
+                        //$map[$k] = array('egt',$btime);
+                        //$map[$k] = array('lt',$etime);
+                        $map[$k] = array(array('egt',$btime),array('lt',$etime),"and");
                     }
                 }
             }

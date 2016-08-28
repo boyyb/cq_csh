@@ -27,8 +27,22 @@ $(function(){
       $navmenu_a_current.addClass("current");
     }); 
   }
+
+   //ajax加载轮播图
+    $.post(
+        "public/common/slider.php",
+        {"slider":"true"},
+        function(jsonstr){
+            var ob = $.parseJSON(jsonstr);
+            $('.bxslider .img1').attr('src',ob[0].pic_name);
+            $('.bxslider .img2').attr('src',ob[1].pic_name);
+            $('.bxslider .img3').attr('src',ob[2].pic_name);
+            $('.bxslider .img4').attr('src',ob[3].pic_name);
+
+        }
+    );
     //轮播图控制
-  $('.bxslider').bxSlider({
+    $('.bxslider').bxSlider({
         mode:'horizontal', //默认的是水平
         captions: true,//自动控制
         auto: true,
@@ -38,8 +52,7 @@ $(function(){
         pause:3500,//图片停留时间4s
         autoHover:true,//当鼠标滑向滑动内容上时，是否暂停滑动,true停，false不停
         //easing: 'swing',
-  });
-
+    });
 
 
 });

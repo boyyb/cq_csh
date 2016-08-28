@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>slider_picture</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
+    <script src="__PUBLIC__/Js/jquery.form.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
+        .p{
+            float:left;
+            width:450px;
+            height:295px;
+            padding:5px;
+            font-size:14px;
+            position:relative;
+            margin-top:30px;
+        }
+        .p .pic{
+            width:380px;
+            height:140px;
+            border:0;
+
+        }
+        .pic img{
+            border:0;
+        }
+        .p .content{
+            margin-top:10px;
+        }
+        .p .content input:not([type=radio]){
+
+            width:270px;
+            border-radius:3px;
+            padding-left:3px;
+            line-height:21px;
+            border:1px solid gray;
+        }
+        .p .content a[class^=update]{
+            display: block;
+            width:80px;
+            height:23px;
+            background: darkgreen;
+            color:white;
+            line-height: 23px;
+            text-align:center;
+            text-decoration: none;
+            border-radius:3px;
+        }
+        .p a[class^=test]{
+            text-decoration: none;
+            color:blue;
+        }
+        .p a[class^=test]:hover{
+            color:brown;
+            text-decoration: underline;
+        }
+        .p .content a[class^=update]:hover{
+            background: forestgreen;
+        }
+        .p .top_info{
+            position:absolute;
+            top:-20px;
+            left:5px;
+            width:60px;
+            height:25px;
+            background: seagreen;
+            text-align:left;
+            line-height:25px;
+            padding-left:3px;
+            color:white;
+            border-radius: 3px 3px 0 0 ;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            //获取初始值
+            pic_prompt = [];
+            pic_prompt[1] = $('input[name=pic_prompt1]').val();
+            pic_prompt[2] = $('input[name=pic_prompt2]').val();
+            pic_prompt[3] = $('input[name=pic_prompt3]').val();
+            pic_prompt[4] = $('input[name=pic_prompt4]').val();
+
+            //初始化页面
+            $('#localP1,#localP2,#localP3,#localP4').prop("checked",true);
+            $('input[name^=pic_network]').val('').prop('disabled',true);
+            $('input[name^=pic_local]').prop("disabled",false);
+
+            //选择本地上传时，复位网络图片框
+            $('#localP1,#localP2,#localP3,#localP4').click(function(){
+                if($(this).is(':checked')){
+                    var id = $(this).attr('id');
+                    var index = id.substring(id.length-1);
+                    $('input[name=pic_network'+index+']').val('').prop('disabled',true);
+                    $('input[name=pic_local'+index+']').prop("disabled",false);
+                    $('.promit'+index).html('');
+                }
+
+            });
+            //选择网络图片时，激活输入框，复位本地上传
+            $('#networkP1,#networkP2,#networkP3,#networkP4').click(function(){
+                if($(this).is(':checked')){
+                    var id = $(this).attr('id');
+                    var index = id.substring(id.length-1);
+                    $('input[name=pic_network'+index+']').prop("disabled",false);
+                    //清空file框
+                    var file = $('input[name=pic_local'+index+']');
+                    file.prop("disabled",true);
+                    file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+                    file.remove();
+                    $('.prompt'+index).html('');
+                }
+            });
+            //保存修改
+            flag = true;
+            $('.update1,.update2,.update3,.update4').click(function(){
+                if(!flag){alert('有数据正在提交中，请稍后再试！');return false;}
+                var classname = $(this).attr('class');
+                var index = classname.substring(classname.length-1);
+                var nprompt = $('input[name=pic_prompt'+index+']').val();
+                var pic_local = $('input[name=pic_local'+index+']').val();
+                var pic_network = $('input[name=pic_network'+index+']').val();
+                //判断是否有数据变化
+                if(nprompt==pic_prompt[index] && !pic_local && !pic_network){
+                    alert("图片-"+index+"：数据没发生变化");
+                    return false;
+                }
+                if($('#networkP'+index).is(':checked')){
+                    if(!pic_network){
+                        alert('网络图片地址不能为空！');
+                        return false;
+                    }else{
+                        alert("提示：确认提交前，请测试网络图片地址是否可用！");
+                    }
+
+                }
+
+                $('.prompt'+index).css('color','#555').html('<i class="fa fa-spinner fa-spin"></i> 数据提交中...');
+                flag = false; //提交中的防止二次点击标识
+
+                //获取图片名称
+                if(!pic_local && !pic_network){
+                    var source = "none";
+                }else{
+                    if(pic_local){
+                        var pic_name = $('input[type=hidden][name=pic_name'+index+']').val();
+                        var source = "local";
+                    }else{
+                        var pic_name = pic_network;
+                        var source = "network";
+                    }
+                }
+
+                var file = $('input[name=pic_local'+index+']');
+                file.prop("disabled",true);
+                file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+                file.remove();
+
+                $.post(
+                        "{:U('home/sliderSave')}",
+                        {"pic_name":pic_name,"order":index,"source":source,"prompt":nprompt},
+                        function(data){
+                            if(data=="ok"){
+                                $('.prompt'+index).css('color','green').html('<i class="fa fa-smile-o"></i> 图片修改成功！');
+                            }else{
+                                $('.prompt'+index).css('color','red').html('<i class="fa fa-frown-o"></i> 图片修改失败！');
+                            }
+                            flag = true;
+                        }
+                );
+
+            });
+
+            //测试
+            $('.test1,.test2,.test3,.test4').click(function(){
+                if(!flag){alert('有数据正在提交中，请稍后再试！');return false;}
+                var classname = $(this).attr('class');
+                var index = classname.substring(classname.length-1);
+                if(!$('#networkP'+index).is(':checked')){
+                    alert("请选择网络图片后再试！");
+                    return false;
+                }
+                var url = $('input[name=pic_network'+index+']').val();
+                if(!url){
+                    alert("请输入正确的图片的网络地址！");
+                    return false;
+                }
+                $(this).attr('target',"_blank").attr('href',url);
+                $("#pic"+index).attr("src",$('input[name=pic_network'+index+']').val());
+            });
+
+
+            //ajax上传
+            var pic_local = ["pic_local1","pic_local2","pic_local3","pic_local4"];
+            $.each(pic_local,function(index,e){
+                index++;
+                $("input[name="+e+"]").wrap("<form id='myupload"+index+"' action='{:U('home/sliderUpload')}' method='post' enctype='multipart/form-data'></form>");
+                $("input[name="+e+"]").change(function(){
+                    $("#myupload"+index).ajaxSubmit({
+                        dataType:  'json',
+                        success: function(filename) {
+                            $("#pic"+index).attr("src","__PUBLIC__/Uploads/tmp/"+filename);
+                            $('input[type=hidden][name=pic_name'+index+']').val(filename);
+                        },
+                        error:function(xhr){
+                            alert("上传失败："+xhr);
+                        }
+                    });
+                });
+            });
+
+
+        });
+    </script>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">首页管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">轮播图</a>
+</div>
+<div class="p">
+    <div class="top_info">图片-1</div>
+    <div class="pic">
+        <img src="{$data[0]['pic_name']}"
+             height="100%" width="100%" id="pic1"/>
+    </div>
+    <div class="content">
+        <table class="p1">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source1" value="1" id="localP1">
+                    <label for="localP1">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local1" style="border:0"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source1" value="2" id="networkP1">
+                    <label for="networkP1">网络图片</label>：
+                </td>
+                <td>
+                    <input name="pic_network1" disabled placeholder="请填写图片url"/>
+                    <a class="test1" href="javascript:void(0)">测试</a>
+                </td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="pic_prompt1" value="{$data[0]['prompt']}" /></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="javascript:void(0)" class="update1">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt1"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="p">
+    <div class="top_info">图片-2</div>
+    <div class="pic"/>
+    <img src="{$data[1]['pic_name']}" height="100%" width="100%" id="pic2"/>
+</div>
+<div class="content">
+    <table class="p2">
+        <tr height="30">
+            <td align="right">
+                <input type="radio" name="pic_source2" value="1" id="localP2">
+                <label for="localP2">本地上传</label>：
+            </td>
+            <td><input type="file" name="pic_local2" style="border:0"/></td>
+        </tr>
+        <tr height="30">
+            <td align="right"><input type="radio" name="pic_source2" value="2" id="networkP2">
+                <label for="networkP2">网络图片</label>：
+            </td>
+            <td><input name="pic_network2" disabled placeholder="请填写图片url"/>
+                <a class="test2" href="javascript:void(0)">测试</a></td>
+        </tr>
+        <tr height="30">
+            <td align="right">底部提示：</td>
+            <td><input name="pic_prompt2" value="{$data[1]['prompt']}"/></td>
+
+        </tr>
+        <tr height="25">
+            <td colspan="2" align="center">
+                <a href="javascript:void(0)" class="update2">确认修改</a>
+            </td>
+        </tr>
+        <tr height="20">
+            <td colspan="2" align="center">
+                <span class="prompt2"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+</div>
+<div class="p">
+    <div class="top_info">图片-3</div>
+    <div class="pic">
+        <img src="{$data[2]['pic_name']}" height="100%" width="100%" id="pic3"/>
+    </div>
+    <div class="content">
+        <table class="p3">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source3" value="1" id="localP3">
+                    <label for="localP3">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local3" style="border:0"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right"><input type="radio" name="pic_source3" value="2" id="networkP3">
+                    <label for="networkP3">网络图片</label>：
+                </td>
+                <td><input name="pic_network3" disabled placeholder="请填写图片url"/>
+                    <a class="test3" href="javascript:void(0)">测试</a></td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="pic_prompt3" value="{$data[2]['prompt']}"/></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="javascript:void(0)" class="update3">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt3"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="p">
+    <div class="top_info">图片-4</div>
+    <div class="pic">
+        <img src="{$data[3]['pic_name']}" height="100%" width="100%" id="pic4"/>
+    </div>
+    <div class="content">
+        <table class="p4">
+            <tr height="30">
+                <td align="right">
+                    <input type="radio" name="pic_source4" value="1" id="localP4">
+                    <label for="localP4">本地上传</label>：
+                </td>
+                <td><input type="file" name="pic_local4" style="border:0"/></td>
+            </tr>
+            <tr height="30">
+                <td align="right"><input type="radio" name="pic_source4" value="2" id="networkP4">
+                    <label for="networkP4">网络图片</label>：
+                </td>
+                <td><input name="pic_network4" disabled placeholder="请填写图片url"/>
+                    <a class="test4" href="javascript:void(0)">测试</a>
+                </td>
+            </tr>
+            <tr height="30">
+                <td align="right">底部提示：</td>
+                <td><input name="pic_prompt4" value="{$data[3]['prompt']}"/></td>
+
+            </tr>
+            <tr height="25">
+                <td colspan="2" align="center">
+                    <a href="javascript:void(0)" class="update4">确认修改</a>
+                </td>
+            </tr>
+            <tr height="20">
+                <td colspan="2" align="center">
+                    <span class="prompt4"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<!--隐藏域表单存放本地上传的图片名称-->
+<input type="hidden" name="pic_name1" />
+<input type="hidden" name="pic_name2" />
+<input type="hidden" name="pic_name3" />
+<input type="hidden" name="pic_name4" />
+</body>
+</html>

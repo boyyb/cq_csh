@@ -1,5 +1,9 @@
 <?php
 session_start();
+header('content-type:text/html;charset=utf-8');
+if(!isset($_SESSION['username'])){
+    die("非法访问！");
+}
 date_default_timezone_set("PRC");
 require_once '../public/class/db.class.php';
 $db = new DB();

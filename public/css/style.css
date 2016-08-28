@@ -27,7 +27,8 @@ a:hover{text-decoration:underline;}
 .top-l{float:left;width:50%;line-height:35px;text-align:left;color:white;}
 .top-l a{color:white;}
 .top-r{float:right;width:50%;height:35px;text-align:right;}
-.top-r a{float:right;color:white;background:url(images/l.jpg) no-repeat right center;padding:0px 10px 0px 10px;line-height:35px;}
+.top-r a{float:right;color:white;padding:0px 5px 0px 5px;line-height:35px;font-size:14px;}
+
 .top_box .topcontent a:hover{color:#ef3b2d;text-decoration:none;}
 
 .menu_box{text-align:left;height:45px;}
@@ -145,7 +146,6 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
 
 /***********************************************************自定义*********************************************************/
 /***********************************网站首页样式*********************************/
-
 /*更多按钮样式*/
 .more{
     display:block;

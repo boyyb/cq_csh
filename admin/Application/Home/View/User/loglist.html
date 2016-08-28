@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <title>userlist</title>
     <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
-    <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/Plugins/date/css/lyz.calendar.css" type="text/css" />
+    <!--<script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>-->
+    <script src="__PUBLIC__/Plugins/date/js/jquery-1.5.1.js"></script>
+    <script src="__PUBLIC__/Plugins/date/js/lyz.calendar.min.js"></script>
     <style>
         body{margin: 6px 0 0 10px;}
         /**************面包屑样式*****************/
@@ -53,9 +56,12 @@
         }
         .search table{
             background: gainsboro;
+            font-size:14px;
         }
-        .search select option{
-            padding-left:5px;
+        .search input[type=submit],#reset{
+            width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer;
+            border:1px solid gray;
+            border-radius:4px;
         }
         /********************分页样式**********************/
         .pages a,.pages span {
@@ -93,27 +99,30 @@
     </style>
     <script>
         $(function(){
-
             //重置查询条件
             $('#reset').click(function(){
-                $('option').removeAttr('selected');
-                $("#username").val("")
+                $(".search input[name]").val("")
             });
 
             //高亮查询结果
             var key=$('input[name=username]').val();
             if(key){
-                highlight_key($('.list'),2,key);
+                highlight_key($('.list'),1,key);
             }
+
+            //日期控件
+
+            $("#login_time").calendar();
 
         });
         //高亮处理函数，e是table元素，n是第几列，val是高亮的值
         function highlight_key(e,n,val){
+            //遍历table下每一行
             e.find("tr").each(function(i) {
                 var rows = e.find('tr').size();
                 //排除非数据行
-                if(i==0 || i==rows-1 || i==rows-2){
-                    return true;
+                if(i==0 || i==rows-1){
+                    return true;//相当于 continue
                 }
                 var tds = $(this).children();
                 var oldval = tds.eq(n).text();
@@ -130,22 +139,27 @@
     <a href="javascript:void(0)">登陆日志</a>
 </div>
 <div class="search">
-    <form action="{:U('user/loglist')}" method="post">
+    <form action="{:U('user/loglist')}" method="post" >
         <table width="99%" border="0">
             <tr height="30">
-                <td width="75" nowrap>用户名：</td>
-                <td width="180"><input name="username" id="username"
-                                       style="width:130px;height:20px;border-radius:4px;border:1px solid gray;" value="{$search.username}"/></td>
-                <td width="85" nowrap>登陆日期：</td>
-                <td width="180">
+                <td width="40" nowrap>用户名：</td>
+                <td width="150">
+                    <input name="username" id="username"
+                           style="width:130px;height:25px;border-radius:4px;border:1px solid gray;padding-left:3px;"
+                           value="{$search.username}"/>
+                </td>
+                <td width="50" nowrap>登陆日期：</td>
+                <td width="150">
+                    <input id="login_time" name="login_time"
+                           style="width:130px;height:25px;border-radius:4px;border:1px solid gray;padding-left:3px;"
+                           value="{$search.login_time}"/>
+                </td>
+                </td>
+                <td align="left" width="200">
+                    <input type="submit" value="查询">
+                    <input type="button" id="reset" value="重置">
+                </td>
 
-                </td>
-                <td align="right">
-                    <input type="submit" value="查询"
-                           style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer">
-                    <input type="button" id="reset" value="重置"
-                           style="width:60px;height:25px;margin-right:10px;background: green;color:white;cursor:pointer">
-                </td>
             </tr>
         </table>
     </form>
@@ -168,7 +182,7 @@
     </foreach>
     <tr height="30">
         <td colspan="12">
-            <div class="pages">{$page}</div>
+            <div class="pages">{$page}<if condition="$data eq null">不存在相关记录。</if></div>
         </td>
     </tr>
 </table>

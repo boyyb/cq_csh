@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿<?php
+include "public/class/db.class.php";
+$db = new DB();
+$data = $db->getAll('slider_pic',"*",'',"pic_order asc");
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>美丽长寿湖</title>
@@ -7,11 +12,11 @@
     <link href="public/css/style.css" type="text/css" rel="stylesheet"/>
     <link href="public/css/dropmenu.css" rel="stylesheet" type="text/css"/>
     <script src="public/js/jquery.min.js" type="text/javascript"></script>
-    <script src="public/js/comm.js" type="text/javascript"></script>
     <script type="text/javascript">var submenu_style = 1;</script>
     <!--轮播图-->
     <script src="public/js/jquery.bxslider/jquery.bxslider.min.js"></script>
     <script src="public/js/jquery.bxslider/jquery.bxslider.js"></script>
+    <script src="public/js/comm.js" type="text/javascript"></script>
     <link href="public/js/jquery.bxslider/jquery.bxslider.css" type="text/css" rel="stylesheet"/>
 
 </head>
@@ -21,10 +26,10 @@
 <!------------------------轮播图开始----------------------------->
     <div class="banner" style="height:350px;width:1000px;margin:10px auto;">
         <ul class="bxslider">
-            <li><img src="public/images/pic1.jpg" style="height:350px;width:1000px;" title=""/></li>
-            <li><img src="public/images/pic2.jpg" style="height:350px;width:1000px;" title="点击了解"/></li>
-            <li><img src="public/images/pic3.jpg" style="height:350px;width:1000px;" title="点击了解"/></li>
-            <li><img src="public/images/pic4.jpg" style="height:350px;width:1000px;" title="点击了解"/></li>
+            <li><img class="img1" src="" style="height:350px;width:1000px;" title="<?php echo $data[0]['prompt']?>"/></li>
+            <li><img class="img2" src="" style="height:350px;width:1000px;" title="<?php echo $data[1]['prompt']?>"/></li>
+            <li><img class="img3" src="" style="height:350px;width:1000px;" title="<?php echo $data[2]['prompt']?>"/></li>
+            <li><img class="img4" src="" style="height:350px;width:1000px;" title="<?php echo $data[3]['prompt']?>"/></li>
         </ul>
     </div>
 <!------------------------轮播图结束----------------------------->
