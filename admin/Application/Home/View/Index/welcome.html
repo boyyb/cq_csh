@@ -15,21 +15,30 @@
             padding:10px;
             position: relative;
         }
-        .help_info{
-            position: absolute;
-            right:10px;
-            top:5px;
-            margin-top:80px;
-            width:500px;
-            min-height:120px;
+        .tongji{
+            margin-top:30px;
+            width:400px;
+            min-height:100px;
             border:1px cornflowerblue solid;
             border-radius:4px;
             background: #e0ecff;
             opacity: 0.7;
+        }
+        .tongji h3{
+            text-align:center;
+            background: seagreen;
+            color:white;
+        }
+        .tongji p{
             padding-left:5px;
         }
-        .help_info h3{
-            text-align:center;
+        .tongji p a{
+            color:blue;
+            text-decoration: none;
+        }
+        .tongji p a:hover{
+            color:orangered;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -42,12 +51,14 @@
 <div id="container">
     <p>您上次登录时间为：<if condition="$data['login_time'] eq null"><else />{$data.login_time|date="Y-m-d H:i",###}</if></p>
     <p>您上次登录IP为：{$data.login_ip}</p>
-    <div class="help_info" style="display:none">
-        <h3>温馨提示</h3>
-        <p>本系统由BinGo开发并维护，如果遇到技术问题或相关建议咨询请联系BinGo！</p>
-        <p>联系人：BinGo</p>
-        <p>电话：13629795255</p>
-        <p>email:619280492@qq.com</p>
+    <div class="tongji">
+        <h3>统计信息</h3>
+        <p>昨日访问人次：</p>
+        <p>最近一周访问人次：</p>
+        <p>会员注册总数：{$udata.total}</p>
+        <p>最近一周新增会员数：{$udata.week}</p>
+        <p>留言未审核条数：<a href="{:U('message/mlist')}" title="点击查看详情">{$mdata.unchecked}</a></p>
+
     </div>
     
 </div>

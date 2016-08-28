@@ -1,5 +1,6 @@
 <?php
 header("content-type:text/html;charset=utf-8");
+date_default_timezone_set("PRC");
 session_start();
 function get_client_ip(){
     if (getenv("HTTP_CLIENT_IP") && strcasecmp(getenv("HTTP_CLIENT_IP"), "unknown")){

@@ -35,6 +35,12 @@
     <!--菜单-->
     <div class="layout_left_menu">
         <ul id="menu">
+            <li class="childUlLi">
+                <a href="javascript:void(0)"> <i class="fa fa-home"></i>首页</a>
+                <ul>
+                    <li><a href="{:U('index/welcome')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>欢迎</a></li>
+                </ul>
+            </li>
             <li class="childUlLi" id="root" <if condition="$level != '0'">style="display:none;"</if>>
                <a href="javascript:void(0)"  target="menuFrame"><i class="fa fa-user"></i>管理员</a>
                 <ul>
@@ -52,7 +58,7 @@
                 </ul>
             </li>
             <li class="childUlLi">
-                <a href="javascript:void(0)"> <i class="fa fa-home"></i>首页管理</a>
+                <a href="javascript:void(0)"> <i class="fa fa-home"></i>前台首页</a>
                 <ul>
                     <li><a href="{:U('home/sliderShow')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>轮播图</a></li>
                     <li><a href="{:U('contact/show')}" target="menuFrame"><i class="glyph-icon icon-chevron-right"></i>待建模块</a></li>
@@ -87,7 +93,7 @@
                         scrolling="yes" frameborder="no" width="100%" height="100%"></iframe>
     </div>
     <div class="layout_footer">
-        <p>Copyright © 2016 - BinGo</p>
+        <p>系统维护人：BinGo | 电话：13629795255 | email:619280492@qq.com</p>
     </div>
 
     <div id="win">
