@@ -96,15 +96,8 @@
             $('.back').click(function(){
                 window.location.href=url;
             });
-
-            $('#news_body input[type=button],#news_body input[type=reset]').mouseover(function(){
-                $(this).css('background','#f86d0d').css('color','white');
-            });
-            $('#news_body input[type=button],#news_body input[type=reset]').mouseout(function(){
-                $(this).css('background','#ddd').css('color','black');
-            });
-
-            $('#news_body input[type=button][value=提交]').click(function(){
+            
+            $('.save').click(function(){
                 //获取表单的值value
                 var id = $('#news_body input[name=id]').val();
                 var topic = $('#news_body input[name=topic]').val();
