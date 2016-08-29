@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>administrators</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <!--引入富文本编辑器-->
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/Plugins/simditor-2.3.0/styles/simditor.css" />
+    <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/module.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/hotkeys.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/uploader.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/simditor.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /************************************上面为公共部分************************************/
+        #news_body{
+            width:1000px;
+            height:400px;
+        //border:1px solid #8ba8af;
+            margin:10px 0;
+            padding-top: 20px;
+            font-size:15px;
+        //background:antiquewhite;
+        //border-radius:4px;
+            font-family:微软雅黑;
+        }
+        input[name=title],input[name=source]{
+            height:25px;
+            width:300px;
+            font-size: 13px;
+            padding: 2px 4px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            border-radius:4px;
+        }
+        .save,.back{
+            float:left;
+            display: block;
+            height:25px;
+            width:60px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            text-decoration: none;
+        }
+        .save{
+            margin-left:45%;
+            margin-right:10%;
+        }
+    </style>
+    <script>
+        $(function(){
+            //初始化富文本编辑器
+            var editor = new Simditor({
+                textarea: $('#editor'),
+                upload: true,
+                defaultImage:'__PUBLIC__/Plugins/simditor-2.3.0/images/image.png',
+                //optional options
+            });
+            //获取原始数据
+            var otopic = $('#news_body input[name=topic]').val();
+            var oemail = $('#news_body input[name=email]').val();
+            var oname = $('#news_body input[name=name]').val() || "游客";
+            var ophone = $('#news_body input[name=phone]').val();
+            var ocontent = $('#news_body textarea[name=content]').val();
+            var otype = $("#news_body input[name=type][type='radio']:checked").val();//获取单选框的值
+            var url = document.referrer; //来源url
+
+            $('.back').click(function(){
+                window.location.href=url;
+            });
+
+            $('#news_body input[type=button],#news_body input[type=reset]').mouseover(function(){
+                $(this).css('background','#f86d0d').css('color','white');
+            });
+            $('#news_body input[type=button],#news_body input[type=reset]').mouseout(function(){
+                $(this).css('background','#ddd').css('color','black');
+            });
+
+            $('#news_body input[type=button][value=提交]').click(function(){
+                //获取表单的值value
+                var id = $('#news_body input[name=id]').val();
+                var topic = $('#news_body input[name=topic]').val();
+                var email = $('#news_body input[name=email]').val();
+                var name = $('#news_body input[name=name]').val() || "游客";
+                var phone = $('#news_body input[name=phone]').val();
+                var content = $('#news_body textarea[name=content]').val();
+                var type = $("#news_body input[name=type][type='radio']:checked").val();//获取单选框的值
+                //检查数据变化,针对详情页
+                if(id){
+                    if(otopic==topic && oemail==email && oname==name && ophone==phone && ocontent==content && otype==type){
+                        alert("数据没有发生变化！");
+                        return false;
+                    }
+
+                }
+
+                //必填项检查
+                if(!topic || !email || !content || !type){
+                    $('#errorMsg').html("带\"*\"的为必填项，请检查填写内容！");
+                    return false;
+                }
+                //主题字数不超过30
+                if(topic.length>30){
+                    $('#errorMsg').html("主题不超过30个字！");
+                    return false;
+                }
+                //email格式检查
+                var emailRe = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+                if(!emailRe.test(email)){
+                    $('#errorMsg').html("邮箱格式不正确！");
+                    return false;
+                }
+                //电话号码检查
+                if(phone && isNaN(phone)){
+                    $('#errorMsg').html("电话号码格式不正确！");
+                    return false;
+                }
+                //留言内容大于5个字
+                if(content.length<5){
+                    $('#errorMsg').html("留言内容至少5个字！");
+                    return false;
+                }
+                $('#errorMsg').css('color','green').html("提交中...");
+                $('#news_body input[type=button][value=提交]').prop('disabled','disabled');
+                //ajax 提交数据
+                $.post(
+                        "{:U('message/save')}",
+                        {"topic":topic,"email":email,"name":name,"phone":phone,"content":content,"type":type,'id':id},
+                        function(data){
+                            if(data=="add_ok"){
+                                $('#errorMsg').css('color','green').html("提交成功！请等待审核通过。");
+                                $('#news_body input[type=reset]').click();
+                            }else if(data=="update_ok"){
+                                $('#errorMsg').css('color','green').html("修改成功！");
+                            }else if(data=="update-fail"){
+                                $('#errorMsg').css('color','red').html("修改失败！");
+                            }else if(data=="add_fail"){
+                                $('#errorMsg').css('color','red').html("提交失败！");
+                            }
+                            $('#news_body input[type=button][value=提交]').removeAttr('disabled');
+                        }
+                );
+
+
+            });
+        });
+    </script>
+</head>
+<body>
+<!--------------------------------------公共面包屑开始---------------------------------------->
+<div class="route_bg">
+    <a href="javascript:void(0)">新闻管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)"><if condition="$data.id eq null">添加<else />详情</if></a>
+</div>
+<!---------------------------------------公共面包屑结束---------------------------------------->
+<div id="news_body">
+    <form action="{:U('news/save')}" method="post">
+        <table width="100%" >
+            <tr height="35">
+                <td nowrap width="180px;" align="right"><span style="color:red;">*</span>新闻标题：</td>
+                <td colspan="5" align="left" style="padding-left:10px;">
+                    <input name="title" value="{$data.title}"/>
+                    <input name="id" type="hidden" value="{$data.id}"/>
+                </td>
+            </tr>
+            <tr height="35">
+                <td nowrap align="right"><span style="color:red;">*</span>新闻来源：</td>
+                <td align="left" style="padding-left:10px;">
+                    <input name="source" value="{$data.source}"/>
+                </td>
+            </tr>
+            <tr>
+                <td nowrap align="right"><span style="color:red;">*</span>新闻内容：</td>
+                <td align="left" style="padding-left:10px;">
+                    <textarea id="editor" placeholder="Balabala" autofocus name="content"></textarea>{$data.content}</textarea>
+                </td>
+            </tr>
+            <tr height="30">
+                <td></td>
+                <td align="left" style="padding-left:10px;color:red;">
+                    <span id="errorMsg"></span>
+                </td>
+            </tr>
+            <tr height="30">
+                <td colspan="2">
+                    <a href="javascript:void(0)" class="save" >保存</a>
+                    <if condition="$data.id eq null"><else /><a href="javascript:void(0)" class="back" >返回</a></if>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+
+</body>
+</html>

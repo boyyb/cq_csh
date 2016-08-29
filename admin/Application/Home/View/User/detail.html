@@ -155,7 +155,12 @@
         <td nowrap align="right">会员积分：</td>
         <td><input name="score" disabled value="{$data.score}" /></td>
     </tr>
-
+    <tr>
+        <td align="right">用户头像：</td>
+        <td>
+            <img style="height:60px;width:60px;" alt="无头像" title="用户头像" src="{$root}/public/upload/user_pic/{$data.pic_name}"/>
+        </td>
+    </tr>
     <tr height="50">
         <td align="center" colspan="2">
             <input type="button" class="button update" value="修改">

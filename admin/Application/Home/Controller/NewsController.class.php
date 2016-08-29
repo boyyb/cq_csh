@@ -1,14 +1,24 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class UserController extends MyController {
-    public $um = '';
+class NewsController extends MyController {
+    public $nm = '';
     public function __construct(){
         parent::__construct();
-        $this->um=D('user');
+        $this->um=D('news');
     }
 
-    public function ulist(){
+    public function addEdit($id){
+        $data = array();
+        if($id){
+            $data = $this->nm->where("id=$id")->select();
+            $data = $data[0];
+        }
+        $this -> assign("data",$data);
+        $this -> display();
+    }
+
+    public function nlist(){
         //筛选出不为空的查询条件
         if(isset($_REQUEST)){
             foreach($_REQUEST as $k=>$v){
