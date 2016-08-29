@@ -91,7 +91,7 @@ class UserController extends MyController {
                 echo "fail";
             }
         }else{
-            $this->error("用户ID获取失败");
+            echo "fail";
         }
     }
 

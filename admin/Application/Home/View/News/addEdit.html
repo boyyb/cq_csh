@@ -11,6 +11,7 @@
     <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/hotkeys.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/uploader.js"></script>
     <script type="text/javascript" src="__PUBLIC__/Plugins/simditor-2.3.0/scripts/simditor.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/Js/jquery.form.js"></script>
     <style>
         body{margin: 6px 0 0 10px;}
         .route_bg{
@@ -74,6 +75,14 @@
             margin-left:45%;
             margin-right:10%;
         }
+        .hint_red{
+            border:1px solid red;
+            box-shadow:0 0 4px 1px red;
+        }
+        .hint_blue{
+            border:1px solid dodgerblue;
+            box-shadow:0 0 4px 1px dodgerblue;
+        }
     </style>
     <script>
         $(function(){
@@ -96,74 +105,87 @@
             $('.back').click(function(){
                 window.location.href=url;
             });
-            
+
+            $('input:not([type=file])').focus(function(){
+                $(this).addClass('hint_blue').removeClass('hint_red');
+                $('input').not(this).removeClass('hint_blue');
+            });
+            $('input').blur(function(){
+                $(this).removeClass('hint_blue');
+            });
+
+            //保存、更新
+            flag=true;
             $('.save').click(function(){
+                if(!flag){
+                    alert("数据正在提交中...请勿重复提交！！！");
+                    return false;
+                }
                 //获取表单的值value
                 var id = $('#news_body input[name=id]').val();
-                var topic = $('#news_body input[name=topic]').val();
-                var email = $('#news_body input[name=email]').val();
-                var name = $('#news_body input[name=name]').val() || "游客";
-                var phone = $('#news_body input[name=phone]').val();
+                var title = $('#news_body input[name=title]').val();
+                var source = $('#news_body input[name=source]').val();
                 var content = $('#news_body textarea[name=content]').val();
-                var type = $("#news_body input[name=type][type='radio']:checked").val();//获取单选框的值
                 //检查数据变化,针对详情页
                 if(id){
                     if(otopic==topic && oemail==email && oname==name && ophone==phone && ocontent==content && otype==type){
                         alert("数据没有发生变化！");
                         return false;
                     }
-
                 }
 
                 //必填项检查
-                if(!topic || !email || !content || !type){
-                    $('#errorMsg').html("带\"*\"的为必填项，请检查填写内容！");
+                if(!title || !source || !content){
+                    $('#prompt_news').css('color','red').html("带\"*\"的为必填项，请检查填写内容！");
                     return false;
                 }
-                //主题字数不超过30
-                if(topic.length>30){
-                    $('#errorMsg').html("主题不超过30个字！");
+                //新闻标题字数不超过30
+                if(title.length>30){
+                    $('#prompt_news').css('color','red').html("新闻标题不能超过30个字！");
+                    $('input[name=title]').addClass('hint_red');
                     return false;
                 }
-                //email格式检查
-                var emailRe = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
-                if(!emailRe.test(email)){
-                    $('#errorMsg').html("邮箱格式不正确！");
-                    return false;
-                }
-                //电话号码检查
-                if(phone && isNaN(phone)){
-                    $('#errorMsg').html("电话号码格式不正确！");
-                    return false;
-                }
-                //留言内容大于5个字
-                if(content.length<5){
-                    $('#errorMsg').html("留言内容至少5个字！");
-                    return false;
-                }
-                $('#errorMsg').css('color','green').html("提交中...");
+                $('#prompt_news').css('color','green').html('提交中...<i class="fa fa-spinner fa-spin"></i>');
                 $('#news_body input[type=button][value=提交]').prop('disabled','disabled');
+                flag=false;
                 //ajax 提交数据
                 $.post(
-                        "{:U('message/save')}",
-                        {"topic":topic,"email":email,"name":name,"phone":phone,"content":content,"type":type,'id':id},
+                        "{:U('news/save')}",
+                        {"title":title,"content":content,"source":source,'id':id},
                         function(data){
-                            if(data=="add_ok"){
-                                $('#errorMsg').css('color','green').html("提交成功！请等待审核通过。");
-                                $('#news_body input[type=reset]').click();
-                            }else if(data=="update_ok"){
-                                $('#errorMsg').css('color','green').html("修改成功！");
-                            }else if(data=="update-fail"){
-                                $('#errorMsg').css('color','red').html("修改失败！");
-                            }else if(data=="add_fail"){
-                                $('#errorMsg').css('color','red').html("提交失败！");
+                            if(data=="ok"){
+                                $('#prompt_news').css('color','green').html("提交成功！");
+                            }else{
+                                $('#prompt_news').css('color', 'red').html("提交失败！");
                             }
-                            $('#news_body input[type=button][value=提交]').removeAttr('disabled');
+                            flag=true;
                         }
                 );
 
 
             });
+
+            //ajax上传
+            $("#upload").wrap("<form id='myupload' action='{:U('news/picUpload')}' method='post' enctype='multipart/form-data'></form>");
+            $("#upload").change(function(){
+                $('.prompt_upload').css('color','blue').html('图片上传中...<i class="fa fa-spinner fa-spin"></i> ');
+                $("#myupload").ajaxSubmit({
+                        dataType:  'json',
+                        success: function(filename) {
+                            $("#pic_news").attr("src","__PUBLIC__/Uploads/tmp/"+filename);
+                            $('input[type=hidden][name=pic_name]').val(filename);
+                            $('.prompt_upload').css('color','green').html('<i class="fa fa-smile-o"></i> 图片上传成功！');
+                        },
+                        error:function(xhr){
+                            alert("上传失败："+xhr);
+                            var file = $('#upload');
+                            file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+                            file.remove();
+                            $('.prompt_upload').css('color','red').html('<i class="fa fa-frown-o"></i> 图片上传失败！');
+                        }
+                    });
+            });
+
         });
     </script>
 </head>
@@ -175,8 +197,7 @@
 </div>
 <!---------------------------------------公共面包屑结束---------------------------------------->
 <div id="news_body">
-    <form action="{:U('news/save')}" method="post">
-        <table width="100%" >
+    <table width="100%" >
             <tr height="35">
                 <td nowrap width="180px;" align="right"><span style="color:red;">*</span>新闻标题：</td>
                 <td colspan="5" align="left" style="padding-left:10px;">
@@ -190,26 +211,38 @@
                     <input name="source" value="{$data.source}"/>
                 </td>
             </tr>
+            <tr height="35">
+                <td align="right">新闻图片：</td>
+                <td>
+                    <input type="file" id="upload" name="pic_news" style="border:0;margin-left:10px;"/>
+                </td>
+            </tr>
+            <tr height="35">
+                <td align="right">图片预览：</td>
+                <td style="padding-left:10px;">
+                    <img style="width:200px;" src="" alt="无图片" id="pic_news" title="新闻插图"/>
+                    <span class="prompt_upload"></span>
+                </td>
+            </tr>
+
             <tr>
                 <td nowrap align="right"><span style="color:red;">*</span>新闻内容：</td>
                 <td align="left" style="padding-left:10px;">
                     <textarea id="editor" placeholder="Balabala" autofocus name="content"></textarea>{$data.content}</textarea>
                 </td>
             </tr>
-            <tr height="30">
-                <td></td>
-                <td align="left" style="padding-left:10px;color:red;">
-                    <span id="errorMsg"></span>
-                </td>
-            </tr>
-            <tr height="30">
+            <tr height="35">
                 <td colspan="2">
                     <a href="javascript:void(0)" class="save" >保存</a>
                     <if condition="$data.id eq null"><else /><a href="javascript:void(0)" class="back" >返回</a></if>
                 </td>
             </tr>
+            <tr height="25">
+                <td align="center" colspan="2">
+                    <span id="prompt_news"></span>
+                </td>
+            </tr>
         </table>
-    </form>
 
 </div>
 

@@ -5,7 +5,7 @@ class NewsController extends MyController {
     public $nm = '';
     public function __construct(){
         parent::__construct();
-        $this->um=D('news');
+        $this->nm=D('news');
     }
 
     public function addEdit($id){
@@ -16,6 +16,23 @@ class NewsController extends MyController {
         }
         $this -> assign("data",$data);
         $this -> display();
+    }
+
+    public function picUpload(){
+        $upload = new \Think\Upload();// 实例化上传类
+        $upload->maxSize = 5242880 ;// 设置附件上传大小 5m
+        $upload->exts = array('jpg', 'gif', 'png', 'jpeg','bmp');// 设置附件上传类型
+        $upload->rootPath = "./Public/Uploads/"; // 设置附件上传根目录
+        $upload->saveName =  substr(md5(time()), 0, 20); //文件命名
+        $upload->autoSub = true; //允许子目录
+        $upload->subName = 'tmp'; //子目录名称（临时存放）
+        // 上传单个文件
+        $info = $upload->uploadOne($_FILES['pic_news']);
+        if(!$info) {// 上传错误提示错误信息
+            echo json_encode($upload->getError());
+        }else{// 上传成功 获取上传文件信息
+            echo json_encode($info['savename']);
+        }
     }
 
     public function nlist(){
@@ -35,7 +52,7 @@ class NewsController extends MyController {
             }
         }
 
-        $count = $this->um->where($map)->join("user_level ul ON ul.id=user.level_id ")->count();// 查询满足要求的总记录数
+        $count = $this->nm->where($map)->join("user_level ul ON ul.id=user.level_id ")->count();// 查询满足要求的总记录数
         $pageSize = 5;//分页显示条数
         $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
         //设置分页样式
@@ -51,7 +68,7 @@ class NewsController extends MyController {
         }
         $show = $Page->show();// 分页显示输出
         //获取表数据，联表查询
-        $data = $this->um
+        $data = $this->nm
             ->join("user_level ul ON ul.id=user.level_id ")
             ->field("user.*,ul.level_name")
             ->order("user.id desc")
@@ -71,7 +88,7 @@ class NewsController extends MyController {
 
     public function delete(){
         $id = $_REQUEST['id'];
-        $num = $this->um->delete($id);
+        $num = $this->nm->delete($id);
         if($num){
             echo "1";
         }else{
@@ -82,7 +99,7 @@ class NewsController extends MyController {
     public function delCh(){
         $ids = $_REQUEST['ids'];
         $num = $_REQUEST['num'];
-        $affectedRows = $this->um->delete($ids);
+        $affectedRows = $this->nm->delete($ids);
         if($affectedRows == $num){
             echo "1";
         }
@@ -92,23 +109,31 @@ class NewsController extends MyController {
     }
     public function save(){
         $id = $_REQUEST['id'];
+        $_REQUEST['pubtime']=time();
+        $_REQUEST['operator']=session("admin_uname");
         if($id) {
             //更新
-            $num = $this->um->where("id=$id")->save($_REQUEST);
+            $num = $this->nm->where("id=$id")->save($_REQUEST);
             if ($num) {
                 echo "ok";
             } else {
                 echo "fail";
             }
         }else{
-            $this->error("用户ID获取失败");
+            //添加
+            $num = $this->nm->add($_REQUEST);
+            if ($num) {
+                echo "ok";
+            } else {
+                echo "fail";
+            }
         }
     }
 
     public function lock($id,$state){
         $url = $_SERVER['HTTP_REFERER'];
         $arr = array('state'=>$state);
-        $this->um->where("id=$id")->save($arr);
+        $this->nm->where("id=$id")->save($arr);
         redirect($url);
 
 
@@ -117,7 +142,7 @@ class NewsController extends MyController {
    public function detail($id){
         if($id){
             $url = $_SERVER['HTTP_REFERER'];
-            $data = $this->um
+            $data = $this->nm
                 ->join("left join user_level ul ON ul.id=user.level_id ") //左连接
                 ->join("left join user_pic up ON up.pid=user.id") //左连接
                 ->field("user.*,ul.level_name,up.pic_name")
@@ -157,7 +182,7 @@ class NewsController extends MyController {
             }
         }
 
-        $count = $this->um->where($map)->join("user_login ul ON ul.pid=user.id ")->count();// 查询满足要求的总记录数
+        $count = $this->nm->where($map)->join("user_login ul ON ul.pid=user.id ")->count();// 查询满足要求的总记录数
         $pageSize = 10;//分页显示条数
         $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
         //设置分页样式
@@ -173,7 +198,7 @@ class NewsController extends MyController {
         }
         $show = $Page->show();// 分页显示输出
         //获取表数据，联表查询
-        $data = $this->um
+        $data = $this->nm
             ->join("user_login ul ON ul.pid=user.id ")
             ->field("user.username,ul.*")
             ->order("ul.login_time desc")
