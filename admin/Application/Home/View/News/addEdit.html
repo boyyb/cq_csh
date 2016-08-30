@@ -57,7 +57,7 @@
             vertical-align: middle;
             border-radius:4px;
         }
-        .save,.back{
+        .save,.back,.button{
             float:left;
             display: block;
             height:25px;
@@ -83,6 +83,7 @@
             border:1px solid dodgerblue;
             box-shadow:0 0 4px 1px dodgerblue;
         }
+
     </style>
     <script>
         $(function(){
@@ -94,12 +95,11 @@
                 //optional options
             });
             //获取原始数据
-            var otopic = $('#news_body input[name=topic]').val();
-            var oemail = $('#news_body input[name=email]').val();
-            var oname = $('#news_body input[name=name]').val() || "游客";
-            var ophone = $('#news_body input[name=phone]').val();
+            var id = $('#news_body input[name=id]').val();
+            var otitle = $('#news_body input[name=title]').val();
+            var osource = $('#news_body input[name=source]').val();
             var ocontent = $('#news_body textarea[name=content]').val();
-            var otype = $("#news_body input[name=type][type='radio']:checked").val();//获取单选框的值
+            var oimage = $('input[type=hidden][name=image]').val();
             var url = document.referrer; //来源url
 
             $('.back').click(function(){
@@ -109,6 +109,7 @@
             $('input:not([type=file])').focus(function(){
                 $(this).addClass('hint_blue').removeClass('hint_red');
                 $('input').not(this).removeClass('hint_blue');
+                $('#prompt_news').html('');
             });
             $('input').blur(function(){
                 $(this).removeClass('hint_blue');
@@ -126,9 +127,10 @@
                 var title = $('#news_body input[name=title]').val();
                 var source = $('#news_body input[name=source]').val();
                 var content = $('#news_body textarea[name=content]').val();
+                var image = $('input[type=hidden][name=image]').val();
                 //检查数据变化,针对详情页
                 if(id){
-                    if(otopic==topic && oemail==email && oname==name && ophone==phone && ocontent==content && otype==type){
+                    if(title==otitle && source==osource && content==ocontent && image==oimage){
                         alert("数据没有发生变化！");
                         return false;
                     }
@@ -151,10 +153,23 @@
                 //ajax 提交数据
                 $.post(
                         "{:U('news/save')}",
-                        {"title":title,"content":content,"source":source,'id':id},
+                        {"title":title,"content":content,"source":source,'id':id,"image":image},
                         function(data){
                             if(data=="ok"){
-                                $('#prompt_news').css('color','green').html("提交成功！");
+                                if(id){
+                                    //保存后保留详情页面数据
+                                    $('#prompt_news').css('color','green').html("提交成功！");
+                                }else{
+                                    $('#prompt_news').css('color','green').html("提交成功！");
+                                    //初始化页面
+                                    $('#news_body input[name]').val('');
+                                    $('.simditor-body').html("");
+                                    $('.prompt_upload').html('');
+                                    $('#news_body img').attr("src",'');
+                                    var file = $('#upload');
+                                    file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+                                    file.remove();
+                                }
                             }else{
                                 $('#prompt_news').css('color', 'red').html("提交失败！");
                             }
@@ -173,7 +188,7 @@
                         dataType:  'json',
                         success: function(filename) {
                             $("#pic_news").attr("src","__PUBLIC__/Uploads/tmp/"+filename);
-                            $('input[type=hidden][name=pic_name]').val(filename);
+                            $('input[type=hidden][name=image]').val(filename);
                             $('.prompt_upload').css('color','green').html('<i class="fa fa-smile-o"></i> 图片上传成功！');
                         },
                         error:function(xhr){
@@ -183,7 +198,13 @@
                             file.remove();
                             $('.prompt_upload').css('color','red').html('<i class="fa fa-frown-o"></i> 图片上传失败！');
                         }
-                    });
+                });
+            });
+
+            //删除图片
+            $('.delPic').click(function(){
+                $('input[type=hidden][name=image]').val("");
+                $("#pic_news").attr("src","");
             });
 
         });
@@ -203,6 +224,7 @@
                 <td colspan="5" align="left" style="padding-left:10px;">
                     <input name="title" value="{$data.title}"/>
                     <input name="id" type="hidden" value="{$data.id}"/>
+                    <input name="image" type="hidden" value="{$data.image}"> <!--图片名称隐藏域-->
                 </td>
             </tr>
             <tr height="35">
@@ -220,7 +242,8 @@
             <tr height="35">
                 <td align="right">图片预览：</td>
                 <td style="padding-left:10px;">
-                    <img style="width:200px;" src="" alt="无图片" id="pic_news" title="新闻插图"/>
+                    <img style="width:200px;" src="__PUBLIC__/Uploads/newspic/{$data.image}" alt="无图片" id="pic_news" title="新闻插图"/>
+                    <if condition="$data.image neq null"><button class="delPic">删除图片</button></if>
                     <span class="prompt_upload"></span>
                 </td>
             </tr>
@@ -228,7 +251,7 @@
             <tr>
                 <td nowrap align="right"><span style="color:red;">*</span>新闻内容：</td>
                 <td align="left" style="padding-left:10px;">
-                    <textarea id="editor" placeholder="Balabala" autofocus name="content"></textarea>{$data.content}</textarea>
+                    <textarea id="editor" placeholder="Balabala" autofocus name="content">{$data.content}</textarea>
                 </td>
             </tr>
             <tr height="35">
@@ -237,8 +260,8 @@
                     <if condition="$data.id eq null"><else /><a href="javascript:void(0)" class="back" >返回</a></if>
                 </td>
             </tr>
-            <tr height="25">
-                <td align="center" colspan="2">
+            <tr height="60">
+                <td align="center" colspan="2" valign="top">
                     <span id="prompt_news"></span>
                 </td>
             </tr>

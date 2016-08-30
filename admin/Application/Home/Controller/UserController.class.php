@@ -133,7 +133,7 @@ class UserController extends MyController {
                 }else{
                     //模糊查询姓名
                     if($k=="username"){
-                        $map[$k]  = array('like',"%".$v."%");
+                        $map[$k]  = array('like',"%".urldecode($v)."%");
                     }else{
                         //登录时间查询
                         $v = urldecode($v);//解码还原为正常字符(针对汉字)

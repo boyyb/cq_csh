@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userlist</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="__PUBLIC__/Plugins/date/css/lyz.calendar.css" type="text/css" />
+    <!--<script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>-->
+    <script src="__PUBLIC__/Plugins/date/js/jquery-1.5.1.js"></script>
+    <script src="__PUBLIC__/Plugins/date/js/lyz.calendar.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
+        .list{
+            border: 1px solid #cccccc;
+            background: snow;
+            font-size:14px;
+            border-collapse: collapse;
+
+        }
+        .list th,.list td{
+            border: 1px solid #cccccc;
+            text-align:center;
+        }
+        .list th{
+            background: #b7d2ff;
+        }
+        .delOne ,.detailOne{
+            color:dodgerblue;
+            text-decoration: none;
+        }
+        .delOne:hover ,.detailOne:hover{
+            color:red;
+            text-decoration: underline;
+        }
+        .delch{
+            display: block;
+            height:25px;
+            width:70px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            text-decoration: none;
+        }
+
+        .search{
+            margin-top:10px;
+            margin-bottom:2px;
+        }
+        .search table{
+            background: gainsboro;
+        }
+        .search td {
+            font-size:14px;
+        }
+        /********************分页样式**********************/
+        .pages a,.pages span {
+            display:inline-block;
+            padding:2px 5px;
+            margin:0 2px;
+            border:1px solid #ccc;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+        }
+        .pages a,.pages li {
+            display:inline-block;
+            list-style: none;
+            text-decoration:none; color:#58A0D3;
+        }
+        .pages a.first,.pages a.prev,.pages a.next,.pages a.end{
+            margin:0px;
+        }
+        .pages a:hover{
+            color:white;
+            border-color:#50A8E6;
+            background:#50A8E6;
+        }
+        .pages span.current{
+            background:#50A8E6;
+            color:#FFF;
+            font-weight:700;
+            border-color:#50A8E6;
+        }
+        .pages .rows{
+            margin-left:10px;
+        }
+        /*********************分页样式结束**************************/
+    </style>
+    <script>
+        $(function(){
+            //日期控件
+            $("#btime").calendar();
+            $("#etime").calendar();
+
+            $('#submit').click(function(){
+                //判断时间段合法性
+                var time_from=$('#btime').val().replace(/\-/g,'');
+                var time_to=$('#etime').val().replace(/\-/g,'');
+                if(time_from && time_to && time_to<time_from){
+                    alert("结束时间不能小于开始时间！");
+                    $('#etime').val("");
+                    return false;
+                }
+            });
+            //单条删除
+            $('.delOne').click(function(){
+                var r = window.confirm("确认要删除吗？删除后不可恢复！");
+                if(!r){return false;}
+                var id = $(this).find('b[style]').html();
+                $(this).css('color','red').html("删除中...").append('<i class="fa fa-refresh fa-spin"></i>');
+                $.post(
+                        "{:U('news/delete')}",
+                        {"id":id},
+                        function(data){
+                            if(data == "ok"){
+                                //alert('删除成功！');
+                                window.location.reload();
+                            }else{
+                                alert('删除失败');
+                                $('.delOne').css('color','dodgerblue').html("删除").removeChild('i');//还原删除样式
+
+                            }
+                        }
+                );
+            });
+
+            //复选框 全选 全不选
+            $('.chall').click(function(){
+                if($(this).attr('checked')){
+                    $('.ch').attr('checked',true); //jquery 1.5.1 不支持prop，只能用attr
+                }else{
+                    $('.ch').attr('checked',false);
+                }
+            });
+            //复选框 自动判断是否勾选全选
+            $('.ch').click(function() {
+                //找出没有被选中的，并计算个数
+                if($('.ch').filter(':not(:checked)').size()>0){
+                    $('.chall').attr('checked', false);
+                }
+                if($('.ch').filter(':not(:checked)').size()==0){
+                    $('.chall').attr('checked', true);
+                }
+            });
+            //删除选中
+            $('.delch').click(function(){
+                //判断是否有选中项
+                if($(".ch:checked").length == 0){
+                    alert("请选择至少一个选项！");
+                    return;
+                }
+
+                var num = $(".ch:checked").length;//获取选中的个数，同size()
+
+                var r = window.confirm("确认要删除所选项吗？删除后不可恢复！");
+                if(r){
+                    var s='';
+                    $('input[class="ch"]:checked').each(function(){
+                        if($(this).val()){
+                            s += $(this).val()+',';
+                        }
+                    });
+                    var allChId = s.substring(0,s.length-1);
+                    //alert(allChId);
+                    $.post(
+                            "{:U('news/delCh')}",
+                            {"ids":allChId,"num":num},
+                            function(data){
+                                if(data=="ok"){
+                                    alert("删除成功！");
+                                    $('.ch').attr('checked',false);//重新初始化复选框
+                                    window.location.reload();
+                                }else{
+                                    alert("删除失败！");
+                                }
+
+
+                            }
+                    );
+                }
+
+            });
+
+            //重置查询条件
+            $('#reset').click(function(){
+                $(".search input[name]").val("")
+            });
+
+            //高亮查询结果
+            var title=$('input[name=title]').val();
+            var source=$('input[name=source]').val();
+            if(title){
+                highlight_key($('.list'),2,title);
+            }
+            if(source){
+                highlight_key($('.list'),3,source);
+            }
+
+        });
+        //高亮处理函数，e是table元素，n是第几列（从0开始），val是高亮的值
+        function highlight_key(e,n,val){
+            e.find("tr").each(function(i) {
+                var rows = e.find('tr').size();
+                //排除非数据行
+                if(i==0 || i==rows-1 || i==rows-2){
+                    return true;
+                }
+                var tds = $(this).children();
+                var oldval = tds.eq(n).text();
+                var r = new RegExp(val,"g");//正则规则
+                t = oldval.replace(r,"<span style='background:greenyellow'>" + val + "</span>");//返回处理后的字符
+                tds.eq(n).html(t);//重新填上新值,text()无法设别html标签，切记不能用
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">新闻管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">列表</a>
+</div>
+<div class="search">
+    <form action="{:U('news/nlist')}" method="post">
+        <table width="99%" border="0">
+            <tr height="30">
+                <td width="70" nowrap>新闻标题：</td>
+                <td width="250">
+                    <input name="title" id="title"
+                           style="width:200px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;" value="{$search.title}"/>
+                </td>
+                <td width="70" nowrap>新闻来源：</td>
+                <td width="220">
+                    <input name="source" id="source"
+                           style="width:160px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;" value="{$search.source}"/>
+                </td>
+                <td width="60" nowrap>时间段：</td>
+                <td width="280">
+                    <input id="btime" name="btime"
+                           style="width:100px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;"
+                           value="{$search.btime}" placeholder="开始时间"/> -
+                    <input id="etime" name="etime"
+                           style="width:100px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;"
+                           value="{$search.etime}" placeholder="结束时间"/>
+                </td>
+                <td align="right">
+                    <input type="submit" id="submit" value="查询"
+                           style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
+                    <input type="button" id="reset" value="重置"
+                           style="width:60px;height:25px;margin-right:10px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+<table width="99%" class="list">
+    <tr height="25">
+        <th width="25"><input type="checkbox" class="chall"/></th>
+        <th width="30" nowrap>序号</th>
+        <th width="130" nowrap>新闻标题</th>
+        <th width="80" nowrap>新闻来源</th>
+        <th width="80" nowrap>发布时间</th>
+        <th width="60" nowrap>发布者</th>
+        <th width="60" nowrap>评论数</th>
+        <th width="60" nowrap>顶 | 踩</th>
+        <th width="100" nowrap="">操作</th>
+    </tr>
+    <foreach name="data" item="v" key="k">
+        <tr height="25">
+            <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
+            <td>{$sn+$k+1}</td>
+            <td nowrap>{$v.title}</td>
+            <td>{$v.source}</td>
+            <td>{$v.pubtime|date="Y-m-d H：i",###}</td>
+            <td>{$v.operator}</td>
+            <td>{$v.comments}</td>
+            <td>{$v.like} | {$v.unlike}</td>
+            <td>
+                <a href="{:U('news/addEdit',array('id'=>$v['id']))}" class="detailOne">内容详情</a>&nbsp;|&nbsp;
+                <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
+            </td>
+        </tr>
+    </foreach>
+    <tr height="30">
+        <td colspan="12" style="text-align:center;padding-left:10px;">
+            <if condition="$data eq null">没有查询到相关数据！！！<else />
+                <a class="delch" href="javascript:void(0)">删除选中</a>
+            </if>
+        </td>
+    </tr>
+    <if condition="$page neq null">
+    <tr height="30">
+        <td colspan="12">
+            <div class="pages">{$page}</div>
+        </td>
+    </tr>
+    </if>
+</table>
+
+</body>
+</html>
