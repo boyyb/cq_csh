@@ -466,6 +466,9 @@ a.menu:hover{color:white;text-decoration:none;background:#333;}
     bottom:2px;
     right:5px;
 }
+#jqzx_container div[class^=news] .content p{
+    font-size:14px;
+}
 #jqzx_container div[class^=news] .bottom{
     float:left;
     width: 700px;
