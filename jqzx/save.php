@@ -44,16 +44,15 @@ if(isset($_REQUEST)){
         echo "<table width=\"100%\" border=\"1\" style=\"margin:5px auto;\">
                    <tr heigh=\"25\">
                        <td colspan=\"4\" align=\"left\" >
-                           1楼 zxxtjt 2015-09-05 18:23发表
+                           ".$_REQUEST['username']." 在 ".date('Y-m-d H:i:s',$_REQUEST['time'])."发表&nbsp;&nbsp;ip: ".$_REQUEST['ip']."
                        </td>
                    </tr>
                    <tr>
                        <td width=\"60\" align=\"left\" valign=\"top\">
-                           <img style=\"height:50px;width:50px;margin-top: 8px;\" src=\"\"/>
+                           <img style=\"height:50px;width:50px;margin-top: 8px;\" src=\" "."../public/upload/user_pic/".$_REQUEST['photo']."\"/>
                        </td>
-                       <td align=\"left\">
-                           7878787878787878787878787878787878787878787878787878787878878878
-                           7888888888888888888888888888888888888888888888888888888888888888
+                       <td align=\"left\" valign=\"top\">
+                            ".$_REQUEST['content']."
                        </td>
                    </tr>
                </table>";
