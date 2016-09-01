@@ -23,7 +23,7 @@ if(isset($_REQUEST)){
     $db = new DB();
     $ip = get_client_ip();
     $pid = $_REQUEST['pid'];
-    $data = $db->getOne("news_like","*","ip='$ip'");
+    $data = $db->getOne("news_like","*","ip='$ip' and pid=$pid");
     //统计
     if(isset($_REQUEST['tongji'])){
         $arr = $db->getAll("news_like","*","nlike='1' and pid=$pid");

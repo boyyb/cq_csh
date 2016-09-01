@@ -120,7 +120,7 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
                             $('.cprompt').css('color','green').html("提交成功！");
                             $('.ctop').after(i);//提交成功后，追加评论内容到列表中
                             $('.nocomments').hide();//隐藏暂无评论的提示
-          
+
                         }else{
                             $('.cprompt').css('color','red').html("提交失败！");
                         }
