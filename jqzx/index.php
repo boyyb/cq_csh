@@ -36,7 +36,7 @@ $src= str_replace("\\","/",$src)."/Public/Uploads/newspic/";
                 <img width="100%" height="100%" src="<?php echo $src.$pic_name;?>"/>
             </div>
             <div class="content">
-                <p><?php echo mb_substr(strip_tags($v['content']),0,300,'utf-8')."....";?></p>
+                <p><?php echo mb_substr(str_replace("&nbsp;","",strip_tags($v['content'])),0,250,'utf-8')."....";?></p>
                 <a href="detail.php?id=<?php echo $v['id'];?>" class="morezx">详情...</a>
             </div>
             <div class="bottom">

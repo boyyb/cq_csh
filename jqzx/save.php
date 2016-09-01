@@ -21,6 +21,7 @@ function get_client_ip(){
 if(isset($_REQUEST)){
     require_once "../public/class/db.class.php";
     $db = new DB();
+
     $username = $_REQUEST['user'];
     if($username == "游客"){
         $_REQUEST['photo']="default.jpg";

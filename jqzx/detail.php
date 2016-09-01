@@ -34,6 +34,7 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
             border:1px solid lightgrey;
             border-radius:4px;
             background: ghostwhite;
+            margin-bottom:40px;
         }
         .news_detail h4{
             margin-top:10px;
@@ -100,6 +101,7 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
     </style>
     <script>
         $(document).ready(function(){
+            //保存评论
             $('.csave').click(function(){
                 var user = $('input[name=user][type=hidden]').val() || "游客";
                 var content = $('.comment textarea').val();
@@ -117,6 +119,8 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
                         if(i){
                             $('.cprompt').css('color','green').html("提交成功！");
                             $('.ctop').after(i);//提交成功后，追加评论内容到列表中
+                            $('.nocomments').hide();//隐藏暂无评论的提示
+          
                         }else{
                             $('.cprompt').css('color','red').html("提交失败！");
                         }
@@ -124,8 +128,10 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
                     },"html"
                 );
 
+
             });
-            flag = true;
+            //ajax异步加载更多评论，每次加10条
+            flag = true; //防重复点击标记
             $('.more').click(function(){
                 if(!flag){alert("正在获取数据中...");return false;}
                 var cnum = $('input[name=cnum][type=hidden]').val();
@@ -169,6 +175,70 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
 
             });
 
+            //顶踩功能
+            a=true;
+            $('#like').click(function(){
+                if(!a){alert("数据在处理中，不要重复点击");return;}
+                var pid = $('input[name=pid][type=hidden]').val();
+                a=false;
+                $.post(
+                    "like_unlike.php",{"like":1,"pid":pid},
+                    function(data){
+                        var data = $.parseJSON(data);
+                        if(data.info=="ok"){
+                            alert("顶操作成功！");
+                            $('#like').html("顶("+ data.like +")");
+                        }
+                        if(data.info=="fail"){
+                            alert("顶操作失败！！");
+                        }
+                        if(data.info=="like+1"){
+                            alert("你已经顶过了！");
+                        }
+                        if(data.info=="unlike+1"){
+                            alert("你已经踩过了！");
+                        }
+                        a=true;
+                    }
+                );
+            });
+
+            $("#unlike").click(function(){
+                if(!a){alert("数据在处理中，不要重复点击");return;}
+                var pid = $('input[name=pid][type=hidden]').val();
+                $.post(
+                    "like_unlike.php",{"unlike":1,"pid":pid},function(data){
+                        var data = $.parseJSON(data);
+                        if(data.info=="ok"){
+                            alert("踩操作成功！");
+                            $('#unlike').html("踩("+ data.unlike +")");
+                        }
+                        if(data.info=="fail"){
+                            alert("踩操作失败！！");
+                        }
+                        if(data.info=="like+1"){
+                            alert("你已经顶过了！");
+                        }
+                        if(data.info=="unlike+1"){
+                            alert("你已经踩过了！");
+                        }
+                        a=true;
+                    }
+                );
+            });
+
+            //ajax获取顶踩数
+            $.post(
+                "like_unlike.php",
+                {"pid":$('input[name=pid][type=hidden]').val(),"tongji":1},
+                function(i){
+                    var d = $.parseJSON(i);
+                    //赋值给按钮
+                    $('#like').html("顶("+ d.like +")");
+                    $('#unlike').html("踩("+ d.unlike +")");
+                }
+            );
+
         });
     </script>
 </head>
@@ -186,10 +256,10 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
            <h4>
                <span>发布时间：<?php echo date("Y-m-d H:i",$data['pubtime']);?></span>&nbsp;&nbsp;
                <span>来源：<?php echo $data['source'];?></span>&nbsp;&nbsp;
-               <span>评论数：<?php echo $nccount;?></span>
+               <span class="total_cnum">评论数：<?php echo $nccount;?></span>
                <span>
-                   <button>顶(999)</button>
-                   <button>踩(9999)</button>
+                   <button id="like">顶</button>
+                   <button id="unlike">踩</button>
                </span>
            </h4>
            <div class="wenzi">
@@ -226,7 +296,11 @@ $usrc= "../public/upload/user_pic/"; //用户头像目录
                    </tr>
                </table>
               <?php }?>
+               <?php if($nccount>5){?>
                <a href="javascript:void(0)" class="more">查看更多</a>
+               <?php }elseif($nccount==0){?>
+               <span class="nocomments">暂无评论！</span>
+               <?php }?>
            </div>
        </div>
     </div>
