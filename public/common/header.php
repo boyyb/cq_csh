@@ -2,7 +2,7 @@
 session_start();
 $url = dirname($_SERVER['PHP_SELF']);
 if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/play" || $url=="/1_csh/czwg/buy"){
-    $url = "/1_csh/czwg/";
+    $url = "/1_csh/czwg";
 }
 ?>
 
@@ -30,7 +30,7 @@ if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/pla
                 <li class="menu_style <?php if($url=="/1_csh")echo "menu_current";?>" id="MenuItem61" name="MenuItem"><a href="http://localhost/1_csh/index1.php" class="menu">网站首页</a></li>
                 <li class="menu_style <?php if($url=="/1_csh/jqjs")echo "menu_current";?>" id="MenuItem62" name="MenuItem"><a href="http://localhost/1_csh/jqjs/" class="menu">景区介绍</a></li>
                 <li class="menu_style <?php if($url=="/1_csh/jqzx")echo "menu_current";?>" id="MenuItem63" name="MenuItem"><a href="http://localhost/1_csh/jqzx/" class="menu">景区资讯</a></li>
-                <li class="menu_style <?php if($url=="/1_csh/czwg")echo "menu_current";?>"" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
+                <li class="menu_style <?php if($url=="/1_csh/czwg")echo "menu_current";?>" id="MenuItem64" name="MenuItem"><a href="javascript:void(0)" class="menu">吃·住·玩·购</a>
                     <ul>
                         <li><a href="http://localhost/1_csh/czwg/eat">"吃"在长寿湖</a></li>
                         <li><a href="http://localhost/1_csh/czwg/live">"住"在长寿湖</a></li>
