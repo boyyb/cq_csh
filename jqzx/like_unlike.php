@@ -32,6 +32,10 @@ if(isset($_REQUEST)){
         $unlike = count($arr2);
         $ret['like']=$like;
         $ret['unlike']=$unlike;
+
+        //同步到news表
+        $db->update("news",array("like"=>$like,"unlike"=>$unlike),"id=$pid");
+
         echo json_encode($ret);
         die;
     }
@@ -49,6 +53,10 @@ if(isset($_REQUEST)){
         $res = $db->getLastId();
         $arr = $db->getAll("news_like","*","nlike='1' and pid=$pid");//获顶总数
         $like = count($arr);
+
+        //同步news表
+        $db->update("news",array("like"=>$like),"id=$pid");
+
         if($res){
             echo json_encode(array("like"=>$like,"info"=>"ok"));
         }else{
@@ -60,6 +68,8 @@ if(isset($_REQUEST)){
         $res = $db->getLastId();
         $arr = $db->getAll("news_like","*","nlike='0' and pid=$pid");//获踩总数
         $unlike = count($arr);
+        //同步news表
+        $db->update("news",array("unlike"=>$unlike),"id=$pid");
         if($res){
             echo json_encode(array("unlike"=>$unlike,"info"=>"ok"));
         }else{
