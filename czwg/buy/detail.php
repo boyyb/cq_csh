@@ -1,5 +1,6 @@
 <?php
 header("content-type:text/html;charset=utf-8");
+if(!isset($_REQUEST['id'])){die("非法访问！");}
 include "../../public/class/db.class.php";
 $db = new DB();
 
@@ -87,9 +88,23 @@ $db = new DB();
         }
         .tuwen{
             float:right;
-            width:800px;
-            min-height:400px;
+            width:789px;
+            min-height:600px;
             background: blueviolet;
+            margin-bottom:20px;
+            margin-top:10px;
+            border-radius:4px;
+        }
+        .shop_info{
+            font-size:15px;
+            text-indent:2em;
+            text-align:left;
+            padding-left:5px;
+        }
+        .tuwen img{
+            margin:10px auto;
+            width:600px;
+            height:500px;
         }
     </style>
     <script>
@@ -154,7 +169,14 @@ $db = new DB();
         </table>
     </div>
     <div class="tuwen">
-
+        <p class="shop_info">
+            jflsjflsjdsj梵蒂冈豆腐干高度鬼地佛挡杀佛斯蒂芬方个豆腐干豆腐干高度鬼地方
+            高度fsfjdlfsdlkfsdjkdsjjfsdl反对反对法佛挡杀佛斯蒂芬森发生的是防隧道 是
+            发生大幅杀跌斯蒂芬森复反反复复反反复复反反复复吩咐
+            发生的发生大幅杀跌是
+        </p>
+        <img src=""/>
+        <img src=""/>
     </div>
 </div>
 
