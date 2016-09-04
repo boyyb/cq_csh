@@ -106,7 +106,7 @@ $db = new DB();
     <div id="buy_top">
         <div id="buy_nav">
             <a href="./index.php">"购"在长寿湖</a> <b> > </b>
-            <a href="javascript:void(o)">长寿湖血脐</a> <b> > </b>
+            <a href="javascript:void(o)">长寿湖血脐</a>
         </div>
     </div>
 
