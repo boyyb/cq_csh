@@ -45,11 +45,11 @@
         .list th{
             background: #b7d2ff;
         }
-        .delOne ,.updateGoods{
+        .delOne ,.updateGoods,.addpic{
             color:dodgerblue;
             text-decoration: none;
         }
-        .delOne:hover ,.updateGoods:hover{
+        .delOne:hover ,.updateGoods:hover,.addpic:hover{
             color:red;
             text-decoration: underline;
         }
@@ -274,9 +274,9 @@
         <th width="70" nowrap>非会员价格</th>
         <th width="70" nowrap>会员价格</th>
         <th width="60" nowrap>来源</th>
-        <th width="60" nowrap>库存</th>
-        <th width="60" nowrap>已售</th>
-        <th width="70" nowrap="">操作</th>
+        <th width="50" nowrap>库存</th>
+        <th width="50" nowrap>已售</th>
+        <th width="130" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
@@ -291,6 +291,7 @@
             <td>{$v.total}</td>
             <td>{$v.sold}</td>
             <td>
+                <a href="{:U('shop/addGoodsPic')}" class="addpic">图片管理</a>&nbsp;|&nbsp;
                 <a href="{:U('shop/updateGoods',array('id'=>$v['id']))}" class="updateGoods">更新</a>&nbsp;|&nbsp;
                 <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
             </td>

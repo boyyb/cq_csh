@@ -142,6 +142,25 @@ class ShopController extends MyController {
     }
 
     public function saveGoods(){
+        //判断有无图片上传并执行上传操作
+        if(isset($_FILES['image']) && $_FILES['image']['name']){
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize = 5242880 ;// 设置附件上传大小 5m
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg','bmp');// 设置附件上传类型
+            $upload->rootPath = "./Public/Uploads/"; // 设置附件上传根目录
+            $upload->saveName =  substr(md5(time()), 0, 20); //文件命名
+            $upload->autoSub = true; //允许子目录
+            $upload->subName = 'goods'; //子目录名称
+            // 上传单个文件
+            $info = $upload->uploadOne($_FILES['image']);
+            if(!$info) {
+                // 上传错误提示信息
+                $this->error($upload->getError(),'',3);
+            }
+            $filename = $info['savename']; //图片名称
+            $_REQUEST['showpic'] = $filename;
+        }
+        //入库
         $gm = D("shop_goods");
         $res = $gm->add($_REQUEST);
         if($res){
@@ -229,14 +248,40 @@ class ShopController extends MyController {
     }
 
     public function usaveGoods(){
+        //删除图片的判断
+        if(isset($_REQUEST['delpic']) && $_REQUEST['delpic']){
+            $_REQUEST['showpic'] = "";
+        }
+
+        //判断有无图片上传并执行上传操作
+        if(isset($_FILES['image']) && $_FILES['image']['name']){
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize = 5242880 ;// 设置附件上传大小 5m
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg','bmp');// 设置附件上传类型
+            $upload->rootPath = "./Public/Uploads/"; // 设置附件上传根目录
+            $upload->saveName =  substr(md5(time()), 0, 20); //文件命名
+            $upload->autoSub = true; //允许子目录
+            $upload->subName = 'goods'; //子目录名称
+            // 上传单个文件
+            $info = $upload->uploadOne($_FILES['image']);
+            if(!$info) {
+                // 上传错误提示信息
+                $this->error($upload->getError(),'',3);
+            }
+            $filename = $info['savename']; //图片名称
+            $_REQUEST['showpic'] = $filename;
+        }
+
         $id = $_REQUEST['id'];
         $referer = $_REQUEST['referer'];//来源页面地址
 
-        dump($_REQUEST);
-
         $sm = D("shop_goods");
-        $odata = $sm->where("id=$id")->select(); dump($odata);
+
+        $odata = $sm->where("id=$id")->select();
         $odata = $odata[0];
+
+        $oimage = $odata['showpic'];
+
         //判断数据是否变化
         $num = 0;
         foreach($_REQUEST as $k=>$v){
@@ -253,11 +298,14 @@ class ShopController extends MyController {
         //入库
         $res = $sm -> save($_REQUEST);
         if($res){
-            $this->success("保存成功！",$referer,4);//返回来源列表页面
+            unlink("./Public/Uploads/goods/$oimage");//删除旧图片
+            $this->success("保存成功！",$referer,3);//返回来源列表页面
         }else{
-            $this->error("保存失败！");//返回编辑页面
+            $this->error("保存失败！",'',3);//返回编辑页面
         }
 
     }
+
+    //商品展示图（非封面图）
 
 }

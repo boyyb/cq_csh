@@ -41,7 +41,7 @@
         //border-radius:4px;
             font-family:微软雅黑;
         }
-        input,select{
+        input:not('#abcd'){
             height:22px;
             width:180px;
             font-size: 13px;
@@ -50,19 +50,26 @@
             vertical-align: middle;
             border-radius:4px;
         }
-        input[name=address]{
-            width:400px;
+        select{
+            border-radius:4px;
+            border:1px solid #ccc;
+            width:150px;
+            height:25px;
+        }
+        #showpic{
+            width:250px;
+            height:180px;
         }
 
         .content{
-            width:400px;
-            height:65px;
+            width:500px;
+            height:155px;
             resize:none;
             padding: 2px 4px;
             border: 1px solid #ccc;
             border-radius:4px;
         }
-        .save,.back{
+        .save{
             height:25px;
             width:60px;
             background: forestgreen;
@@ -100,18 +107,14 @@
                 var content = $('#goods_body textarea[name=content]').val();
 
                 //必填项检查
-                /*if(!gname || !sellerid || !type || !price || !userprice || !total || !source || !content){
+                if(!gname || !sellerid || !type || !price || !userprice || !total || !source || !content){
                     alert("带\"*\"的为必填项，请检查填写内容！");
                     return false;
-                }*/
+                }
 
                 $('form').submit();
             });
 
-            //返回
-            $('.back').click(function(){
-                window.history.back(-1);
-            });
            
         });
     </script>
@@ -124,7 +127,7 @@
 </div>
 <!---------------------------------------公共面包屑结束---------------------------------------->
 <div id="goods_body">
-    <form action="{:U('shop/usaveGoods')}" method="post">
+    <form action="{:U('shop/usaveGoods')}" method="post" enctype="multipart/form-data">
         <table width="100%" >
             <tr height="30">
                 <td nowrap width="180px;" align="right"><b style="color:red;">*</b>名称：</td>
@@ -184,7 +187,14 @@
             <tr height="30">
                 <td nowrap align="right">封面图：</td>
                 <td>
-                    <input name="source" type="file" />
+                    <input name="image" type="file" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">封面图预览：</td>
+                <td>
+                    <img id="showpic" src='__PUBLIC__/Uploads/goods/<if condition="$gdata['showpic'] eq null">default.jpg <else />{$gdata.showpic}</if>'/>
+                    <input type="checkbox" <if condition="$gdata['showpic'] eq null">disabled</if> name="delpic" value="1" id="abcd"/><label for="abcd" style="color:orangered">删除该图</label>
                 </td>
             </tr>
             <tr height="60">
@@ -193,11 +203,10 @@
                     <textarea class="content" name="content">{$gdata.content}</textarea>
                 </td>
             </tr>
-            <tr height="35">
+            <tr height="75">
                 <td></td>
                 <td>
                     <button class="save">保存</button>
-                    <button class="back">返回</button>
                 </td>
             </tr>
         </table>
