@@ -3,6 +3,12 @@ header("content-type:text/html;charset=utf-8");
 if(!isset($_REQUEST['id'])){die("非法访问！");}
 include "../../public/class/db.class.php";
 $db = new DB();
+$goodsid = $_REQUEST['id'];
+//$basedata = $db->getOne('shop_goods',"*","id=$goodsid");
+//$sellerdata = $db->getOne('shop_seller',"*","id=".$basedata['sellerid']);
+//$sname = $sellerdata['sname'];
+//$imagedata = $db->getAll("shop_image","*","pid=$goodsid");
+//var_dump($basedata);die;
 
 ?>
 
@@ -117,6 +123,9 @@ $db = new DB();
 <!--引入公共头部-->
 <?php include "../../public/common/header.php";?>
 
+<!--隐藏域-->
+<input type="hidden" name="goodsid" value="<?php echo $goodsid;?>"/>
+
 <div id="buy_detail">
     <div id="buy_top">
         <div id="buy_nav">
@@ -132,27 +141,27 @@ $db = new DB();
         <table width="99%">
             <tr height="30">
                 <td align="right" width="150">品名：</td>
-                <td align="left" >水果</td>
+                <td align="left" ><?php echo $basedata['gname'];?></td>
             </tr>
             <tr height="30">
                 <td align="right">产地：</td>
-                <td align="left">犯得上发射</td>
+                <td align="left"><?php echo $basedata['source'];?></td>
             </tr>
             <tr height="30">
                 <td align="right">非会员价格：</td>
-                <td align="left">144</td>
+                <td align="left"><?php echo $basedata['price'];?></td>
             </tr>
             <tr height="30">
                 <td align="right">会员价格：</td>
-                <td align="left">32</td>
+                <td align="left"><?php echo $basedata['userprice'];?></td>
             </tr>
             <tr height="30">
                 <td align="right">商家：</td>
-                <td align="left">大坪岛主</td>
+                <td align="left"><?php echo $sname;?></td>
             </tr>
             <tr height="30">
                 <td align="right">库存：</td>
-                <td align="left">很多</td>
+                <td align="left"><?php echo $basedata['total'];?></td>
             </tr>
             <tr height="30">
                 <td align="right">购买数量：</td>

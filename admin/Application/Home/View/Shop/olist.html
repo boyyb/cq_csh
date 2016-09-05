@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>administrators</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <script src="__PUBLIC__/Js/jquery-1.8.3.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /************************************上面为公共部分************************************/
+        #news_body{
+            width:1000px;
+            height:400px;
+        //border:1px solid #8ba8af;
+            margin:10px 0;
+            padding-top: 20px;
+            font-size:15px;
+        //background:antiquewhite;
+        //border-radius:4px;
+            font-family:微软雅黑;
+        }
+        input[name=title],input[name=source]{
+            height:25px;
+            width:300px;
+            font-size: 13px;
+            padding: 2px 4px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            border-radius:4px;
+        }
+        .save,.back,.button{
+            float:left;
+            display: block;
+            height:25px;
+            width:60px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            text-decoration: none;
+        }
+        .save{
+            margin-left:45%;
+            margin-right:10%;
+        }
+        .hint_red{
+            border:1px solid red;
+            box-shadow:0 0 4px 1px red;
+        }
+        .hint_blue{
+            border:1px solid dodgerblue;
+            box-shadow:0 0 4px 1px dodgerblue;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            //保存
+            flag=true;
+            $('.save').click(function(){
+                if(!flag){
+                    alert("数据正在提交中...请勿重复提交！！！");
+                    return false;
+                }
+                //获取表单的值value
+                var id = $('#news_body input[name=id]').val();
+                var title = $('#news_body input[name=title]').val();
+                var source = $('#news_body input[name=source]').val();
+                var content = $('#news_body textarea[name=content]').val();
+                var image = $('input[type=hidden][name=image]').val();
+                //检查数据变化,针对详情页
+                if(id){
+                    if(title==otitle && source==osource && content==ocontent && image==oimage){
+                        alert("数据没有发生变化！");
+                        return false;
+                    }
+                }
+
+                //必填项检查
+                if(!title || !source || !content){
+                    $('#prompt_news').css('color','red').html("带\"*\"的为必填项，请检查填写内容！");
+                    return false;
+                }
+                //新闻标题字数不超过30
+                if(title.length>30){
+                    $('#prompt_news').css('color','red').html("新闻标题不能超过30个字！");
+                    $('input[name=title]').addClass('hint_red');
+                    return false;
+                }
+                $('#prompt_news').css('color','green').html('提交中...<i class="fa fa-spinner fa-spin"></i>');
+                $('#news_body input[type=button][value=提交]').prop('disabled','disabled');
+                flag=false;
+                //ajax 提交数据
+                $.post(
+                        "{:U('news/save')}",
+                        {"title":title,"content":content,"source":source,'id':id,"image":image},
+                        function(data){
+                            if(data=="ok"){
+                                if(id){
+                                    //保存后保留详情页面数据
+                                    $('#prompt_news').css('color','green').html("提交成功！");
+                                }else{
+                                    $('#prompt_news').css('color','green').html("提交成功！");
+                                    //初始化页面
+                                    $('#news_body input[name]').val('');
+                                    $('.simditor-body').html("");
+                                    $('.prompt_upload').html('');
+                                    $('#news_body img').attr("src",'');
+                                    var file = $('#upload');
+                                    file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+                                    file.remove();
+                                }
+                            }else{
+                                $('#prompt_news').css('color', 'red').html("提交失败！");
+                            }
+                            flag=true;
+                        }
+                );
+
+
+            });
+
+        });
+    </script>
+</head>
+<body>
+<!--------------------------------------公共面包屑开始---------------------------------------->
+<div class="route_bg">
+    <a href="javascript:void(0)">商城管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">添加</a>
+</div>
+<!---------------------------------------公共面包屑结束---------------------------------------->
+<div id="news_body">
+    <table width="100%" >
+        <tr height="35">
+            <td nowrap width="180px;" align="right"><span style="color:red;">*</span>新闻标题：</td>
+            <td colspan="5" align="left" style="padding-left:10px;">
+                <input name="title" value="{$data.title}"/>
+                <input name="id" type="hidden" value="{$data.id}"/>
+                <input name="image" type="hidden" value="{$data.image}"> <!--图片名称隐藏域-->
+            </td>
+        </tr>
+        <tr height="35">
+            <td nowrap align="right"><span style="color:red;">*</span>新闻来源：</td>
+            <td align="left" style="padding-left:10px;">
+                <input name="source" value="{$data.source}"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">新闻图片：</td>
+            <td>
+                <input type="file" id="upload" name="pic_news" style="border:0;margin-left:10px;"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right">图片预览：</td>
+            <td style="padding-left:10px;">
+                <img style="width:200px;" src="__PUBLIC__/Uploads/newspic/{$data.image}" alt="无图片" id="pic_news" title="新闻插图"/>
+                <if condition="$data.image neq null"><button class="delPic">删除图片</button></if>
+                <span class="prompt_upload"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td nowrap align="right"><span style="color:red;">*</span>新闻内容：</td>
+            <td align="left" style="padding-left:10px;">
+                <textarea id="editor" placeholder="Balabala" autofocus name="content">{$data.content}</textarea>
+            </td>
+        </tr>
+        <tr height="35">
+            <td colspan="2">
+                <a href="javascript:void(0)" class="save" >保存</a>
+                <if condition="$data.id eq null"><else /><a href="javascript:void(0)" class="back" >返回</a></if>
+            </td>
+        </tr>
+        <tr height="60">
+            <td align="center" colspan="2" valign="top">
+                <span id="prompt_news"></span>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

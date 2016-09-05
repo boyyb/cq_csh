@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>administrators</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <script src="__PUBLIC__/Js/jquery-1.8.3.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /************************************上面为公共部分************************************/
+        #news_body{
+            width:1000px;
+            height:400px;
+        //border:1px solid #8ba8af;
+            margin:10px 0;
+            padding-top: 20px;
+            font-size:15px;
+        //background:antiquewhite;
+        //border-radius:4px;
+            font-family:微软雅黑;
+        }
+        input{
+            height:22px;
+            width:180px;
+            font-size: 13px;
+            padding: 2px 4px;
+            border: 1px solid #ccc;
+            vertical-align: middle;
+            border-radius:4px;
+        }
+        input[name=address]{
+            width:400px;
+        }
+        .save,.back{
+            height:25px;
+            width:60px;
+            background: forestgreen;
+            color:whitesmoke;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            border:1px solid gray;
+            cursor:pointer;
+            margin-right:40px;
+        }
+
+        .hint_red{
+            border:1px solid red;
+            box-shadow:0 0 4px 1px red;
+        }
+        .hint_blue{
+            border:1px solid dodgerblue;
+            box-shadow:0 0 4px 1px dodgerblue;
+        }
+
+    </style>
+    <script>
+        $(function(){
+            //保存
+            $('.save').click(function(){
+                //获取表单的值value
+                var sname = $('#news_body input[name=sname]').val();
+                var phone = $('#news_body input[name=phone]').val();
+                var postcode = $('#news_body input[name=postcode]').val();
+                var address = $('#news_body input[name=address]').val();
+                var shopname = $('#news_body input[name=shopname]').val();
+
+                //必填项检查
+                if(!sname || !phone || !postcode || !address || !shopname){
+                    alert("带\"*\"的为必填项，请检查填写内容！");
+                    return false;
+                }
+
+                $('form').submit();
+            });
+
+            //返回
+            $('.back').click(function(){
+                window.history.back(-1);
+            });
+            $('input[name=shopname]').blur(function(){
+                var shopname = $('#news_body input[name=shopname]').val();
+                if(shopname){
+                    $.post(
+                            "{:U('shop/checkshopname')}",
+                            {"shopname":shopname},
+                            function(i){
+                                if(i=="exist"){
+                                    alert("该店铺名称已经存在！");
+                                    $('#news_body input[name=shopname]').val("");
+                                }
+                            }
+
+                    );
+                }
+
+            });
+        });
+    </script>
+</head>
+<body>
+<!--------------------------------------公共面包屑开始---------------------------------------->
+<div class="route_bg">
+    <a href="javascript:void(0)">商城管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">添加卖家</a>
+</div>
+<!---------------------------------------公共面包屑结束---------------------------------------->
+<div id="news_body">
+<form action="{:U('shop/usaveSeller')}" method="post">
+    <table width="100%" >
+        <tr height="35">
+            <td nowrap width="180px;" align="right"><b style="color:red;">*</b>店铺名称：</td>
+            <td>
+                <input name="shopname" disabled value="{$data.shopname}"/>
+                <input type="hidden" name="id" value="{$data.id}">
+                <input type="hidden" name="referer" value="<?php echo $_SERVER['HTTP_REFERER'];?>">
+            </td>
+        </tr>
+        <tr height="35">
+            <td nowrap width="180px;" align="right"><b style="color:red;">*</b>卖家姓名：</td>
+            <td>
+                <input name="sname" value="{$data.sname}"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td nowrap align="right"><b style="color:red;">*</b>卖家电话：</td>
+            <td>
+                <input name="phone" value="{$data.phone}"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td align="right"><b style="color:red;">*</b>所在地邮编：</td>
+            <td>
+                <input name="postcode" value="{$data.postcode}"/>
+            </td>
+        </tr>
+        <tr>
+            <td nowrap align="right"><b style="color:red;">*</b>联系地址：</td>
+            <td>
+                <input name="address" value="{$data.address}"/>
+            </td>
+        </tr>
+        <tr height="35">
+            <td></td>
+            <td>
+                <button class="save">保存</button>
+                <button class="back">返回</button>
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+
+</body>
+</html>

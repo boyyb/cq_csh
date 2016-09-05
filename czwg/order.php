@@ -45,6 +45,8 @@ $db = new DB();
             $('#back').click(function(){
                 window.location.href=document.referrer;
             });
+            $()
+
         });
     </script>
 </head>
@@ -142,7 +144,7 @@ $db = new DB();
         </td>
     </tr>
 
-    <tr>
+    <tr height="50">
         <td colspan="3" align="center">
             <button id="submit">提交订单</button>
             <button id="back">返回</button>
