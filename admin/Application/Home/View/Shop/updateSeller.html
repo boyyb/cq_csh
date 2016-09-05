@@ -30,7 +30,7 @@
 
         }
         /************************************上面为公共部分************************************/
-        #news_body{
+        #seller_body{
             width:1000px;
             height:400px;
         //border:1px solid #8ba8af;
@@ -81,11 +81,11 @@
             //保存
             $('.save').click(function(){
                 //获取表单的值value
-                var sname = $('#news_body input[name=sname]').val();
-                var phone = $('#news_body input[name=phone]').val();
-                var postcode = $('#news_body input[name=postcode]').val();
-                var address = $('#news_body input[name=address]').val();
-                var shopname = $('#news_body input[name=shopname]').val();
+                var sname = $('#seller_body input[name=sname]').val();
+                var phone = $('#seller_body input[name=phone]').val();
+                var postcode = $('#seller_body input[name=postcode]').val();
+                var address = $('#seller_body input[name=address]').val();
+                var shopname = $('#seller_body input[name=shopname]').val();
 
                 //必填项检查
                 if(!sname || !phone || !postcode || !address || !shopname){
@@ -101,7 +101,7 @@
                 window.history.back(-1);
             });
             $('input[name=shopname]').blur(function(){
-                var shopname = $('#news_body input[name=shopname]').val();
+                var shopname = $('#seller_body input[name=shopname]').val();
                 if(shopname){
                     $.post(
                             "{:U('shop/checkshopname')}",
@@ -109,7 +109,7 @@
                             function(i){
                                 if(i=="exist"){
                                     alert("该店铺名称已经存在！");
-                                    $('#news_body input[name=shopname]').val("");
+                                    $('#seller_body input[name=shopname]').val("");
                                 }
                             }
 
@@ -124,10 +124,10 @@
 <!--------------------------------------公共面包屑开始---------------------------------------->
 <div class="route_bg">
     <a href="javascript:void(0)">商城管理</a><i class="fa fa-chevron-right"></i>
-    <a href="javascript:void(0)">添加卖家</a>
+    <a href="javascript:void(0)">更新卖家</a>
 </div>
 <!---------------------------------------公共面包屑结束---------------------------------------->
-<div id="news_body">
+<div id="seller_body">
 <form action="{:U('shop/usaveSeller')}" method="post">
     <table width="100%" >
         <tr height="35">

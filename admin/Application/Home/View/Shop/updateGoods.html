@@ -120,16 +120,18 @@
 <!--------------------------------------公共面包屑开始---------------------------------------->
 <div class="route_bg">
     <a href="javascript:void(0)">商城管理</a><i class="fa fa-chevron-right"></i>
-    <a href="javascript:void(0)">添加商品</a>
+    <a href="javascript:void(0)">更新商品</a>
 </div>
 <!---------------------------------------公共面包屑结束---------------------------------------->
 <div id="goods_body">
-    <form action="{:U('shop/saveGoods')}" method="post">
+    <form action="{:U('shop/usaveGoods')}" method="post">
         <table width="100%" >
             <tr height="30">
                 <td nowrap width="180px;" align="right"><b style="color:red;">*</b>名称：</td>
                 <td>
-                    <input name="gname"/>
+                    <input name="gname" value="{$gdata.gname}"/>
+                    <input type="hidden" name="referer" value="<?php echo $_SERVER['HTTP_REFERER'];?>">
+                    <input type="hidden" name="id" value="{$gdata.id}">
                 </td>
             </tr>
             <tr height="30">
@@ -138,7 +140,7 @@
                     <select name="sellerid">
                         <option value="">请选择</option>
                         <foreach name="sdata" item="v" key="k">
-                            <option value="{$v.id}">{$v.shopname}</option>
+                            <option <if condition="$gdata['sellerid'] eq $v['id']">selected="selected"</if> value="{$v.id}">{$v.shopname}</option>
                         </foreach>
                     </select>
                 </td>
@@ -148,35 +150,35 @@
                 <td>
                     <select name="type">
                         <option value="">请选择</option>
-                        <option value="购">购</option>
-                        <option value="住">住</option>
-                        <option value="吃">吃</option>
-                        <option value="玩">玩</option>
+                        <option <if condition="$gdata['type'] eq '购'">selected="selected"</if> value="购">购</option>
+                        <option <if condition="$gdata['type'] eq '住'">selected="selected"</if> value="住">住</option>
+                        <option <if condition="$gdata['type'] eq '吃'">selected="selected"</if> value="吃">吃</option>
+                        <option <if condition="$gdata['type'] eq '玩'">selected="selected"</if> value="玩">玩</option>
                     </select>
                 </td>
             </tr>
             <tr height="30">
                 <td nowrap align="right"><b style="color:red;">*</b>普通价格：</td>
                 <td>
-                    <input name="price"/>
+                    <input name="price" value="{$gdata.price}"/>
                 </td>
             </tr>
             <tr height="30">
                 <td align="right"><b style="color:red;">*</b>会员价格：</td>
                 <td>
-                    <input name="userprice" />
+                    <input name="userprice" value="{$gdata.userprice}" />
                 </td>
             </tr>
             <tr height="30">
                 <td nowrap align="right"><b style="color:red;">*</b>库存数量：</td>
                 <td>
-                    <input name="total" />
+                    <input name="total" value="{$gdata.total}"/>
                 </td>
             </tr>
             <tr height="30">
                 <td nowrap align="right"><b style="color:red;">*</b>来源：</td>
                 <td>
-                    <input name="source" />
+                    <input name="source" value="{$gdata.source}"/>
                 </td>
             </tr>
             <tr height="30">
@@ -188,7 +190,7 @@
             <tr height="60">
                 <td nowrap align="right"><b style="color:red;">*</b>描述：</td>
                 <td>
-                    <textarea class="content" name="content"></textarea>
+                    <textarea class="content" name="content">{$gdata.content}</textarea>
                 </td>
             </tr>
             <tr height="35">

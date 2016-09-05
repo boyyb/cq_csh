@@ -191,20 +191,21 @@ DROP TABLE IF EXISTS `shop_goods`;
 CREATE TABLE `shop_goods` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `gname` varchar(40) NOT NULL COMMENT '商品名称',
-  `content` varchar(300) NOT NULL COMMENT '商品描述',
+  `content` text NOT NULL COMMENT '商品描述',
   `type` varchar(10) NOT NULL COMMENT '产品分类（eat、buy、live、play）',
   `price` float(7,2) NOT NULL COMMENT '价格',
   `userprice` float(7,2) NOT NULL COMMENT '会员价格',
-  `total` int(11) NOT NULL COMMENT '总库存量',
+  `total` int(11) NOT NULL COMMENT '当前库存量',
+  `sold` int(11) DEFAULT NULL COMMENT '已售数量',
   `source` varchar(20) NOT NULL COMMENT '商品来源',
-  `sellerid` int(11) NOT NULL COMMENT '卖家id',
+  `sellerid` int(11) NOT NULL COMMENT '卖家商铺id',
   `showpic` varchar(40) NOT NULL COMMENT '展示图',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_goods` */
 
-insert  into `shop_goods`(`id`,`gname`,`content`,`type`,`price`,`userprice`,`total`,`source`,`sellerid`,`showpic`) values (1,'aa','法大师傅十分士大夫','buy',120.00,100.00,12,'me',2,'');
+insert  into `shop_goods`(`id`,`gname`,`content`,`type`,`price`,`userprice`,`total`,`sold`,`source`,`sellerid`,`showpic`) values (4,'dd','fdsfdsfsdffdsfdsrtefds','住',22.00,2.00,2,NULL,'',6,''),(5,'dfd','fdsfdsfdsfdsf','吃',3.00,3.00,3,NULL,'3',6,''),(6,'ewe','fdsfddsfdsfsffgfgf','玩',3.00,3.00,3,NULL,'3',6,''),(7,'ee','fdsfsdffdsfs','玩',3.00,3.00,3,NULL,'3',5,''),(8,'wq','fdsfdsfsfdsfs','吃',5.00,5.00,5,NULL,'5',5,''),(9,'uy','fdsfdfdsfsdfsfs','住',7.00,7.00,7,NULL,'7',6,''),(10,'ff','fdfsfdsffsdfd','购',44.00,4.00,4,NULL,'4',5,''),(11,'fdf','fdsfdsfdsfsf','购',44.00,4.00,5,NULL,'',5,''),(12,'fd','fdsfdsfsf','购',44.00,4.00,5,NULL,'5',5,''),(13,'gf','fdsfdsfdsf','购',44.00,4.00,5,NULL,'5',5,''),(14,'aa','fsffdffsds','购',22.00,33.00,22,NULL,'',5,'');
 
 /*Table structure for table `shop_image` */
 
@@ -266,7 +267,7 @@ CREATE TABLE `shop_seller` (
 
 /*Data for the table `shop_seller` */
 
-insert  into `shop_seller`(`id`,`shopname`,`sname`,`phone`,`address`,`postcode`) values (5,'543','44111111','55','6666666666666666666666666666','7677'),(6,'吊死扶伤','房贷首付','3232323','大苏打实打实大苏打','55'),(7,'房贷首付','高浮雕个','4444','656566','656'),(8,'767','6565444','6565','6565','656'),(9,'7676','878','878','8787','878'),(10,'1111','2222','333','444','8787'),(15,'222','333555','444','3333','333');
+insert  into `shop_seller`(`id`,`shopname`,`sname`,`phone`,`address`,`postcode`) values (5,'大坪岛兴隆湾','bin','13654824511','重庆长寿长寿湖大坪村','401241'),(6,'大坪岛水果铺','bin','13654824511','重庆长寿大坪岛上的','55'),(7,'房贷首付','高浮雕个','4444','656566','656'),(8,'767','6565444','6565','6565','656'),(9,'7676','878','878','8787','878'),(10,'1111','2222','333','444','8787'),(15,'222','333555','444','3333','333');
 
 /*Table structure for table `slider_pic` */
 
