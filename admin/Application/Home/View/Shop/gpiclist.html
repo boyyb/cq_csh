@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>gpiclist</title>
+    <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
+    <script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>
+    <style>
+        body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
+        .route_bg{
+            background-color: #E7E7E7;
+            border-radius: 4px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .route_bg i{
+            color: gray;
+            margin-left:5px;
+            font-size:12px;
+        }
+        .route_bg a{
+            font-size: 14px;
+            color: #555;
+            text-decoration: none;
+            font-weight:bold;
+        }
+        .route_bg a:hover{
+            color: #888;
+            text-decoration: none;
+
+        }
+        /**************面包屑样式结束****************/
+        .list{
+            border: 1px solid #cccccc;
+            background: snow;
+            font-size:14px;
+            border-collapse: collapse;
+        }
+
+        .list th,.list td{
+            border: 1px solid #cccccc;
+            text-align:center;
+        }
+        .list th{
+            background: #b7d2ff;
+        }
+        .delOne ,.updateGoods,.addpic{
+            color:dodgerblue;
+            text-decoration: none;
+        }
+        .delOne:hover ,.updateGoods:hover,.addpic:hover{
+            color:red;
+            text-decoration: underline;
+        }
+        #addS{
+            margin-top:10px;
+        }
+        .delch,#addS a{
+            display: block;
+            height:25px;
+            width:70px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            text-decoration: none;
+        }
+
+        #addS a{
+            font-size:14px;
+            width:80px;
+        }
+
+        /********************分页样式**********************/
+        .pages a,.pages span {
+            display:inline-block;
+            padding:2px 5px;
+            margin:0 2px;
+            border:1px solid #ccc;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+        }
+        .pages a,.pages li {
+            display:inline-block;
+            list-style: none;
+            text-decoration:none; color:#58A0D3;
+        }
+        .pages a.first,.pages a.prev,.pages a.next,.pages a.end{
+            margin:0px;
+        }
+        .pages a:hover{
+            color:white;
+            border-color:#50A8E6;
+            background:#50A8E6;
+        }
+        .pages span.current{
+            background:#50A8E6;
+            color:#FFF;
+            font-weight:700;
+            border-color:#50A8E6;
+        }
+        .pages .rows{
+            margin-left:10px;
+        }
+        /*********************分页样式结束**************************/
+        /*****************************************弹窗样式**********************************/
+        #win_add{
+            display : none;
+            position : absolute;
+            width : 400px;
+            height: 150px;
+            top : 150px;
+            left: -200px;;
+            margin-left:50%;
+            z-index: 1051;
+            border-radius:4px;
+            border:1px gray solid;
+            background: white;
+        }
+        #title_add{
+            height:30px;
+            background-color : #0066bb;
+            color : ghostwhite;
+            padding-left:4px;
+            font-size:16px;
+            line-height:30px;
+        }
+        #close_add{
+            position:absolute;
+            top:0px;
+            right:10px;
+            cursor: pointer;
+        }
+        #close_add:hover{
+            color:orangered;
+        }
+        #content_add{
+            padding : 10px;
+            text-align:center;
+        }
+        #button_add{
+            position:absolute;
+            left:-111px;
+            margin-left:50%;
+            bottom:10px;
+            height:30px;
+            width:222px;
+            color : ghostwhite;
+            font-size:16px;
+            line-height:30px;
+        }
+        .save_add,.closewin_add{
+            display: block;
+            height:25px;
+            width:70px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            text-decoration: none;
+            float:left;
+        }
+        .save_add{
+            margin-right:80px;
+        }
+        .mask{
+            background-color: #333333;
+            z-index: 1050;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            filter: Alpha(Opacity=30);
+            -moz-opacity: 0.4;
+            opacity: 0.4;
+        }
+    </style>
+    <script>
+        $(function(){
+
+            //单条删除
+            $('.delOne').click(function(){
+                var r = window.confirm("确认要删除吗？删除后不可恢复！");
+                if(!r){return false;}
+                var id = $(this).find('b[style]').html();
+                $(this).css('color','red').html("删除中...").append('<i class="fa fa-refresh fa-spin"></i>');
+                $.post(
+                        "{:U('shop/deleteGoodsPic')}",
+                        {"id":id},
+                        function(data){
+                            if(data == "ok"){
+                                //alert('删除成功！');
+                                window.location.reload();
+                            }else{
+                                alert('删除失败');
+                                $('.delOne').css('color','dodgerblue').html("删除").removeChild('i');//还原删除样式
+
+                            }
+                        }
+                );
+            });
+
+
+            //打开弹窗
+            $('.addgpic').click(function(){
+                $('.mask').css('display','block');
+                $('#win_add').fadeIn('normal');
+
+
+            });
+            //关闭弹窗
+            $('.closewin_add,#close_add').click(function(){
+                $('#win_add').hide();
+                $('.mask').css('display','none');
+
+                window.location.reload();
+            });
+
+            //保存上传图片
+            $('.save_add').click(function(){
+                if($('input[name=image]').val()){
+                    $('#formpic').submit();
+                }else{
+                    alert("你没有选择图片！");
+                }
+            });
+
+            //每次刷新都复位file框
+            var file = $('input[name=image]');
+            file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+            file.remove();
+        });
+
+    </script>
+</head>
+<body>
+<div class="route_bg">
+    <a href="javascript:void(0)">商城管理</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">商品列表</a><i class="fa fa-chevron-right"></i>
+    <a href="javascript:void(0)">图片管理</a>
+</div>
+
+<div id="addS"><a href="javascript:void(0)" class="addgpic">添加图片</a></div>
+<table  class="list">
+    <tr height="25">
+        <th width="30" nowrap>序号</th>
+        <th width="400"nowrap>商品图片</th>
+        <th width="130" nowrap="">操作</th>
+    </tr>
+    <foreach name="data" item="v" key="k">
+        <tr height="25">
+            <td>{$sn+$k+1}</td>
+            <td nowrap style="padding:5px;">
+                <img style="width:300px;height:250px;" class="image" src="__PUBLIC__/Uploads/goods_more/{$v.iname}" />
+            </td>
+            <td>
+                <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
+            </td>
+        </tr>
+    </foreach>
+    <if condition="$data eq null">
+        <tr height="30">
+            <td colspan="12" style="text-align:center;padding-left:10px;">没有查询到相关数据！！！</td>
+        </tr>
+    </if>
+
+</table>
+
+<div id="win_add" style="display:none;">
+    <div id="title_add">
+        <span>上传商品图片</span>
+        <a id="close_add" title="点击关闭">X</a>
+    </div>
+    <div id="content_add">
+        <form id="formpic" action="{:U('shop/saveGoodsPic')}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="pid" value="{$pid}"/>
+            <input id="fileupload" type="file" name="image"/>
+        </form>
+    </div>
+    <div id="button_add">
+        <a class="save_add" href="javascript:void(0)">保存</a>
+        <a class="closewin_add" href="javascript:void(0)">关闭</a>
+    </div>
+</div>
+
+<div class="mask" style="display:none;"></div>
+</body>
+</html>

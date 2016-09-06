@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>administrators</title>
+    <title>userlist</title>
     <link rel="stylesheet" href="__PUBLIC__/Css/font-awesome.min.css" type="text/css" />
-    <script src="__PUBLIC__/Js/jquery-1.8.3.min.js"></script>
+    <link rel="stylesheet" href="__PUBLIC__/Plugins/date/css/lyz.calendar.css" type="text/css" />
+    <!--<script src="__PUBLIC__/Js/jquery-2.2.4.min.js"></script>-->
+    <script src="__PUBLIC__/Plugins/date/js/jquery-1.5.1.js"></script>
+    <script src="__PUBLIC__/Plugins/date/js/lyz.calendar.min.js"></script>
     <style>
         body{margin: 6px 0 0 10px;}
+        /**************面包屑样式*****************/
         .route_bg{
             background-color: #E7E7E7;
             border-radius: 4px;
@@ -29,32 +33,33 @@
             text-decoration: none;
 
         }
-        /************************************上面为公共部分************************************/
-        #news_body{
-            width:1000px;
-            height:400px;
-        //border:1px solid #8ba8af;
-            margin:10px 0;
-            padding-top: 20px;
-            font-size:15px;
-        //background:antiquewhite;
-        //border-radius:4px;
-            font-family:微软雅黑;
+        /**************面包屑样式结束****************/
+        .list{
+            border: 1px solid #cccccc;
+            background: snow;
+            font-size:14px;
+            border-collapse: collapse;
+
         }
-        input[name=title],input[name=source]{
-            height:25px;
-            width:300px;
-            font-size: 13px;
-            padding: 2px 4px;
-            border: 1px solid #ccc;
-            vertical-align: middle;
-            border-radius:4px;
+        .list th,.list td{
+            border: 1px solid #cccccc;
+            text-align:center;
         }
-        .save,.back,.button{
-            float:left;
+        .list th{
+            background: #b7d2ff;
+        }
+        .delOne ,.detailOne{
+            color:dodgerblue;
+            text-decoration: none;
+        }
+        .delOne:hover ,.detailOne:hover{
+            color:red;
+            text-decoration: underline;
+        }
+        .delch{
             display: block;
             height:25px;
-            width:60px;
+            width:70px;
             background: forestgreen;
             color:whitesmoke;
             -webkit-border-radius:3px;
@@ -64,148 +69,265 @@
             line-height:25px;
             text-decoration: none;
         }
-        .save{
-            margin-left:45%;
-            margin-right:10%;
+
+        .search{
+            margin-top:10px;
+            margin-bottom:2px;
         }
-        .hint_red{
-            border:1px solid red;
-            box-shadow:0 0 4px 1px red;
+        .search table{
+            background: gainsboro;
         }
-        .hint_blue{
-            border:1px solid dodgerblue;
-            box-shadow:0 0 4px 1px dodgerblue;
+        .search td {
+            font-size:14px;
         }
 
+        .list table td{
+            text-align:left;
+
+        }
+        /********************分页样式**********************/
+        .pages a,.pages span {
+            display:inline-block;
+            padding:2px 5px;
+            margin:0 2px;
+            border:1px solid #ccc;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+        }
+        .pages a,.pages li {
+            display:inline-block;
+            list-style: none;
+            text-decoration:none; color:#58A0D3;
+        }
+        .pages a.first,.pages a.prev,.pages a.next,.pages a.end{
+            margin:0px;
+        }
+        .pages a:hover{
+            color:white;
+            border-color:#50A8E6;
+            background:#50A8E6;
+        }
+        .pages span.current{
+            background:#50A8E6;
+            color:#FFF;
+            font-weight:700;
+            border-color:#50A8E6;
+        }
+        .pages .rows{
+            margin-left:10px;
+        }
+        /*********************分页样式结束**************************/
     </style>
     <script>
         $(function(){
-            //保存
-            flag=true;
-            $('.save').click(function(){
-                if(!flag){
-                    alert("数据正在提交中...请勿重复提交！！！");
-                    return false;
-                }
-                //获取表单的值value
-                var id = $('#news_body input[name=id]').val();
-                var title = $('#news_body input[name=title]').val();
-                var source = $('#news_body input[name=source]').val();
-                var content = $('#news_body textarea[name=content]').val();
-                var image = $('input[type=hidden][name=image]').val();
-                //检查数据变化,针对详情页
-                if(id){
-                    if(title==otitle && source==osource && content==ocontent && image==oimage){
-                        alert("数据没有发生变化！");
-                        return false;
-                    }
-                }
+            //日期控件
+            $("#btime").calendar();
+            $("#etime").calendar();
 
-                //必填项检查
-                if(!title || !source || !content){
-                    $('#prompt_news').css('color','red').html("带\"*\"的为必填项，请检查填写内容！");
+            $('#submit').click(function(){
+                //判断时间段合法性
+                var time_from=$('#btime').val().replace(/\-/g,'');
+                var time_to=$('#etime').val().replace(/\-/g,'');
+                if(time_from && time_to && time_to<time_from){
+                    alert("结束时间不能小于开始时间！");
+                    $('#etime').val("");
                     return false;
                 }
-                //新闻标题字数不超过30
-                if(title.length>30){
-                    $('#prompt_news').css('color','red').html("新闻标题不能超过30个字！");
-                    $('input[name=title]').addClass('hint_red');
-                    return false;
-                }
-                $('#prompt_news').css('color','green').html('提交中...<i class="fa fa-spinner fa-spin"></i>');
-                $('#news_body input[type=button][value=提交]').prop('disabled','disabled');
-                flag=false;
-                //ajax 提交数据
+            });
+            //单条删除
+            $('.delOne').click(function(){
+                var r = window.confirm("确认要删除吗？删除后不可恢复！");
+                if(!r){return false;}
+                var id = $(this).find('b[style]').html();
+                $(this).css('color','red').html("删除中...").append('<i class="fa fa-refresh fa-spin"></i>');
                 $.post(
-                        "{:U('news/save')}",
-                        {"title":title,"content":content,"source":source,'id':id,"image":image},
+                        "{:U('shop/deleteOrder')}",
+                        {"id":id},
                         function(data){
-                            if(data=="ok"){
-                                if(id){
-                                    //保存后保留详情页面数据
-                                    $('#prompt_news').css('color','green').html("提交成功！");
-                                }else{
-                                    $('#prompt_news').css('color','green').html("提交成功！");
-                                    //初始化页面
-                                    $('#news_body input[name]').val('');
-                                    $('.simditor-body').html("");
-                                    $('.prompt_upload').html('');
-                                    $('#news_body img').attr("src",'');
-                                    var file = $('#upload');
-                                    file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
-                                    file.remove();
-                                }
+                            if(data == "ok"){
+                                //alert('删除成功！');
+                                window.location.reload();
                             }else{
-                                $('#prompt_news').css('color', 'red').html("提交失败！");
+                                alert('删除失败');
+                                $('.delOne').css('color','dodgerblue').html("删除").removeChild('i');//还原删除样式
+
                             }
-                            flag=true;
                         }
                 );
+            });
 
+            //复选框 全选 全不选
+            $('.chall').click(function(){
+                if($(this).attr('checked')){
+                    $('.ch').attr('checked',true); //jquery 1.5.1 不支持prop，只能用attr
+                }else{
+                    $('.ch').attr('checked',false);
+                }
+            });
+            //子复选框 自动判断是否勾选全选复选框
+            $('.ch').click(function() {
+                //找出没有被选中的，并计算个数
+                if($('.ch').filter(':not(:checked)').size()>0){
+                    $('.chall').attr('checked', false);
+                }
+                if($('.ch').filter(':not(:checked)').size()==0){
+                    $('.chall').attr('checked', true);
+                }
+            });
+            //删除选中
+            $('.delch').click(function(){
+                //判断是否有选中项
+                if($(".ch:checked").length == 0){
+                    alert("请选择至少一个选项！");
+                    return;
+                }
+
+                var num = $(".ch:checked").length;//获取选中的个数，同size()
+
+                var r = window.confirm("确认要删除所选项吗？删除后不可恢复！");
+                if(r){
+                    var s='';
+                    $('input[class="ch"]:checked').each(function(){
+                        if($(this).val()){
+                            s += $(this).val()+',';
+                        }
+                    });
+                    var allChId = s.substring(0,s.length-1);
+                    //alert(allChId);
+                    $.post(
+                            "{:U('shop/delChOrder')}",
+                            {"ids":allChId,"num":num},
+                            function(data){
+                                if(data=="ok"){
+                                    alert("删除成功！");
+                                    $('.ch').attr('checked',false);//重新初始化复选框
+                                    window.location.reload();
+                                }else{
+                                    alert("删除失败！");
+                                }
+
+
+                            }
+                    );
+                }
 
             });
+
+            //重置查询条件
+            $('#reset').click(function(){
+                $(".search input[name]").val("")
+                $(".search select option").attr("selected",false);
+            });
+
 
         });
     </script>
 </head>
 <body>
-<!--------------------------------------公共面包屑开始---------------------------------------->
 <div class="route_bg">
     <a href="javascript:void(0)">商城管理</a><i class="fa fa-chevron-right"></i>
-    <a href="javascript:void(0)">添加</a>
+    <a href="javascript:void(0)">订单列表</a>
 </div>
-<!---------------------------------------公共面包屑结束---------------------------------------->
-<div id="news_body">
-    <table width="100%" >
-        <tr height="35">
-            <td nowrap width="180px;" align="right"><span style="color:red;">*</span>新闻标题：</td>
-            <td colspan="5" align="left" style="padding-left:10px;">
-                <input name="title" value="{$data.title}"/>
-                <input name="id" type="hidden" value="{$data.id}"/>
-                <input name="image" type="hidden" value="{$data.image}"> <!--图片名称隐藏域-->
-            </td>
-        </tr>
-        <tr height="35">
-            <td nowrap align="right"><span style="color:red;">*</span>新闻来源：</td>
-            <td align="left" style="padding-left:10px;">
-                <input name="source" value="{$data.source}"/>
-            </td>
-        </tr>
-        <tr height="35">
-            <td align="right">新闻图片：</td>
+<div class="search">
+    <form action="{:U('shop/olist')}" method="post">
+        <table width="99%" border="0">
+            <tr height="30">
+                <td width="70" nowrap>商品名称：</td>
+                <td width="250">
+                    <input name="gname" id="gname"
+                           style="width:180px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;" value="{$search.gname}"/>
+                </td>
+                <td width="50" nowrap>状态：</td>
+                <td width="220">
+                    <select name="state" style="width:180px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;">
+                        <option value="">请选择</option>
+                        <option <if condition="$search['type'] eq '未付款'">selected="selected"</if> value="未付款">未付款</option>
+                        <option <if condition="$search['type'] eq '已付款'">selected="selected"</if> value="已付款">已付款</option>
+                        <option <if condition="$search['type'] eq '已发货'">selected="selected"</if> value="已发货">已发货</option>
+                        <option <if condition="$search['type'] eq '已收货'">selected="selected"</if> value="已收货">已收货</option>
+                    </select>
+                </td>
+                <td width="60" nowrap>时间段：</td>
+                <td width="280">
+                    <input id="btime" name="btime"
+                           style="width:100px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;"
+                           value="{$search.btime}" placeholder="开始时间"/> -
+                    <input id="etime" name="etime"
+                           style="width:100px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;"
+                           value="{$search.etime}" placeholder="结束时间"/>
+                </td>
+                <td align="right">
+                    <input type="submit" id="submit" value="查询"
+                           style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
+                    <input type="button" id="reset" value="重置"
+                           style="width:60px;height:25px;margin-right:10px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+<table width="99%" class="list">
+    <tr height="25">
+        <th width="25"><input type="checkbox" class="chall"/></th>
+        <th width="30" nowrap>序号</th>
+        <th width="650" nowrap>订单详情</th>
+        <th width="100" nowrap="">操作</th>
+    </tr>
+    <foreach name="data" item="v" key="k">
+        <tr height="25">
+            <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
+            <td>{$sn+$k+1}</td>
             <td>
-                <input type="file" id="upload" name="pic_news" style="border:0;margin-left:10px;"/>
-            </td>
-        </tr>
-        <tr height="35">
-            <td align="right">图片预览：</td>
-            <td style="padding-left:10px;">
-                <img style="width:200px;" src="__PUBLIC__/Uploads/newspic/{$data.image}" alt="无图片" id="pic_news" title="新闻插图"/>
-                <if condition="$data.image neq null"><button class="delPic">删除图片</button></if>
-                <span class="prompt_upload"></span>
-            </td>
-        </tr>
+                <table width="98%" style="background: whitesmoke;font-size:12px;color:royalblue;border-collapse: collapse;" border="1">
+                    <tr style="background:seagreen;color:white;">
+                        <td width="300">订单号：{$v.ordernum}</td>
+                        <td width="380">状态：{$v.state}</td>
+                        <td width="350" align="right">下单时间：{$v.time|date="Y-m-d H：i",###}</td>
+                    </tr>
+                    <tr>
+                        <td>商品名称：<b>{$v.gname}</b></td>
+                        <td>店铺名称：{$v.shopname}</td>
+                        <td>
+                            数量：{$v.number} &nbsp;&nbsp;
+                            价格：{$v.price} &nbsp;&nbsp;
+                            总价：{$v.totalprice}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>收货人：{$v.bname}</td>
+                        <td>电话：{$v.bphone}</td>
+                        <td>邮编：{$v.postcode}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            收货地址：{$v.baddress}
+                        </td>
+                    </tr>
 
-        <tr>
-            <td nowrap align="right"><span style="color:red;">*</span>新闻内容：</td>
-            <td align="left" style="padding-left:10px;">
-                <textarea id="editor" placeholder="Balabala" autofocus name="content">{$data.content}</textarea>
+                </table>
+            </td>
+            <td>
+                <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
             </td>
         </tr>
-        <tr height="35">
-            <td colspan="2">
-                <a href="javascript:void(0)" class="save" >保存</a>
-                <if condition="$data.id eq null"><else /><a href="javascript:void(0)" class="back" >返回</a></if>
+    </foreach>
+    <tr height="30">
+        <td colspan="12" style="text-align:center;padding-left:10px;">
+            <if condition="$data eq null">没有查询到相关数据！！！<else />
+                <a class="delch" href="javascript:void(0)">删除选中</a>
+            </if>
+        </td>
+    </tr>
+    <if condition="$page neq null">
+        <tr height="30">
+            <td colspan="12">
+                <div class="pages">{$page}</div>
             </td>
         </tr>
-        <tr height="60">
-            <td align="center" colspan="2" valign="top">
-                <span id="prompt_news"></span>
-            </td>
-        </tr>
-    </table>
-
-</div>
+    </if>
+</table>
 
 </body>
 </html>

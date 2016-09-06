@@ -291,7 +291,7 @@
             <td>{$v.total}</td>
             <td>{$v.sold}</td>
             <td>
-                <a href="{:U('shop/addGoodsPic')}" class="addpic">图片管理</a>&nbsp;|&nbsp;
+                <a href="{:U('shop/gpiclist',array('id'=>$v['id']))}" class="addpic">图片管理</a>&nbsp;|&nbsp;
                 <a href="{:U('shop/updateGoods',array('id'=>$v['id']))}" class="updateGoods">更新</a>&nbsp;|&nbsp;
                 <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
             </td>
