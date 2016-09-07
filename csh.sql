@@ -1,6 +1,6 @@
 /*
-SQLyog Enterprise v12.08 (32 bit)
-MySQL - 5.6.17 : Database - csh
+SQLyog Professional v12.09 (64 bit)
+MySQL - 5.5.40 : Database - csh
 *********************************************************************
 */
 
@@ -164,11 +164,11 @@ CREATE TABLE `shop_buyer` (
   `address` varchar(100) NOT NULL,
   `postcode` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_buyer` */
 
-insert  into `shop_buyer`(`id`,`bname`,`phone`,`address`,`postcode`) values (4,'就','发','反对',' 反对');
+insert  into `shop_buyer`(`id`,`bname`,`phone`,`address`,`postcode`) values (32,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000'),(31,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000'),(30,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000'),(29,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000'),(28,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000'),(27,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000'),(26,'唧唧哥哥','13656578877','重庆南岸区南坪西路','400000');
 
 /*Table structure for table `shop_cart` */
 
@@ -181,7 +181,7 @@ CREATE TABLE `shop_cart` (
   `gnum` int(11) NOT NULL COMMENT '数量',
   `gprice` float NOT NULL COMMENT '单价',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_cart` */
 
@@ -202,7 +202,7 @@ CREATE TABLE `shop_goods` (
   `sellerid` int(11) NOT NULL COMMENT '卖家商铺id',
   `showpic` varchar(40) NOT NULL COMMENT '展示图',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_goods` */
 
@@ -217,7 +217,7 @@ CREATE TABLE `shop_image` (
   `pid` int(11) NOT NULL,
   `iname` varchar(50) NOT NULL,
   KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_image` */
 
@@ -229,9 +229,9 @@ DROP TABLE IF EXISTS `shop_order`;
 
 CREATE TABLE `shop_order` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ordernum` varchar(20) NOT NULL,
+  `ordernum` varchar(50) NOT NULL,
   `sellerid` int(11) NOT NULL,
-  `shop_name` varchar(50) NOT NULL,
+  `shopname` varchar(50) NOT NULL,
   `sname` varchar(20) NOT NULL,
   `sphone` varchar(20) NOT NULL,
   `spostcode` varchar(10) NOT NULL,
@@ -249,11 +249,11 @@ CREATE TABLE `shop_order` (
   `time` int(11) DEFAULT NULL COMMENT '生成时间',
   `timestamp` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_order` */
 
-insert  into `shop_order`(`id`,`ordernum`,`sellerid`,`shop_name`,`sname`,`sphone`,`spostcode`,`saddress`,`bname`,`bphone`,`bpostcode`,`baddress`,`goodsid`,`gname`,`number`,`price`,`totalprice`,`state`,`time`,`timestamp`) values (4,'6546',54,'54','4543535','54545','','','','','','54',54,'54',0,0.00,0.00,'已发货',4343434,'2016-09-06 14:13:53'),(5,'',0,'','','','','','','','','',0,'ddd',0,0.00,0.00,'已发货',12333333,'2016-09-06 14:14:59');
+insert  into `shop_order`(`id`,`ordernum`,`sellerid`,`shopname`,`sname`,`sphone`,`spostcode`,`saddress`,`bname`,`bphone`,`bpostcode`,`baddress`,`goodsid`,`gname`,`number`,`price`,`totalprice`,`state`,`time`,`timestamp`) values (30,'c_2016090722014714732569071814',5,'大坪岛兴隆湾','bin','13654824511','401241','重庆长寿长寿湖大坪村','唧唧哥哥','13656578877','400000','重庆南岸区南坪西路',14,'血脐',1,10.00,10.00,'未付款',1473257374,'2016-09-07 22:09:34');
 
 /*Table structure for table `shop_seller` */
 
@@ -268,7 +268,7 @@ CREATE TABLE `shop_seller` (
   `postcode` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique1` (`shopname`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `shop_seller` */
 

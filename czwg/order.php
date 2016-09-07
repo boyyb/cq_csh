@@ -177,6 +177,7 @@ $sdata = $db->getOne("shop_seller","*","id=$sellerid");//卖家信息
             <td>
                 <input name="gname" readonly value="<?php echo $gname?>"/>
                 <input type="hidden" name="goodsid" value="<?php echo $goodsid;?>"/>
+                <input type="hidden" name="ordernum" value="<?php echo "c_".date("YmdHis",time()).time().rand(1000,9999);?>">
             </td>
         </tr>
         <tr height="25">

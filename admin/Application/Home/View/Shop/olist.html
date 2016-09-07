@@ -201,7 +201,7 @@
                             function(data){
                                 if(data=="ok"){
                                     alert("删除成功！");
-                                    $('.ch').attr('checked',false);//重新初始化复选框
+                                    $('.ch,.chall').attr('checked',false);//重新初始化复选框
                                     window.location.reload();
                                 }else{
                                     alert("删除失败！");
@@ -234,13 +234,13 @@
         <table width="99%" border="0">
             <tr height="30">
                 <td width="70" nowrap>商品名称：</td>
-                <td width="250">
+                <td width="220">
                     <input name="gname" id="gname"
                            style="width:180px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;" value="{$search.gname}"/>
                 </td>
                 <td width="50" nowrap>状态：</td>
-                <td width="220">
-                    <select name="state" style="width:180px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;">
+                <td width="160">
+                    <select name="state" style="width:130px;height:25px;border-radius:4px;border:1px solid gray;padding-left:5px;">
                         <option value="">请选择</option>
                         <option <if condition="$search['type'] eq '未付款'">selected="selected"</if> value="未付款">未付款</option>
                         <option <if condition="$search['type'] eq '已付款'">selected="selected"</if> value="已付款">已付款</option>
@@ -249,17 +249,17 @@
                     </select>
                 </td>
                 <td width="60" nowrap>时间段：</td>
-                <td width="280">
+                <td width="250">
                     <input id="btime" name="btime"
-                           style="width:100px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;"
+                           style="width:80px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;"
                            value="{$search.btime}" placeholder="开始时间"/> -
                     <input id="etime" name="etime"
-                           style="width:100px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;"
+                           style="width:80px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;"
                            value="{$search.etime}" placeholder="结束时间"/>
                 </td>
-                <td align="right">
+                <td align="right" nowrap>
                     <input type="submit" id="submit" value="查询"
-                           style="width:60px;height:25px;margin-right:50px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
+                           style="width:60px;height:25px;margin-right:30px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
                     <input type="button" id="reset" value="重置"
                            style="width:60px;height:25px;margin-right:10px;background: green;color:white;cursor:pointer;border:1px solid gray;border-radius:4px;">
                 </td>
@@ -284,7 +284,7 @@
                     <tr style="background:seagreen;color:white;">
                         <td width="300">订单号：{$v.ordernum}</td>
                         <td width="380">状态：{$v.state}</td>
-                        <td width="350" align="right">下单时间：{$v.time|date="Y-m-d H：i",###}</td>
+                        <td width="350" align="right">下单时间：{$v.time|date="Y-m-d H:i:s",###}</td>
                     </tr>
                     <tr>
                         <td>商品名称：<b>{$v.gname}</b></td>
