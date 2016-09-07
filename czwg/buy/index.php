@@ -3,7 +3,8 @@ header("content-type:text/html;charset=utf-8");
 include "../../public/class/db.class.php";
 $db = new DB();
 //获取商品数据
-//$data = $db->getAll('shop_goods',"*","type='buy'","id desc");
+$data = $db->getAll('shop_goods',"*","type='购'","id desc");
+//var_dump($data);die;
 ?>
 
 <!DOCTYPE html>
@@ -102,61 +103,17 @@ $db = new DB();
             "购"在长寿湖
         </marquee>
     </div>
-
+    <?php foreach($data as $k=>$v){?>
     <div class="buy_box">
-        <img src="../../public/images/rmtj_pic.jpg"/>
+        <img src="../../admin/Public/Uploads/goods/<?php echo $v['showpic']?$v['showpic']:'default.jpg';?>"/>
         <div class="brief">
-            <p class="gname">长寿湖血脐</p>
-            <p class="ginfo">长寿湖血脐是一种非常好吃的水果，具有美艳功效，深受大家的喜欢深受大家的喜欢深受大家的喜欢深受大家的2222222222222222222深受大家的喜欢</p>
-            <p class="gprice">非会员价格：5元/公斤 &nbsp;&nbsp; 会员价格：4元/公斤</p>
+            <p class="gname"><?php echo $v['gname'];?></p>
+            <p class="ginfo"><?php echo $v['content'];?></p>
+            <p class="gprice">非会员价格：<?php echo $v['price'];?>元/斤 &nbsp;&nbsp; 会员价格：<?php echo $v['userprice'];?>元/斤</p>
         </div>
-        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo "";?>">查看详情</a></div>
+        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo $v['id'];?>">查看详情</a></div>
     </div>
-    <div class="buy_box">
-        <img src="../../public/images/rmtj_pic.jpg"/>
-        <div class="brief">
-            <p class="gname">长寿湖血脐</p>
-            <p class="ginfo">长寿湖血脐是一种非常好吃的水果，具有美艳功效，深受大家的喜欢深受大家的喜欢深受大家的喜欢深受大家的2222222222222222222深受大家的喜欢</p>
-            <p class="gprice">非会员价格：5元/公斤 &nbsp;&nbsp; 会员价格：4元/公斤</p>
-        </div>
-        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo "";?>">查看详情</a></div>
-    </div>
-    <div class="buy_box">
-        <img src="../../public/images/rmtj_pic.jpg"/>
-        <div class="brief">
-            <p class="gname">长寿湖血脐</p>
-            <p class="ginfo">长寿湖血脐是一种非常好吃的水果，具有美艳功效，深受大家的喜欢深受大家的喜欢深受大家的喜欢深受大家的2222222222222222222深受大家的喜欢</p>
-            <p class="gprice">非会员价格：5元/公斤 &nbsp;&nbsp; 会员价格：4元/公斤</p>
-        </div>
-        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo "";?>">查看详情</a></div>
-    </div>
-    <div class="buy_box">
-        <img src="../../public/images/rmtj_pic.jpg"/>
-        <div class="brief">
-            <p class="gname">长寿湖血脐</p>
-            <p class="ginfo">长寿湖血脐是一种非常好吃的水果，具有美艳功效，深受大家的喜欢深受大家的喜欢深受大家的喜欢深受大家的2222222222222222222深受大家的喜欢</p>
-            <p class="gprice">非会员价格：5元/公斤 &nbsp;&nbsp; 会员价格：4元/公斤</p>
-        </div>
-        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo "";?>">查看详情</a></div>
-    </div>
-    <div class="buy_box">
-        <img src="../../public/images/rmtj_pic.jpg"/>
-        <div class="brief">
-            <p class="gname">长寿湖血脐</p>
-            <p class="ginfo">长寿湖血脐是一种非常好吃的水果，具有美艳功效，深受大家的喜欢深受大家的喜欢深受大家的喜欢深受大家的2222222222222222222深受大家的喜欢</p>
-            <p class="gprice">非会员价格：5元/公斤 &nbsp;&nbsp; 会员价格：4元/公斤</p>
-        </div>
-        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo "";?>">查看详情</a></div>
-    </div>
-    <div class="buy_box">
-        <img src="../../public/images/rmtj_pic.jpg"/>
-        <div class="brief">
-            <p class="gname">长寿湖血脐</p>
-            <p class="ginfo">长寿湖血脐是一种非常好吃的水果，具有美艳功效，深受大家的喜欢深受大家的喜欢深受大家的喜欢深受大家的2222222222222222222深受大家的喜欢</p>
-            <p class="gprice">非会员价格：5元/公斤 &nbsp;&nbsp; 会员价格：4元/公斤</p>
-        </div>
-        <div class="buy_more"><a class="morezx" href="detail.php?id=<?php echo "";?>">查看详情</a></div>
-    </div>
+    <?php }?>
 
 </div>
 

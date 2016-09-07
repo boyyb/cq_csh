@@ -11,7 +11,7 @@ function time_out_check(){
     if( $current_time - $_SESSION['logintime'] > $expire){
         echo "<script>alert('登陆超时')</script>";
         unset($_SESSION['username']);
-        session_destroy();
+        //session_destroy();
     }else{
         $_SESSION['logintime'] = time();
     }
