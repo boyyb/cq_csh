@@ -14,6 +14,8 @@ session_start();
     </style>
 </head>
 <body>
+<p>方式1：通过邮箱找回</p>
+<hr/>
 <form action="" method="post">
     <p><input name="username" placeholder="账户名称"/></p>
     <p><input name="email" placeholder="注册邮箱" /></p>
@@ -27,12 +29,14 @@ session_start();
     <p><input name="cpassword" placeholder="确认新密码" /></p>
     <p><input type="submit" value="提交"/></p>
 </form>
+<hr/>
+<p><a href="forgetpwd2.php">方式2：通过手机找回</a></p>
 </body>
 </html>
 <?php
 header("content-type:text/html;charset=utf-8");
 error_reporting(0);
-if(isset($_POST)){
+if(isset($_POST) && $_POST){
     require '../public/class/PHPMailer/class.smtp.php';
     require '../public/class/PHPMailer/class.phpmailer.php';
     require "../public/class/db.class.php";

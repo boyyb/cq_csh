@@ -1,14 +1,17 @@
 <?php
 header("content-type:text/html;charset=utf-8");
 session_start();
-if(isset($_REQUEST)){
+if(isset($_POST) && $_POST){
     require_once "../public/class/db.class.php";
     $db = new DB();
     $code = $_REQUEST['token'];
     $pwd = $_REQUEST['password'];
     $cpwd = $_REQUEST['cpassword'];
-    $username = $_SESSION['username'];
-    if($code != $_SESSION['usercode']){
+    $username = @$_SESSION['username'];
+    if(!$code || !$pwd || !$cpwd){
+        die("数据填写不完整!<a href='forgetpwd.php'>返回</a>");
+    }
+    if($code != @$_SESSION['usercode']){
         die("校验码错误!<a href='forgetpwd.php'>返回</a>");
     }
     if(strlen($pwd)<6){
