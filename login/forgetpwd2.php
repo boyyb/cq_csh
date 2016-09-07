@@ -69,11 +69,13 @@ $body['to'] = '13629795255';
 // 提交请求
 $result = post($funAndOperate, $body);
 //echo("<br/>result:<br/><br/>");
-//var_dump($result);
+var_dump($result);
 
     $ret = json_decode($result);
     if($ret->respCode=="00000"){
         echo "<script>alert('短信已经发送到{$phone}，请注意查收！');</script>";
+    }else{
+        echo "<script>alert('短信发送失败！');</script>";
     }
 }
 
