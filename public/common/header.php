@@ -4,6 +4,23 @@ $url = dirname($_SERVER['PHP_SELF']);
 if($url=="/1_csh/czwg/eat" || $url=="/1_csh/czwg/live" || $url=="/1_csh/czwg/play" || $url=="/1_csh/czwg/buy"){
     $url = "/1_csh/czwg";
 }
+
+function time_out_check(){
+    $current_time = time();
+    $expire = 30*60; //超时时间 单位秒
+    if( $current_time - $_SESSION['logintime'] > $expire){
+        echo "<script>alert('登陆超时')</script>";
+        unset($_SESSION['username']);
+        session_destroy();
+    }else{
+        $_SESSION['logintime'] = time();
+    }
+}
+
+if(isset($_SESSION['logintime']) && isset($_SESSION['username'])){
+    time_out_check();
+}
+
 ?>
 
 <!-------------------------顶部开始--------------------------->

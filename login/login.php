@@ -44,6 +44,7 @@ if(isset($_REQUEST)){
         $db->add('user_login',array("pid"=>$pid,"login_time"=>$login_time,"login_ip"=>$login_ip));
         //处理session
         $_SESSION['username']=$username;
+        $_SESSION['logintime']=time();
     }
 }else{
     die("非法访问！");
