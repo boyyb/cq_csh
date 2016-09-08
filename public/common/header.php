@@ -30,6 +30,7 @@ if(isset($_SESSION['logintime']) && isset($_SESSION['username'])){
         <div class="topcontent">
             <span class="top-l">欢迎光临长寿湖旅游网站!</span>
                 <span class="top-r">
+                    <a href="/1_csh/userinfo/user_order.php">订单查询</a>
                     <?php if(isset($_SESSION['username'])){?>
                     <a href="javascript:void(0)" id="login_out" onclick="logout();">注销</a>
                     <a href="/1_csh/userinfo/" class="userdetail" title="点击查看用户资料">[root]</a>
