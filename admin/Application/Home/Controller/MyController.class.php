@@ -10,6 +10,13 @@ class MyController extends Controller {
         $this->redirect("login/index");
         }
 
+        //统计在线时长，只针对session
+        if(session("admin_uname")){
+            $sid = session("session_id");
+            $logout_time = time()+120; //默认2分钟后停止操作
+            D('admin_login')->where("session_id='$sid'")->save(array("logout_time"=>$logout_time));
+        }
     }
+
 
 }

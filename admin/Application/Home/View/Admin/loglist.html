@@ -93,6 +93,7 @@
         <th width="100" nowrap="">用户名</th>
         <th width="100" nowrap="">用户级别</th>
         <th width="100" nowrap="">登陆时间</th>
+        <th width="100" nowrap="">登出时间</th>
         <th width="100" nowrap="">登陆ip</th>
     </tr>
     <foreach name="data" item="v" key="k">
@@ -101,6 +102,7 @@
             <td>{$v.username}</td>
             <td><if condition="$v.level eq 0">超级管理员<else />普通管理员</if></td>
             <td>{$v.login_time|date="Y-m-d H:i:s",###}</td>
+            <td>{$v.logout_time|date="Y-m-d H:i:s",###}</td>
             <td>{$v.login_ip}</td>
         </tr>
     </foreach>

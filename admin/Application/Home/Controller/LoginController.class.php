@@ -37,6 +37,8 @@ class LoginController extends Controller {
         }
         //更新记录表数据,记录登录信息
         $alm = D('admin_login');
+        $session_id = time().rand(1000,9999);
+        $_REQUEST['session_id'] = $session_id;
         $_REQUEST['pid'] = $data[0]['id'];
         $_REQUEST['login_time']=time();
         $_REQUEST['login_ip']=get_client_ip();
@@ -44,6 +46,7 @@ class LoginController extends Controller {
 
         //设置session
         session('admin_uname',$username);
+        session("session_id",$session_id);
         echo "ok";
 
     }
@@ -60,6 +63,10 @@ class LoginController extends Controller {
     public function logout(){
         session('admin_uname',null);
         cookie('admin_uname',null);
+        //记录登出时间
+        $sid = session("session_id");
+        D('admin_login')->where("session_id='$sid'")->save(array("logout_time"=>time()));
+
         $this -> success("注销成功！",'index',2);
     }
 

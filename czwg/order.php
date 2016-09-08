@@ -58,11 +58,11 @@ $sdata = $db->getOne("shop_seller","*","id=$sellerid");//卖家信息
             $('input[name=number]').bind("blur focus keydown keypress keyup",function(){
                 var num = $(this).val();
                 var preg = /^[1-9][0-9]*$/; //匹配大于0的正整数
-                if(!preg.test(num)){
+                if(num && !preg.test(num)){
                     alert("购买数量不合法，请填写正整数！");
                     $(this).val("1");//赋默认值1
-                    return false;
                 }
+                countTotal();
             });
 
             $('#less').click(function(){
