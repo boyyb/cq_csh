@@ -1,5 +1,7 @@
 <?php
+session_start();
 header("content-type:text/html;charset=utf-8");
+date_default_timezone_set("PRC");
 //if(!isset($_REQUEST){die("非法访问！");}
 include "../public/class/db.class.php";
 $db = new DB();
@@ -14,6 +16,7 @@ $db->add("shop_buyer",array(
 $ordernum = $_REQUEST["ordernum"];
 $_REQUEST['state'] = "未付款";
 $_REQUEST['time'] = time();
+$_REQUEST['username'] = $_SESSION['username'];
 $dataarr = $db->create("shop_order",$_REQUEST);
 $res = $db->getOne("shop_order","*","ordernum='$ordernum'");
 if(!$res){
@@ -33,7 +36,17 @@ if(!$res){
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <script src="../public/js/jquery-1.8.3.min.js" type="text/javascript"></script>
     <style>
-
+        .back{
+            display: block;
+            width:80px;
+            height:25px;
+            line-height:25px;
+            color:white;
+            background: green;
+            text-decoration: none;
+            text-align: center;
+        }
+        
     </style>
     <script>
         $(document).ready(function(){
@@ -42,6 +55,7 @@ if(!$res){
     </script>
 </head>
 <body>
+<p><a class="back" href="../index1.php">返回主页</a></p>
 <table width="1000" align="center"
        style="background: whitesmoke;font-size:14px;color:royalblue;border-collapse: collapse;margin-top:80px;" border="1">
     <tr style="background:seagreen;color:white;">

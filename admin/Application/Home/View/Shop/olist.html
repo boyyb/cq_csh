@@ -296,7 +296,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>收货人：{$v.bname}</td>
+                        <td>收货人：{$v.bname}(<if condition="$v.username eq null">非会员<else /><b style="color:red">会员</b></if>)</td>
                         <td>电话：{$v.bphone}</td>
                         <td>邮编：{$v.postcode}</td>
                     </tr>
