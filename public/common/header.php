@@ -58,6 +58,7 @@ if(isset($_SESSION['logintime']) && isset($_SESSION['username'])){
                 </li>
                 <li class="menu_style <?php if($url=="/1_csh/zxly")echo "menu_current";?>" id="MenuItem65" name="MenuItem"><a href="http://localhost/1_csh/zxly/" class="menu">在线留言</a></li>
                 <li class="menu_style <?php if($url=="/1_csh/lxwm")echo "menu_current";?>" id="MenuItem66" name="MenuItem"><a href="http://localhost/1_csh/lxwm/" class="menu">联系我们</a></li>
+                <li class="menu_style <?php if($url=="/1_csh/other")echo "menu_current";?>" id="MenuItem66" name="MenuItem"><a href="http://localhost/1_csh/other/" class="menu">其他</a></li>
             </ul>
         </div>
     </div>
