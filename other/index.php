@@ -76,7 +76,8 @@
         .clear{clear:both}
         .saylist{margin:8px auto; padding:4px 0; border-bottom:1px dotted #d3d3d3}
         .saylist img{float:left; width:50px; margin:4px}
-        .saytxt{float:right; width:530px; overflow:hidden}
+        .saytxt{float:right; width:530px; overflow:hidden;
+            text-align: left;}
         .saytxt p{line-height:18px}
         .saytxt p strong{margin-right:6px}
         .date{color:#999}
@@ -132,8 +133,6 @@
             <div class="demo">
                 <form id="myform" action="submit.php" method="post">
                     <h3><span style="color: rgb(204, 204, 204);" class="counter">140</span>说说你正在做什么...</h3>
-                    <input type="hidden" id="ip" name="ip" value="<?php /*echo $ip;*/?>">
-                    <input type="hidden" id="location" name="location" value="<?php /*echo $location;*/?>">
                     <textarea name="saytxt" id="saytxt" class="input" tabindex="1" rows="2" cols="40"></textarea>
                     <p>
                         <input src="file/btn.gif" class="sub_btn" alt="发布" type="image">

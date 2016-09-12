@@ -27,8 +27,17 @@ $(function(){
 			  }
 		  }
 	    });
-		return false;
+		return false; //防止页面跳转
 	});
+
+	//获取留言数据
+	$.post(
+			"getMessage.php",{},function(data){
+				$('#saywrap').prepend(data);
+				$('#saytxt').val('');
+				recount();
+			}
+	);
 });
 
 function recount(){

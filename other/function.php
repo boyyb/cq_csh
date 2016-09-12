@@ -1,22 +1,22 @@
 <?php
 /*时间转换函数*/
 function tranTime($time) {
-    $rtime = date("m-d H:i",$time);
+    $rtime = date("Y-m-d H:i",$time);
     $htime = date("H:i",$time);
     $time = time() - $time;
 
-    if ($time < 60) {
+    if ($time < 60) { //60s内
         $str = '刚刚';
     }
-    elseif ($time < 60 * 60) {
+    elseif ($time < 60 * 60) { //60分钟内
         $min = floor($time/60);
         $str = $min.'分钟前';
     }
-    elseif ($time < 60 * 60 * 24) {
+    elseif ($time < 60 * 60 * 24) { //24小时内
         $h = floor($time/(60*60));
         $str = $h.'小时前 '.$htime;
     }
-    elseif ($time < 60 * 60 * 24 * 3) {
+    elseif ($time < 60 * 60 * 24 * 3) { //3天内
         $d = floor($time/(60*60*24));
         if($d==1)
             $str = '昨天 '.$rtime;
