@@ -230,7 +230,7 @@
                 var id = $(this).find('b[style]').html();
                 $(this).css('color','red').html("删除中...").append('<i class="fa fa-refresh fa-spin"></i>');
                 $.post(
-                        "{:U('other/deleteFile')}",
+                        "{:U('other/deleteMsg')}",
                         {"id":id},
                         function(data){
                             if(data == "ok"){
@@ -265,8 +265,7 @@
             });
             //删除选中
             $('.delch').click(function(){
-                alert("该功能暂时不可用！");
-                return;
+
                 //判断是否有选中项
                 if($(".ch:checked").length == 0){
                     alert("请选择至少一个选项！");
@@ -286,7 +285,7 @@
                     var allChId = s.substring(0,s.length-1);
                     //alert(allChId);
                     $.post(
-                            "{:U('other/delChFile')}",
+                            "{:U('other/delChMsg')}",
                             {"ids":allChId,"num":num},
                             function(data){
                                 if(data=="ok"){
@@ -310,9 +309,9 @@
             });
 
             //高亮查询结果
-            var filename=$('input[name=filename]').val();
+            var filename=$('input[name=content]').val();
             if(filename){
-                highlight_key($('.list'),2,filename);
+                highlight_key($('.list'),4,filename);
             }
 
         });
@@ -336,16 +335,16 @@
 <body>
 <div class="route_bg">
     <a href="javascript:void(0)">其他</a><i class="fa fa-chevron-right"></i>
-    <a href="javascript:void(0)">文件下载</a>
+    <a href="javascript:void(0)">自由留言</a>
 </div>
 <div class="search">
-    <form action="{:U('other/filelist')}" method="post">
+    <form action="{:U('other/saylist')}" method="post">
         <table width="99%" border="0">
             <tr height="30">
-                <td width="70" nowrap>文件名：</td>
+                <td width="90" nowrap>留言关键字：</td>
                 <td width="200">
-                    <input name="filename" id="filename"
-                           style="width:150px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;" value="{$search.filename}"/>
+                    <input name="content" id="content"
+                           style="width:150px;height:22px;border-radius:4px;border:1px solid gray;padding-left:5px;" value="{$search.content}"/>
                 </td>
                 <td align="right">
                     <input type="submit" id="submit" value="查询"
@@ -358,27 +357,25 @@
     </form>
 
 </div>
-<div id="addfile"><a href="javascript:void(0)">添加文件</a></div>
+<div id="addfile"><a href="/1_csh/other" target="_blank">添加留言</a></div>
 <table width="99%" class="list">
     <tr height="25">
         <th width="25"><input type="checkbox" class="chall"/></th>
         <th width="30" nowrap>序号</th>
-        <th width="90" nowrap>文件名</th>
-        <th width="80" nowrap>文件大小(Byte)</th>
-        <th width="80" nowrap>添加时间</th>
-        <th width="200" nowrap>下载次数</th>
-        <th width="60" nowrap="">操作</th>
+        <th width="60" nowrap>留言者ip</th>
+        <th width="60" nowrap>留言时间</th>
+        <th width="330">留言内容</th>
+        <th width="40" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
-            <td><input type="checkbox" value="{$v.id}" class="ch" /></if></td>
+            <td><input type="checkbox" value="{$v.uid}" class="ch" /></if></td>
             <td>{$sn+$k+1}</td>
-            <td nowrap>{$v.filename}</td>
-            <td>{$v.filesize}</td>
-            <td>{$v.addtime|date="Y-m-d H：i",###}</td>
-            <td>{$v.count}</td>
+            <td nowrap>{$v.ip}</td>
+            <td>{$v.addtime|date="Y-m-d H:i:s",###}</td>
+            <td>{$v.content}</td>
             <td>
-                <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
+                <a class="delOne" href="javascript:void({$v['_id']})">删除<b style="display:none;">{$v.uid}</b></a>
             </td>
         </tr>
     </foreach>

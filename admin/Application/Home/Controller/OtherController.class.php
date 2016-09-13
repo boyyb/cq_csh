@@ -1,6 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
+use Home\Model\MonModel;  //
 class OtherController extends MyController {
 
     public function filelist(){
@@ -96,7 +97,7 @@ class OtherController extends MyController {
         }
 
     }
-    public function delChFile(){
+   /* public function delChFile(){
         $ids = $_REQUEST['ids'];
         $num = $_REQUEST['num'];
         $affectedRows = D('file_download')->delete($ids);
@@ -107,6 +108,86 @@ class OtherController extends MyController {
             echo "0";
         }
 
+    }*/
+
+    /**********自由留言**************/
+
+    public function saylist(){
+        //采用mongodb接入
+        $M= new MonModel('message');// 实例化mongodb模型类
+        //查询条件
+        $map = array();
+        if(isset($_REQUEST)){
+            if($_REQUEST['content']){
+                //模糊查询标题，和mysql不一样
+                $map['content']  = array('like',urldecode($_REQUEST['content']));
+            }
+        }
+
+        $count = $M->where($map)->count();// 查询满足要求的总记录数
+        $pageSize = 5;//分页显示条数
+        $Page = new \Think\Page($count,$pageSize);// 实例化分页类 传入总记录数和每页显示的记录数
+        //设置分页样式
+        $Page->setConfig('header', '<li class="rows">共<b>%TOTAL_ROW%</b>条记录&nbsp;第<b>%NOW_PAGE%</b>页/共<b>%TOTAL_PAGE%</b>页</li>');
+        $Page->setConfig('prev', '上一页');
+        $Page->setConfig('next', '下一页');
+        $Page->setConfig('last', '末页');
+        $Page->setConfig('first', '首页');
+        $Page->setConfig('theme', '%FIRST%%UP_PAGE%%LINK_PAGE%%DOWN_PAGE%%END%%HEADER%');
+        $Page->lastSuffix = false;//最后一页不显示为总页数
+        foreach($_POST as $key=>$val) {
+            $Page->parameter[$key] = urlencode($val); //带上查询参数，并url编码
+        }
+        $show = $Page->show();// 分页显示输出
+        //获取表数据，联表查询
+        $data = $M
+            ->where($map)
+            ->order("addtime desc")
+            ->limit($Page->firstRow.','.$Page->listRows)
+            ->select();
+        foreach($data as $v){
+            $newdata[]=$v;
+        }
+
+        $this -> assign("search",$_REQUEST);//查询的参数回传，以便显示
+        $this -> assign('page',$show);// 赋值分页输出
+        $this -> assign('data',$newdata);// 赋值数据集
+        $this -> assign("sn",$Page->firstRow);//序号
+
+        $this -> display();// 输出模板
     }
 
+    public function deleteMsg(){
+        $uid = $_REQUEST['id'];
+        $M= new MonModel('message');
+
+        $flag = $M->where(array("uid"=>$uid))->delete();
+        if($flag){
+            echo "ok";
+        }else{
+            echo "fail";
+        }
+        get_client_ip();
+    }
+
+    public function delChMsg()
+    {
+        $ids = $_REQUEST['ids'];
+        $number = $_REQUEST['num'];
+        $M = new MonModel('message');
+
+        $arr = explode(",",$ids);
+        $num = 0;
+        foreach($arr as $v){
+            $res = $M->where(array("uid"=>$v))->delete();
+            if($res){
+                $num++;
+            }
+        }
+        if($num==$number){
+            echo "ok";
+        }else{
+            echo "fail";
+        }
+    }
 }

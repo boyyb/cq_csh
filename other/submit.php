@@ -26,6 +26,7 @@ if(isset($_POST['saytxt'])){
     //插入数据到集合中
     //$db->execSql("insert into say(userid,content,addtime,ip,location) values ('$userid','$txt','$time','$ip','$location')");
     $dataArr=array(
+        "uid"=>uniqid(),
         "userid"=>$userid,
         "content"=>$txt,
         "addtime"=>$time,
