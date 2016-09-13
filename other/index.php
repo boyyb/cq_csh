@@ -114,7 +114,6 @@ $data = $db->getAll("file_download","*","","id desc");
     </div>
     <div class="right">
         <div class="download_box" style="display:block;">
-            <p style="margin-bottom:10px;">中文名文件下载请用火狐浏览器！</p>
             <p>
                 <table>
                 <?php foreach($data as $v){?>
