@@ -44,34 +44,62 @@ class OtherController extends MyController {
         $this -> display();// 输出模板
 
     }
-    public function save(){
-        $id = $_REQUEST['id'];
-        if($id){
-            $num = $this->ulm->where("id=$id")->save($_REQUEST);
+
+    public function saveFile(){
+
+        if(isset($_FILES['file']) && $_FILES['file']['name']){
+            $upload = new \Think\Upload();// 实例化上传类
+            $upload->maxSize = 0;//
+            //$upload->exts = array('jpg', 'gif', 'png', 'jpeg','bmp');// 设置附件上传类型
+            $upload->rootPath = "./Public/Downloads/"; // 设置附件上传根目录
+            $upload->saveName =  ''; //文件命名 空表示保持原名称不变
+            $upload->autoSub = false; //不允许子目录
+            //$upload->subName = 'downloads'; //子目录名称
+            //存在同中文名的文件则会覆盖，编码问题，英文名的文件则不会覆盖
+
+            // 上传单个文件
+            $info = $upload->uploadOne($_FILES['file']);
+            if(!$info) {
+                // 上传错误提示信息
+                $this->error($upload->getError(),'',2);
+            }
+
+            $arr['filename'] = $info['savename']; //图片名称
+            $arr['filesize'] = $info['size'];
+            $arr['addtime'] = time();
+
         }else{
-            $num = $this->ulm->add($_REQUEST);
+            $this->error("上传文件信息不存在！","",2);
         }
-        if($num){
+
+        //增加到数据库
+        $res = D('file_download')->add($arr);
+        if($res){
+            $this->success("添加文件成功！",'',2);
+        }else{
+            $this->error("添加文件失败！",'',2);
+        }
+    }
+
+    public function deleteFile(){
+        $id = $_REQUEST['id'];
+        $filename = D('file_download')->where("id=$id")->select();
+        $filename = $filename[0]['filename'];
+
+        unlink("./Public/Downloads/$filename");
+
+        $flag = D("file_download")->delete($id);
+        if($flag){
             echo "ok";
         }else{
             echo "fail";
         }
-    }
-    public function delete(){
-        $id = $_REQUEST['id'];
-        $num = $this->ulm->delete($id);
-        if($num){
-            echo "1";
-        }else{
-            echo "0";
-        }
 
     }
-
-    public function delCh(){
+    public function delChFile(){
         $ids = $_REQUEST['ids'];
         $num = $_REQUEST['num'];
-        $affectedRows = D('user_level')->delete($ids);
+        $affectedRows = D('file_download')->delete($ids);
         if($affectedRows == $num){
             echo "1";
         }

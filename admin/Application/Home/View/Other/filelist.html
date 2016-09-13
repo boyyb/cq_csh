@@ -53,7 +53,7 @@
             color:red;
             text-decoration: underline;
         }
-        .delch,#addS a{
+        .delch,#addfile a{
             display: block;
             height:25px;
             width:70px;
@@ -114,9 +114,114 @@
             margin-left:10px;
         }
         /*********************分页样式结束**************************/
+        /*****************************************弹窗样式**********************************/
+        #win_add{
+            display : none;
+            position : absolute;
+            width : 400px;
+            height: 150px;
+            top : 150px;
+            left: -200px;;
+            margin-left:50%;
+            z-index: 1051;
+            border-radius:4px;
+            border:1px gray solid;
+            background: white;
+        }
+        #title_add{
+            height:30px;
+            background-color : #0066bb;
+            color : ghostwhite;
+            padding-left:4px;
+            font-size:16px;
+            line-height:30px;
+        }
+        #close_add{
+            position:absolute;
+            top:0px;
+            right:10px;
+            cursor: pointer;
+        }
+        #close_add:hover{
+            color:orangered;
+        }
+        #content_add{
+            padding : 10px;
+            text-align:center;
+        }
+        #button_add{
+            position:absolute;
+            left:-111px;
+            margin-left:50%;
+            bottom:10px;
+            height:30px;
+            width:222px;
+            color : ghostwhite;
+            font-size:16px;
+            line-height:30px;
+        }
+        .save_add,.closewin_add{
+            display: block;
+            height:25px;
+            width:70px;
+            background: forestgreen;
+            color:whitesmoke;
+            -webkit-border-radius:3px;
+            -moz-border-radius:3px;
+            border-radius:3px;
+            text-align: center;
+            line-height:25px;
+            text-decoration: none;
+            float:left;
+        }
+        .save_add{
+            margin-right:80px;
+        }
+        .mask{
+            background-color: #333333;
+            z-index: 1050;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            filter: Alpha(Opacity=30);
+            -moz-opacity: 0.4;
+            opacity: 0.4;
+        }
     </style>
     <script>
         $(function(){
+
+            //打开弹窗
+            $('#addfile a').click(function(){
+                $('.mask').css('display','block');
+                $('#win_add').fadeIn('normal');
+
+
+            });
+            //关闭弹窗
+            $('.closewin_add,#close_add').click(function(){
+                $('#win_add').hide();
+                $('.mask').css('display','none');
+
+                window.location.reload();
+            });
+
+            //保存上传图片
+            $('.save_add').click(function(){
+                if($('input[name=file]').val()){
+                    $('#formfile').submit();
+                }else{
+                    alert("你没有选择文件！");
+                }
+            });
+
+            //每次刷新都复位file框
+            var file = $('input[name=file]');
+            file.after(file.clone(true).val(""));//clone(true)表示事件一起克隆
+            file.remove();
+
 
             //单条删除
             $('.delOne').click(function(){
@@ -125,7 +230,7 @@
                 var id = $(this).find('b[style]').html();
                 $(this).css('color','red').html("删除中...").append('<i class="fa fa-refresh fa-spin"></i>');
                 $.post(
-                        "{:U('shop/deleteSeller')}",
+                        "{:U('other/deleteFile')}",
                         {"id":id},
                         function(data){
                             if(data == "ok"){
@@ -160,6 +265,8 @@
             });
             //删除选中
             $('.delch').click(function(){
+                alert("该功能暂时不可用！");
+                return;
                 //判断是否有选中项
                 if($(".ch:checked").length == 0){
                     alert("请选择至少一个选项！");
@@ -179,7 +286,7 @@
                     var allChId = s.substring(0,s.length-1);
                     //alert(allChId);
                     $.post(
-                            "{:U('shop/delChSeller')}",
+                            "{:U('other/delChFile')}",
                             {"ids":allChId,"num":num},
                             function(data){
                                 if(data=="ok"){
@@ -255,16 +362,16 @@
     </form>
 
 </div>
-<div id="addS"><a href="{:U('shop/addSeller')}">添加文件</a></div>
+<div id="addfile"><a href="javascript:void(0)">添加文件</a></div>
 <table width="99%" class="list">
     <tr height="25">
         <th width="25"><input type="checkbox" class="chall"/></th>
         <th width="30" nowrap>序号</th>
         <th width="90" nowrap>文件名</th>
-        <th width="80" nowrap>文件大小</th>
+        <th width="80" nowrap>文件大小(Byte)</th>
         <th width="80" nowrap>添加时间</th>
         <th width="200" nowrap>下载次数</th>
-        <th width="70" nowrap="">操作</th>
+        <th width="60" nowrap="">操作</th>
     </tr>
     <foreach name="data" item="v" key="k">
         <tr height="25">
@@ -275,7 +382,6 @@
             <td>{$v.addtime|date="Y-m-d H：i",###}</td>
             <td>{$v.count}</td>
             <td>
-                <a href="{:U('other/updateFile',array('id'=>$v['id']))}" class="updateFile">修改</a>&nbsp;|&nbsp;
                 <a class="delOne" href="javascript:void({$v['id']})">删除<b style="display:none;">{$v.id}</b></a>
             </td>
         </tr>
@@ -296,5 +402,22 @@
     </if>
 </table>
 
+<div id="win_add" style="display:none;">
+    <div id="title_add">
+        <span>上传供下载文件</span>
+        <a id="close_add" title="点击关闭">X</a>
+    </div>
+    <div id="content_add">
+        <form id="formfile" action="{:U('other/saveFile')}" method="post" enctype="multipart/form-data">
+            <input id="fileupload" type="file" name="file"/>
+        </form>
+    </div>
+    <div id="button_add">
+        <a class="save_add" href="javascript:void(0)">保存</a>
+        <a class="closewin_add" href="javascript:void(0)">关闭</a>
+    </div>
+</div>
+
+<div class="mask" style="display:none;"></div>
 </body>
 </html>

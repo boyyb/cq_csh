@@ -100,7 +100,12 @@
 </head>
 <body>
 <!--引入公共头部-->
-<?php include "../public/common/header.php";?>
+<?php include "../public/common/header.php";
+include "../public/class/db.class.php";
+$db = new DB();
+$data = $db->getAll("file_download","*","","id desc");
+
+?>
 <div id="other">
     <div class="left">
         <a class="download" href="javascript:void(0)">文档下载</a>
@@ -109,25 +114,17 @@
     </div>
     <div class="right">
         <div class="download_box" style="display:block;">
+            <p style="margin-bottom:10px;">中文名文件下载请用火狐浏览器！</p>
             <p>
-                <a href="download.php?filename=111.jpg&dl=1" >下载图片</a>
-                <a href="download.php?filename=11.jpg&see=1" target="_blank" >查看图片</a>
+                <table>
+                <?php foreach($data as $v){?>
+                    <tr>
+                        <td width="100"><?php echo $v['filename']?></td>
+                        <td><a href="download.php?filename=<?php echo $v['filename']?>&dl=1&id=<?php echo $v['id']?>" >点击下载</a></td>
+                    </tr>
+                <?php }?>
+                </table>
             <p>
-            <p>
-                <a href="download.php?filename=11.txt&dl=1">下载文件</a>
-                <a href="download.php?filename=11.txt&see=1" target="_blank">查看文件</a>
-            </p>
-            <p>
-                <a href="download.php?filename=11.rar&dl=1">下载压缩文件</a>
-                <a href="download.php?filename=11.rar&see=1" target="_blank">查看压缩文件</a>
-            </p>
-            <p>
-                <a href="download.php?filename=11.xlsx&dl=1">下载excel文件</a>
-                <a href="download.php?filename=11.xlsx&see=1" target="_blank">查看excel文件</a>
-            </p>
-            <p>
-                <a href="download.php?filename=360.exe&dl=1">下载exe</a>
-            </p>
         </div>
         <div class="freetalk_box" style="display:none;">
             <div class="demo">
