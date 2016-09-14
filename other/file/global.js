@@ -30,13 +30,13 @@ $(function(){
 		return false; //防止页面跳转
 	});
 
-	//获取留言数据
+	//获取所有留言数据，回调数据以html格式返回
 	$.post(
 			"getMessage.php",{},function(data){
 				$('#saywrap').prepend(data);
 				$('#saytxt').val('');
 				recount();
-			}
+			},"html"
 	);
 });
 

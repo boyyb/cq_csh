@@ -140,11 +140,15 @@ $data = $db->getAll("file_download","*","","id desc");
                 <div id="saywrap">
                     <?php /*echo $sayList;*/?>
                 </div>
+            </div>
         </div>
         <div class="lottery_box" style="display:none;">
 
         </div>
     </div>
+        <div class="lottery_box" style="display: none;">
+            抽奖游戏
+        </div>
     <div style="clear:both;"></div>
 
 </div>
