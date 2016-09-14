@@ -53,6 +53,7 @@
             border:1px solid #eeeeff;
             border-radius:4px;
             margin-top:5px;
+            margin-bottom:10px;
             padding:5px;
         }
         .download_box{
@@ -84,6 +85,13 @@
         .inact,.inact:hover{background:#f5f5f5; border:1px solid #eee; color:#aaa; cursor:auto;}
         #msg{color:#f30}
         :root #header + #content > #left > #rlblock_left {display:none !important;}
+
+        /**********************数字游戏样式***********************/
+        .numbergame_box .title{
+            margin-top:5px;
+            font-size:18px;
+            font-weight:bold;
+        }
     </style>
     <script>
         $(function(){
@@ -110,7 +118,7 @@ $data = $db->getAll("file_download","*","","id desc");
     <div class="left">
         <a class="download" href="javascript:void(0)">文档下载</a>
         <a class="freetalk" href="javascript:void(0)">自由发言</a>
-        <a class="lottery" href="javascript:void(0)">手机抽奖</a>
+        <a class="numbergame" href="javascript:void(0)">猜猜数字</a>
     </div>
     <div class="right">
         <div class="download_box" style="display:block;">
@@ -142,13 +150,22 @@ $data = $db->getAll("file_download","*","","id desc");
                 </div>
             </div>
         </div>
-        <div class="lottery_box" style="display:none;">
+        <div class="numbergame_box" style="display:none;">
+            <p class="title">请猜1-100内的数字！</p>
+            <div>
+                <table>
+                    <tr>
+                        <td><b style="color:red">*</b> 昵称：</td>
+                        <td>
+                            <input class="nickname" name="nickname" placeholder="请输入昵称"
+                                   style="border:1px solid gray;border-radius:4px;width:120px;height:20px;padding:2px;">
+                            <button title="提交后开始游戏" class="addnickname">提交</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-        </div>
-    </div>
-        <div class="lottery_box" style="display: none;">
-            抽奖游戏
-        </div>
     <div style="clear:both;"></div>
 
 </div>
