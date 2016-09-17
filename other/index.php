@@ -102,6 +102,10 @@
                 $('.right .'+classname+'_box').show().siblings().hide();
             });
 
+            $('.numbergame_box .addnickname').click(function(){
+
+            });
+
 
         });
     </script>
@@ -162,9 +166,16 @@ $data = $db->getAll("file_download","*","","id desc");
                             <button title="提交后开始游戏" class="addnickname">提交</button>
                         </td>
                     </tr>
-                </table>
+                </table><br/><br/>
+                <div class="game_box" style="display: none;">
+                    <button class="startgame">开始游戏</button><br/><br/><br/>
+                    <input name="number" style="border:1px solid gray;border-radius:4px;width:120px;height:20px;padding:2px;">
+                    <button class="submit">提交</button><br/><br/><br/>
+                    <button class="answer">查看答案</button>
+                </>
             </div>
         </div>
+    </div>
 
     <div style="clear:both;"></div>
 
