@@ -1,4 +1,6 @@
-
+<?php
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,11 +104,38 @@
                 $('.right .'+classname+'_box').show().siblings().hide();
             });
 
-            $('.numbergame_box .addnickname').click(function(){
 
+            $('.startgame').click(function(){
+                number = Math.floor(Math.random()*98+1);//生成1-99的随机数字
+                time = 0*1;
+                $('input[name=number]').prop("disabled",false).val("");
+                $('.submit').prop("disabled",false);
+                alert("随机数字已经生成！请在下面输入框中输入数字。");
             });
 
+            time = 0*1;
+            $('.submit').click(function(){
+                time++;
+                var inputnum = $('input[name=number]').val()*1;
+                if(inputnum != number){
+                    if(inputnum>number){
+                        alert("不对！，大了。");
+                    }
+                    if(inputnum<number){
+                        alert("不对！，小了。");
+                    }
+                    return false;
+                }
+                alert("恭喜你！，终于猜中啦，正确答案为："+number+"，你一共用了"+time+"次机会。");
+                $('input[name=number]').prop("disabled",true);
+                $('.submit').prop("disabled",true);
+            });
 
+            $('.answer').click(function(){
+                alert("正确答案是："+number);
+                $('input[name=number]').prop("disabled",true);
+                $('.submit').prop("disabled",true);
+            });
         });
     </script>
 </head>
@@ -157,29 +186,18 @@ $data = $db->getAll("file_download","*","","id desc");
         <div class="numbergame_box" style="display:none;">
             <p class="title">请猜1-100内的数字！</p>
             <div>
-                <table>
-                    <tr>
-                        <td><b style="color:red">*</b> 昵称：</td>
-                        <td>
-                            <input class="nickname" name="nickname" placeholder="请输入昵称"
-                                   style="border:1px solid gray;border-radius:4px;width:120px;height:20px;padding:2px;">
-                            <button title="提交后开始游戏" class="addnickname">提交</button>
-                        </td>
-                    </tr>
-                </table><br/><br/>
-                <div class="game_box" style="display: none;">
-                    <button class="startgame">开始游戏</button><br/><br/><br/>
-                    <input name="number" style="border:1px solid gray;border-radius:4px;width:120px;height:20px;padding:2px;">
-                    <button class="submit">提交</button><br/><br/><br/>
+                <div class="game_box"><br/><br/>
+                    <button class="startgame">开始游戏</button><br/><br/>
+                    <input name="number" placeholder="请输入数字" disabled style="border:1px solid gray;border-radius:4px;width:120px;height:20px;padding:2px;">
+                    <button class="submit" disabled>提交</button><br/><br/><br/>
                     <button class="answer">查看答案</button>
-                </>
+                </div>
             </div>
         </div>
     </div>
-
     <div style="clear:both;"></div>
-
 </div>
+
 
 <!------------------------底部开始----------------------------->
 <?php include "../public/common/footer.php";?>
