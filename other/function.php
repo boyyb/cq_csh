@@ -81,7 +81,9 @@ function is_ip($str){
 function getInfoByIp($ip){
     //利用淘宝接口
     $url = "http://ip.taobao.com/service/getIpInfo.php?ip=" . $ip;
-    $ip = json_decode(file_get_contents($url));//将json格式的数据转换为对象
+    $json = @file_get_contents($url);
+    if(!$json){return false;}
+    $ip = json_decode($json);//将json格式的数据转换为对象
     $data = (array)$ip->data;//获得data下的数据并转换为数组
     return $data;//返回一个关联数组
 }
